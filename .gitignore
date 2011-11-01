@@ -1,0 +1,9 @@
+*.swp
+*.pyc
+*.rbc
+.rake_tasks~
+.DS_Store
+tags
+vimfiles/bundle/
+partial/
+vimfiles/autoload/pathogen.vim
