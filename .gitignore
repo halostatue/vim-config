@@ -5,5 +5,6 @@
 .DS_Store
 tags
 vimfiles/bundle/
+vimfiles/.netrwhist
 partial/
 vimfiles/autoload/pathogen.vim

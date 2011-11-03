@@ -524,16 +524,18 @@ endif
 
 " config_files: Useful maps for managing config files
 " ------------------------------------------------------------------------
-nnoremap <Leader>v :split $MYVIMRC<CR>
-nnoremap <Leader>uv :source $MYVIMRC<CR>
-nnoremap <Leader>g :split $MYGVIMRC<CR>
-nnoremap <Leader>ug :source $MYGVIMRC<CR>
+nnoremap <Leader>ev :split $MYVIMRC<CR>
+nnoremap <Leader>eg :split $MYGVIMRC<CR>
 
 " The last thing we do is load bundles via Pathogen.
 call pathogen#infect()
 " call pathogen#helptags()
 syntax on
 filetype plugin indent on
+
+if has("gui_running")
+  set background=light
+endif
 
 " % to bounce from do to end etc.
 runtime! macros/matchit.vim

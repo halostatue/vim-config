@@ -281,3 +281,4 @@ endif
 colorscheme desert
 colorscheme desertEx
 " colorscheme vexorian
+colorscheme solarized

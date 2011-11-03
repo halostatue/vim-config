@@ -3,24 +3,35 @@
 require 'fileutils'
 
 BUNDLES = {
+#   github://astashov/vim-ruby-debugger
   :git => %W(
     github://ajf/puppet-vim
     github://altercation/vim-colors-solarized
-    github://astashov/vim-ruby-debugger
     github://bdd/vim-scala
+    github://bootleq/vim-textobj-rubysymbol
     github://bsl/obviousmode
     github://ervandew/supertab
     github://fholgado/minibufexpl.vim
     github://godlygeek/tabular
     github://jeetsukumaran/vim-buffergator
+    github://kana/vim-ku
+    github://kana/vim-scratch
+    github://kana/vim-textobj-datetime
+    github://kana/vim-textobj-diff
+    github://kana/vim-textobj-entire
+    github://kana/vim-textobj-function
+    github://kana/vim-textobj-indent
+    github://kana/vim-textobj-user
     github://kchmck/vim-coffee-script
     github://mattn/gist-vim
     github://michaeljsmith/vim-indent-object
+    github://millermedeiros/vim-statline
     github://mikewest/vimroom
     github://mileszs/ack.vim
     github://mrtazz/molokai.vim
     github://msanders/cocoa.vim
     github://msanders/snipmate.vim
+    github://nelstrom/vim-textobj-ruby-block
     github://pangloss/vim-javascript
     github://scrooloose/nerdcommenter
     github://scrooloose/nerdtree
@@ -30,6 +41,14 @@ BUNDLES = {
     github://sjl/threesome.vim
     github://sunaku/vim-ruby-minitest
     github://taq/vim-rspec
+    github://thinca/vim-fontzoon
+    github://thinca/vim-ft-vim_fold
+    github://thinca/vim-ft-markdown_fold
+    github://thinca/vim-prettyprint
+    github://thinca/vim-quickrun
+    github://thinca/vim-textobj-comment
+    github://thinca/vim-textobj-function-javascript
+    github://thinca/vim-textobj-function-perl
     github://timcharper/textile.vim
     github://tomtom/quickfixsigns_vim
     github://tpope/vim-abolish
@@ -67,6 +86,7 @@ BUNDLES = {
     github://vim-scripts/searchfold.vim
     github://vim-scripts/taglist.vim
     github://vim-scripts/taskpaper.vim
+    github://vim-scripts/vim-textobj-quoted
     github://wgibbs/vim-irblack
   ),
   :svn => {
