@@ -4,6 +4,7 @@ require 'fileutils'
 
 BUNDLES = {
 #   github://astashov/vim-ruby-debugger
+#   github://thinca/vim-fontzoom
   :git => %W(
     github://ajf/puppet-vim
     github://altercation/vim-colors-solarized
@@ -41,7 +42,6 @@ BUNDLES = {
     github://sjl/threesome.vim
     github://sunaku/vim-ruby-minitest
     github://taq/vim-rspec
-    github://thinca/vim-fontzoom
     github://thinca/vim-ft-vim_fold
     github://thinca/vim-ft-markdown_fold
     github://thinca/vim-prettyprint
