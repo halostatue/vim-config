@@ -31,7 +31,7 @@ BUNDLES = {
     github://mrtazz/molokai.vim
     github://msanders/cocoa.vim
     github://msanders/snipmate.vim
-    github://nelstrom/vim-textobj-ruby-block
+    github://nelstrom/vim-textobj-rubyblock
     github://pangloss/vim-javascript
     github://scrooloose/nerdcommenter
     github://scrooloose/nerdtree
@@ -41,7 +41,7 @@ BUNDLES = {
     github://sjl/threesome.vim
     github://sunaku/vim-ruby-minitest
     github://taq/vim-rspec
-    github://thinca/vim-fontzoon
+    github://thinca/vim-fontzoom
     github://thinca/vim-ft-vim_fold
     github://thinca/vim-ft-markdown_fold
     github://thinca/vim-prettyprint
