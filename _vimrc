@@ -533,9 +533,5 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
-if has("gui_running")
-  set background=light
-endif
-
 " % to bounce from do to end etc.
 runtime! macros/matchit.vim

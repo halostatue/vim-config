@@ -276,9 +276,11 @@ if exists("loaded_nerd_tree")
   call s:DefineCommand("mkdir", "Mkdir")
 endif
 
+set background=light
+
 " colorscheme denim
 " colorscheme inkpot
-colorscheme desert
-colorscheme desertEx
+" colorscheme desert
+" colorscheme desertEx
 " colorscheme vexorian
 colorscheme solarized
