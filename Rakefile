@@ -95,6 +95,7 @@ BUNDLES = {
   :copy => %W(
     janus
     google-golang
+    manpageview
   ),
 }
 
