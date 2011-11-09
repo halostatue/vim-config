@@ -280,6 +280,7 @@ class BundleInstaller
   def base_tasks
     directory bundle_path
     directory partial_path
+    task :install => [ bundle_path, partial_path ]
 
     file vimfiles_path('autoload', 'pathogen.vim') do |t|
       fileops.mkdir_p File.dirname(t.name)
@@ -416,7 +417,7 @@ augroup END
   end
 end
 
-inst.git_task "git://git.wincent.com/command-t.git" do |mode|
+inst.git_task "github://wincent/Command-T" do |mode|
   case mode
   when :post_update
     # TODO: Need a way to generically specify the 'system' Ruby regardless
