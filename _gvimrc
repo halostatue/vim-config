@@ -12,6 +12,8 @@ set guioptions+=e guioptions-=r guioptions-=R guioptions-=l guioptions-=L
 set guioptions-=t guioptions-=T guioptions-=b guioptions-=h
 set winaltkeys=no
 
+set fillchars+=vert:│
+
 if has("gui_macvim")
   set guifont=Inconsolata\ Medium:h10,Andale_Mono:h11,DejaVu\ Sans\ Mono:h10
   set fuoptions=maxvert,maxhorz
@@ -38,6 +40,8 @@ if has("gui_macvim")
   vmap <D-]> >gv
   vmap <D-[> <gv
 
+
+
   " Map Command-# to switch tabs
   map  <D-0> 0gt
   imap <D-0> <Esc>0gt
@@ -59,6 +63,29 @@ if has("gui_macvim")
   imap <D-8> <Esc>8gt
   map  <D-9> 9gt
   imap <D-9> <Esc>9gt
+
+  " Use the normal HIG movements, except for M-Up/Down
+"  let macvim_skip_cmd_opt_movement = 1
+"  no   <D-Left>       <Home>
+"  no!  <D-Left>       <Home>
+"  no   <M-Left>       <C-Left>
+"  no!  <M-Left>       <C-Left>
+
+"  no   <D-Right>      <End>
+"  no!  <D-Right>      <End>
+"  no   <M-Right>      <C-Right>
+"  no!  <M-Right>      <C-Right>
+
+"  no   <D-Up>         <C-Home>
+"  ino  <D-Up>         <C-Home>
+"  imap <M-Up>         <C-o>{
+
+"  no   <D-Down>       <C-End>
+"  ino  <D-Down>       <C-End>
+"  imap <M-Down>       <C-o>}
+
+"  imap <M-BS>         <C-w>
+"  inoremap <D-BS>     <esc>my0c`y
 
   " Command-Option-ArrowKey to switch viewports
   map <D-M-Up> <C-w>k

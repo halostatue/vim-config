@@ -4,7 +4,7 @@ require 'fileutils'
 
 BUNDLES = {
 #   github://astashov/vim-ruby-debugger
-#   github://thinca/vim-fontzoom
+#   github://robgleeson/hammer.vim
   :git => %W(
     github://ajf/puppet-vim
     github://altercation/vim-colors-solarized
@@ -14,6 +14,7 @@ BUNDLES = {
     github://ervandew/supertab
     github://fholgado/minibufexpl.vim
     github://godlygeek/tabular
+    github://jceb/vim-orgmode
     github://jeetsukumaran/vim-buffergator
     github://kana/vim-ku
     github://kana/vim-scratch
@@ -26,12 +27,13 @@ BUNDLES = {
     github://kchmck/vim-coffee-script
     github://mattn/gist-vim
     github://michaeljsmith/vim-indent-object
-    github://millermedeiros/vim-statline
     github://mikewest/vimroom
     github://mileszs/ack.vim
+    github://millermedeiros/vim-statline
     github://mrtazz/molokai.vim
     github://msanders/cocoa.vim
     github://msanders/snipmate.vim
+    github://nathanaelkane/vim-indent-guides
     github://nelstrom/vim-textobj-rubyblock
     github://pangloss/vim-javascript
     github://scrooloose/nerdcommenter
@@ -42,8 +44,9 @@ BUNDLES = {
     github://sjl/threesome.vim
     github://sunaku/vim-ruby-minitest
     github://taq/vim-rspec
-    github://thinca/vim-ft-vim_fold
+    github://thinca/vim-fontzoom
     github://thinca/vim-ft-markdown_fold
+    github://thinca/vim-ft-vim_fold
     github://thinca/vim-prettyprint
     github://thinca/vim-quickrun
     github://thinca/vim-textobj-comment
