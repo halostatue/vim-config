@@ -14,6 +14,7 @@ BUNDLES = {
     github://ervandew/supertab
     github://fholgado/minibufexpl.vim
     github://godlygeek/tabular
+    github://hsitz/VimOrganizer
     github://jceb/vim-orgmode
     github://jeetsukumaran/vim-buffergator
     github://kana/vim-ku
