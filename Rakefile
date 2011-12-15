@@ -5,6 +5,7 @@ require 'fileutils'
 BUNDLES = {
 #   github://astashov/vim-ruby-debugger
 #   github://robgleeson/hammer.vim
+#   github://fholgado/minibufexpl.vim
   :git => %W(
     github://ajf/puppet-vim
     github://altercation/vim-colors-solarized
@@ -12,7 +13,6 @@ BUNDLES = {
     github://bootleq/vim-textobj-rubysymbol
     github://bsl/obviousmode
     github://ervandew/supertab
-    github://fholgado/minibufexpl.vim
     github://godlygeek/tabular
     github://hsitz/VimOrganizer
     github://jceb/vim-orgmode
