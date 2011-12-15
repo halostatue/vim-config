@@ -51,7 +51,7 @@ set autoread " Automatically reload changed files.
 set autowrite " Automatically write changed buffers to disk.
 set modelines=5 " vim default
 
-set nonumber norelativenumber
+set norelativenumber
 
 set lazyredraw
 set matchtime=3
@@ -166,6 +166,7 @@ vnoremap id i[
 vnoremap ad a[
 
 " }}}
+
 " Next and Last {{{
 " Motion for "next/last object". For example, "din(" would go to the next "()" pair
 " and delete its contents.
@@ -539,7 +540,7 @@ map <Leader>mail :call <SID>setupMail()<CR>
 nnoremap ; :
 
 " Faster ESC
-inoremap jk <ESC>
+" inoremap jk <ESC>
 
 " Cmdheight switching
 nnoremap <Leader>1 :set cmdheight=1<cr>
@@ -1096,6 +1097,11 @@ if has("autocmd")
   augroup ft_lisp_vimrc
     autocmd!
     autocmd FileType lisp call TurnOnLispFolding()
+  augroup END
+
+  augroup ft_shell_vimrc
+    autocmd!
+    autocmd FileType sh,zsh,csh setlocal comments=:# formatoptions+=r
   augroup END
 
   augroup ft_c_vimrc
