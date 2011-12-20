@@ -218,7 +218,7 @@ function! s:AckMotion(type) abort
 endfunction
 
 " Use ,z to "focus" the current fold.
-nnoremap <Leader>z zMzvzz
+nnoremap <leader>z zMzvzz
 
 " Make CTRL-^ rebound to the line and *column* in the previous file
 noremap <C-^> <C-^>`"
@@ -250,8 +250,8 @@ function! s:QFixToggle(forced) " {{{
   endif
 endfunction " }}}
 
-nmap <Silent> <Leader>et :ErrorsToggle<cr>
-nmap <Silent> <Leader>qt :QFixToggle<cr>
+nmap <silent> <leader>et :ErrorsToggle<cr>
+nmap <silent> <leader>qt :QFixToggle<cr>
 
 " Show more information under <C-G>
 noremap <C-G> 2<C-G>
@@ -260,7 +260,7 @@ noremap <M-Down>   <C-W>j
 noremap <M-Up>     <C-W>k
 noremap <M-Left>   <C-W>h
 noremap <M-Right>  <C-W>l
-noremap <Leader>v  <C-W>v
+noremap <leader>v  <C-W>v
 
 " Synstack {{{
 " Show the stack of syntax hilighting classes affecting whatever is under the
@@ -318,7 +318,7 @@ cnoremap <C-E> <End>
 cnoremap <C-D> <Del>
 
 " Clear matches with this.
-noremap <Leader><Space> :noh<CR>:call clearmatches()<CR>
+noremap <leader><Space> :noh<CR>:call clearmatches()<CR>
 
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
@@ -366,11 +366,11 @@ noremap k gk
 nnoremap D d$
 
 " Open a Quickfix window for the last search.
-nnoremap <Silent> <Leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " Ack for the last search.
-nnoremap <Silent> <Leader>? :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
-map <Leader>a :Ack! 
+nnoremap <silent> <leader>? :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
+map <leader>a :Ack! 
 
 function! s:PulseCursorLine()
   let current_window = winnr()
@@ -429,7 +429,7 @@ endfunction
 
 function! s:setupMarkdown()
   call s:setupTextWrapping()
-  " map <buffer> <Leader>p :Hammer<CR>
+  " map <buffer> <leader>p :Hammer<CR>
 endfunction
 
 function! s:setupMail()
@@ -447,7 +447,7 @@ function! s:TabMessage(cmd)
 endfunction
 command! -nargs=+ -complete=command TabMessage call <SID>TabMessage(<q-args>)
 
-" nmap <Leader>x <Plug>ToggleAutoCloseMappings
+" nmap <leader>x <Plug>ToggleAutoCloseMappings
 
 " Ctrl-P {{{
 " https://github.com/kien/ctrlp.vim
@@ -467,16 +467,16 @@ command! -nargs=+ -complete=command TabMessage call <SID>TabMessage(<q-args>)
 " https://github.com/Lokaltog/vim-easymotion
 " let g:EasyMotion_do_mapping = 0
 " 
-" nnoremap <silent> <Leader>f      :call EasyMotionF(0, 0)<CR>
-" onoremap <silent> <Leader>f      :call EasyMotionF(0, 0)<CR>
-" vnoremap <silent> <Leader>f :<C-U>call EasyMotionF(1, 0)<CR>
+" nnoremap <silent> <leader>f      :call EasyMotionF(0, 0)<CR>
+" onoremap <silent> <leader>f      :call EasyMotionF(0, 0)<CR>
+" vnoremap <silent> <leader>f :<C-U>call EasyMotionF(1, 0)<CR>
 " 
-" nnoremap <silent> <Leader>F      :call EasyMotionF(0, 1)<CR>
-" onoremap <silent> <Leader>F      :call EasyMotionF(0, 1)<CR>
-" vnoremap <silent> <Leader>F :<C-U>call EasyMotionF(1, 1)<CR>
+" nnoremap <silent> <leader>F      :call EasyMotionF(0, 1)<CR>
+" onoremap <silent> <leader>F      :call EasyMotionF(0, 1)<CR>
+" vnoremap <silent> <leader>F :<C-U>call EasyMotionF(1, 1)<CR>
 " 
-" onoremap <silent> <Leader>t      :call EasyMotionT(0, 0)<CR>
-" onoremap <silent> <Leader>T      :call EasyMotionT(0, 1)<CR>
+" onoremap <silent> <leader>t      :call EasyMotionT(0, 0)<CR>
+" onoremap <silent> <leader>T      :call EasyMotionT(0, 1)<CR>
 
 " For keyboards that have Insert and Del keys (not Macs), make them do the
 " right thing.
@@ -520,21 +520,21 @@ noremap L g_
 nnoremap Q gqip
 
 " Easier linewise reselection
-nnoremap <Leader>V V`]
+nnoremap <leader>V V`]
 
 " Preview Files
-" nnoremap <Leader>p :w<cr>:Hammer<cr>
+" nnoremap <leader>p :w<cr>:Hammer<cr>
 
 " Align text
-nnoremap <Leader>Al :left<cr>
-nnoremap <Leader>Ac :center<cr>
-nnoremap <Leader>Ar :right<cr>
-vnoremap <Leader>Al :left<cr>
-vnoremap <Leader>Ac :center<cr>
-vnoremap <Leader>Ar :right<cr>
+nnoremap <leader>Al :left<cr>
+nnoremap <leader>Ac :center<cr>
+nnoremap <leader>Ar :right<cr>
+vnoremap <leader>Al :left<cr>
+vnoremap <leader>Ac :center<cr>
+vnoremap <leader>Ar :right<cr>
 
 " Prepare to write email.
-map <Leader>mail :call <SID>setupMail()<CR>
+map <leader>mail :call <SID>setupMail()<CR>
 
 " Less chording
 nnoremap ; :
@@ -543,12 +543,12 @@ nnoremap ; :
 " inoremap jk <ESC>
 
 " Cmdheight switching
-nnoremap <Leader>1 :set cmdheight=1<cr>
-nnoremap <Leader>2 :set cmdheight=2<cr>
+nnoremap <leader>1 :set cmdheight=1<cr>
+nnoremap <leader>2 :set cmdheight=2<cr>
 
 " Source
-vnoremap <Leader>S y:execute @@<cr>
-nnoremap <Leader>S ^vg_y:execute @@<cr>
+vnoremap <leader>S y:execute @@<cr>
+nnoremap <leader>S ^vg_y:execute @@<cr>
 
 function! s:WhenPUMVisible(ifVisible, ifNotVisible)
   if pumvisible()
@@ -568,8 +568,8 @@ inoremap <expr> <PageDown> <SID>WhenPUMVisible("\<PageDown>\<C-P>\<C-N>", "\<Pag
 inoremap <expr> <PageUp>   <SID>WhenPUMVisible("\<PageUp>\<C-P>\<C-N>", "\<PageUp>")
 
 " For the BufferList plug-in.
-noremap <Silent> <F3> :call BufferList()<CR>
-inoremap <Silent> <F3> <C-O>:call BufferList()<CR>
+noremap <silent> <F3> :call BufferList()<CR>
+inoremap <silent> <F3> <C-O>:call BufferList()<CR>
 
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_debug = 1
@@ -587,12 +587,12 @@ let g:gundo_preview_bottom = 1
 " nnoremap <leader>L :LinediffReset<cr>
 
 " Opens an edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>e
-map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+" Normal mode: <leader>e
+map <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
 " Opens a tab edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>t
-map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+" Normal mode: <leader>t
+map <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Inserts the path of the currently edited file into a command
 " Command mode: Ctrl+P
@@ -627,7 +627,7 @@ if has("mac") || has("macunix")
       echo "No URI found in line."
     endif
   endfunction
-  map <Leader>w :call <SID>OpenURL()<CR>
+  map <leader>w :call <SID>OpenURL()<CR>
 endif
 
 " Indent Guides {{{
@@ -641,7 +641,7 @@ function! s:IndentGuides()
     execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
   endif
 endfunction
-nnoremap <Leader>i :call <SID>IndentGuides()<CR>
+nnoremap <leader>i :call <SID>IndentGuides()<CR>
 
 " Insert Mode Completion {{{
 inoremap <C-L> <C-X><C-L>
@@ -666,7 +666,7 @@ function! s:BlockColor() " {{{
     call matchadd("BlockColor4", '^ \{16}.*', 4, 77883)
   endif
 endfunction " }}}
-nnoremap <Leader>B :call BlockColor()<CR>
+nnoremap <leader>B :call BlockColor()<CR>
 
 " }}}
 
@@ -697,7 +697,7 @@ nnoremap _d  :set ft=diff<CR>
 "
 " Especially useful for adding items in the middle of long lists/tuples in Python
 " while maintaining a sane text width.
-nnoremap <Leader>K h/[^ ]<cr>"zd$jyyP^v$h"zpJk:s/\v +$//<cr>:noh<cr>j^
+nnoremap <leader>K h/[^ ]<cr>"zd$jyyP^v$h"zpJk:s/\v +$//<cr>:noh<cr>j^
 " }}}
 
 " function! SuperCleverTab()
@@ -858,7 +858,7 @@ let g:xml_syntax_folding=1
 " This file is used for plug-in settings.
 
 " https://github.com/reinh/vim-makegreen
-" nnoremap <Leader>| :call MakeGreen('')<CR>
+" nnoremap <leader>| :call MakeGreen('')<CR>
 
 " Threesome {{{
 
@@ -925,7 +925,7 @@ let g:NERDTreeSplitVertical=1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeIgnore=['\.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index', 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json', '.*\.o$', 'db.db', '\.rbc$']
-noremap <Leader>n :NERDTreeToggle<CR>
+noremap <leader>n :NERDTreeToggle<CR>
 
 augroup ft_nerdtree_vimrc
   autocmd!
@@ -986,13 +986,13 @@ function! s:ScratchToggle()
     exec "normal! :ScratchOpen"
   endif
 endfunction
-nnoremap <Silent> <Leader><Leader><S> :ScratchToggle<CR>
+nnoremap <silent> <leader><leader><S> :ScratchToggle<CR>
 
 " ZoomWin configuration
-map <Leader><Leader> :ZoomWin<CR>
+map <leader><leader> :ZoomWin<CR>
 
 " CTags
-map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+map <leader>rt :!ctags --extra=+f -R *<CR><CR>
 map <C-\> :tnext<CR>
 
 " Find where the abbreviations.txt file exists for the abbrevlist plug-in to
@@ -1124,7 +1124,7 @@ if has("autocmd")
     autocmd Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd Filetype less,css setlocal iskeyword+=-
 
-    " Use <Leader>S to sort properties.  Turns this:
+    " Use <leader>S to sort properties.  Turns this:
     "
     "     p {
     "         width: 200px;
@@ -1282,9 +1282,9 @@ endif
 
 " config_files: Useful maps for managing config files
 " ------------------------------------------------------------------------
-nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
-nnoremap <Leader>eg :vsplit $MYGVIMRC<CR>
-nnoremap <Leader>es :vsplit $HOME/.vim/snippets/<CR>
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader>eg :vsplit $MYGVIMRC<CR>
+nnoremap <leader>es :vsplit $HOME/.vim/snippets/<CR>
 
 " Shell
 function! s:ExecuteInShell(command) " {{{
@@ -1296,26 +1296,26 @@ function! s:ExecuteInShell(command) " {{{
     silent! execute 'silent %!'. command
     silent! redraw
     silent! execute 'autocmd BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
-    silent! execute 'nnoremap <Silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>:AnsiEsc<CR>'
-    silent! execute 'nnoremap <Silent> <buffer> q :q<CR>'
+    silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>:AnsiEsc<CR>'
+    silent! execute 'nnoremap <silent> <buffer> q :q<CR>'
     silent! execute 'AnsiEsc'
     echo 'Shell command ' . command . ' executed.'
 endfunction " }}}
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
-nnoremap <Leader>! :Shell 
+nnoremap <leader>! :Shell 
 
 " Use sane regexes.
 nnoremap / /\v
 vnoremap / /\v
 
 " Clean whitespace
-map <Leader>W  :%s/\s\+$//<CR>:let @/=''<CR>
+map <leader>W  :%s/\s\+$//<CR>:let @/=''<CR>
 
 " Dammit, Slimv
-map <Leader>WW :%s/\s\+$//<CR>:let @/=''<CR>
+map <leader>WW :%s/\s\+$//<CR>:let @/=''<CR>
 
 " Substitute
-nnoremap <Leader>s :%s//<Left>
+nnoremap <leader>s :%s//<Left>
 
 " Change case
 nnoremap <C-U> gUiw
@@ -1369,7 +1369,7 @@ command! -nargs=0 HgBlame call s:HgBlame()
 nnoremap <leader>hb :HgBlame<cr>
 
 " Diffoff
-nnoremap <Leader>D :diffoff!<cr>
+nnoremap <leader>D :diffoff!<cr>
 
 set diffopt-=iwhite
 let g:diffwhitespaceon = 1
