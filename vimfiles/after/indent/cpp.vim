@@ -112,16 +112,33 @@ function! GoogleCPPIndent()
   return l:retv
 endfunction
 
-setlocal shiftwidth=2
-setlocal tabstop=2
-setlocal softtabstop=2
-setlocal expandtab
-setlocal textwidth=118
-setlocal nowrap
+if exists('g:cpp_indent_width')
+  let &l:shiftwidth = g:cpp_indent_width
+  let &l:tabstop = g:cpp_indent_width
+  let &l:softtabstop = 2
+else
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+endif
 
+if exists('g:cpp_line_width')
+  let &l:textwidth=g:cpp_line_width
+else
+  setlocal textwidth=118
+endif
+
+setlocal expandtab
+setlocal nowrap
 setlocal cindent
 
-setlocal indentexpr=GoogleCPPIndent()
+if exists('g:cpp_indentexpr')
+  let &l:indentexpr = g:cpp_indentexpr
+elseif exists('g:cpp_no_google_indent') && g:cpp_no_google_indent == 1
+  setlocal indentexpr=
+else
+  setlocal indentexpr=GoogleCPPIndent()
+endif
 
 let b:undo_indent = "setl sw< ts< sts< et< tw< wrap< cin< cino< inde<"
 

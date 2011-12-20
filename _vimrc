@@ -148,11 +148,11 @@ omap <Tab> za
 " special characters on the Mac and the Command/Super key isn't available off
 " the Mac.
 if has("mac") || has("macunix")
-  map <D-[> :N<CR>
-  map <D-]> :n<CR>
+  map <D-<> :N<CR>
+  map <D->> :n<CR>
 else
-  map <A-[> :N<CR>
-  map <A-]> :N<CR>
+  map <A-<> :N<CR>
+  map <A->> :N<CR>
 endif
 
 " Make zO recursively open whatever top level fold we're in, no matter where the
@@ -892,10 +892,12 @@ if !has("ruby")
   let g:LustyJugglerSuppressRubyWarning = 1
 endif
 
-let g:syntastic_enable_signs = 1
 let g:syntastic_disabled_filetypes = ['html']
 let g:syntastic_stl_format = '[%E{Error 1/%e: line %fe}%B{, }%W{Warning 1/%w: line %fw}]'
 let g:syntastic_jsl_conf = '$HOME/.vim/jsl.conf'
+let g:syntastic_mode_map = { 'mode': 'active',
+      \ 'active_filetypes': [],
+      \ 'passive_filetypes': [ 'c', 'cpp' ] }
 
 " Unimpaired configuration
 " Bubble single lines
@@ -1502,6 +1504,10 @@ function! NyanMe() " {{{
     redraw
 endfunction " }}}
 command! NyanMe call NyanMe()
+
+if filereadable(expand("~/.vimrc.local"))
+  exec ":source " . expand("~/.vimrc.local")
+endif
 
 " The last thing we do is load bundles via Pathogen.
 call pathogen#infect()
