@@ -115,7 +115,7 @@ endfunction
 if exists('g:cpp_indent_width')
   let &l:shiftwidth = g:cpp_indent_width
   let &l:tabstop = g:cpp_indent_width
-  let &l:softtabstop = 2
+  let &l:softtabstop = g:cpp_indent_width
 else
   setlocal shiftwidth=2
   setlocal tabstop=2

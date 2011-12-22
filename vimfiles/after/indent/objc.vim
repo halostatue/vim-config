@@ -14,8 +14,9 @@ endif
 
 let b:did_after_indent = 1
 
-" Set the function to do the work.
-setlocal indentexpr=GoogleObjCIndent()
+if !exists("b:debug_indent")
+  let b:debug_indent = 0
+endif
 
 " To make a colon (:) suggest an indentation other than a goto/swich label,
 setlocal indentkeys-=:
@@ -101,13 +102,33 @@ function! GoogleObjCIndent()
   return l:retv
 endfunction
 
-setlocal shiftwidth=2
-setlocal tabstop=2
-setlocal softtabstop=2
-setlocal expandtab
-setlocal textwidth=118
-setlocal nowrap
+if exists('g:objc_indent_width')
+  let &l:shiftwidth = g:objc_indent_width
+  let &l:tabstop = g:objc_indent_width
+  let &l:softtabstop = g:objc_indent_width
+else
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+endif
 
+if exists('g:objc_line_width')
+  let &l:textwidth=g:objc_line_width
+else
+  setlocal textwidth=118
+endif
+
+setlocal expandtab
+setlocal nowrap
 setlocal cindent
+
+" Set the function to do the work.
+if exists('g:objc_indentexpr')
+  let &l:indentexpr = g:objc_indentexpr
+elseif exists('g:objc_no_google_indent') && g:objc_no_google_indent == 1
+  setlocal indentexpr=
+else
+  setlocal indentexpr=GoogleObjCIndent()
+endif
 
 let b:undo_indent = "setl sw< ts< sts< et< tw< wrap< cin< cino< inde<"

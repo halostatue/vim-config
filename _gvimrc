@@ -306,6 +306,6 @@ set background=light
 " colorscheme denim
 " colorscheme inkpot
 " colorscheme desert
-" colorscheme desertEx
+colorscheme desertEx
 " colorscheme vexorian
-colorscheme solarized
+" colorscheme solarized
