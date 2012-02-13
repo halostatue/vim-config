@@ -1200,7 +1200,7 @@ if has("autocmd")
 
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType python setlocal define=^\s*\\(def\\\\|class\\)
-    autocmd FileType python compiler nose
+"   autocmd FileType python compiler nose
     autocmd FileType man nnoremap <buffer> <CR> :q<CR>
   augroup END
 
