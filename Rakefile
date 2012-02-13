@@ -62,6 +62,7 @@ BUNDLES = {
     github://tpope/vim-fugitive
     github://tpope/vim-git
     github://tpope/vim-haml
+    github://tpope/vim-liquid
     github://tpope/vim-markdown
     github://tpope/vim-ragtag
     github://tpope/vim-rails
