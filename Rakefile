@@ -12,8 +12,13 @@ BUNDLES = {
     github://bdd/vim-scala
     github://bootleq/vim-textobj-rubysymbol
     github://bsl/obviousmode
+    github://danro/rename.vim
     github://ervandew/supertab
     github://godlygeek/tabular
+    github://henrik/vim-open-url
+    github://henrik/vim-reveal-in-finder
+    github://henrik/vim-ruby-runner
+    github://henrik/vim-yaml-flattener
     github://hsitz/VimOrganizer
     github://jceb/vim-orgmode
     github://jeetsukumaran/vim-buffergator
@@ -54,8 +59,10 @@ BUNDLES = {
     github://thinca/vim-textobj-function-javascript
     github://thinca/vim-textobj-function-perl
     github://timcharper/textile.vim
+    github://tjennings/git-grep-vim
     github://tomtom/quickfixsigns_vim
     github://tpope/vim-abolish
+    github://tpope/vim-bundler
     github://tpope/vim-commentary
     github://tpope/vim-cucumber
     github://tpope/vim-endwise
@@ -76,9 +83,11 @@ BUNDLES = {
     github://vim-scripts/Color-Sampler-Pack
     github://vim-scripts/ColorX
     github://vim-scripts/IndexedSearch
+    github://vim-scripts/YankRing.vim
     github://vim-scripts/ZoomWin
     github://vim-scripts/a.vim
     github://vim-scripts/applescript.vim
+    github://vim-scripts/argtextobj.vim
     github://vim-scripts/bufexplorer.zip
     github://vim-scripts/bufferlist.vim
     github://vim-scripts/calendar.vim--Matsumoto

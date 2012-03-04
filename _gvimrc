@@ -15,7 +15,7 @@ set winaltkeys=no
 set fillchars+=vert:│
 
 if has("gui_macvim")
-  set guifont=Inconsolata\ Medium:h10,Andale_Mono:h11,DejaVu\ Sans\ Mono:h10
+  set guifont=Inconsolata\ Medium:h10,Anonymous\ Pro:h12,DejaVu\ Sans\ Mono:h10,Andale\ Mono:h11
   set fuoptions=maxvert,maxhorz
 
   " Command-T for CommandT
@@ -112,7 +112,7 @@ endif
 highlight Pmenu      term=NONE cterm=NONE ctermfg=7 ctermbg=5 gui=NONE guifg=White guibg=Magenta
 highlight PmenuSel   term=NONE cterm=NONE ctermfg=0 ctermbg=7 gui=NONE guifg=Black guibg=White
 highlight PmenuSbar  term=NONE cterm=NONE ctermfg=7 ctermbg=0 gui=NONE guifg=White guibg=Black
-highlight PmenuThumb term=NONE cterm=NONE ctermfg=0 ctermbg=7 gui=NONE guifg=Black guibg=White 
+highlight PmenuThumb term=NONE cterm=NONE ctermfg=0 ctermbg=7 gui=NONE guifg=Black guibg=White
 
 if has("balloon_eval")
   function! FoldSpellBalloon()
@@ -180,7 +180,7 @@ function! s:CdIfDirectory(directory)
 
   " Allows reading from stdin
   " ex: git diff | mvim -R -
-  if strlen(a:directory) == 0 
+  if strlen(a:directory) == 0
     return
   endif
 

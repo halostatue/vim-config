@@ -609,26 +609,26 @@ vmap D y'>p
 " overwriting the default register
 vmap P p :call setreg('"', getreg('0')) <CR>
 
-if has("mac") || has("macunix")
-  command! -bar -nargs=1 OpenURL :call <SID>OpenURL(<q-args>)<CR>
-  function! s:OpenURL(...)
-    if a:0 == 0
-      let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
-    elseif a:0 == 1
-      let s:uri = a:1
-    else
-      echo "Too many arguments."
-      return
-    endif
-    echo s:uri
-    if s:uri != ""
-      execute "!open \"" . s:uri . "\""
-    else
-      echo "No URI found in line."
-    endif
-  endfunction
-  map <leader>w :call <SID>OpenURL()<CR>
-endif
+" if has("mac") || has("macunix")
+"   command! -bar -nargs=1 OpenURL :silent call <SID>OpenURL(<q-args>)<CR>
+"   function! s:OpenURL(...)
+"     if a:0 == 0
+"       let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:)]*')
+"     elseif a:0 == 1
+"       let s:uri = a:1
+"     else
+"       echo "Too many arguments."
+"       return
+"     endif
+"     echo s:uri
+"     if s:uri != ""
+"       execute "!open \"" . s:uri . "\""
+"     else
+"       echo "No URI found in line."
+"     endif
+"   endfunction
+"   map <leader>w :silent call <SID>OpenURL()<CR>
+" endif
 
 " Indent Guides {{{
 let g:indentguides_state = 0
