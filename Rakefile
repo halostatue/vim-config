@@ -292,9 +292,10 @@ class BundleInstaller
   end
 
   def base_tasks
+    directory vimfiles_path('tmp')
     directory bundle_path
     directory partial_path
-    task :install => [ bundle_path, partial_path ]
+    task :install => [ vimfiles_path('tmp'), bundle_path, partial_path ]
 
     file vimfiles_path('autoload', 'pathogen.vim') do |t|
       fileops.mkdir_p File.dirname(t.name)

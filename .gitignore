@@ -6,5 +6,6 @@
 tags
 vimfiles/bundle/
 vimfiles/.netrwhist
+vimfiles/tmp/
 partial/
 vimfiles/autoload/pathogen.vim

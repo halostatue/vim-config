@@ -65,10 +65,10 @@ set foldlevelstart=0
 " Make a backup of a file while we're writing it, and then delete it. This
 " prevents us from having unsighly ~ files.
 set nobackup writebackup
-" set backupdir=~/.vim/tmp/backup// " backups
+" set backupdir=~/.vim/tmp/backup/ " backups
 set noundofile undoreload=10000
-" set undodir=~/.vim/tmp/undo//     " undo files
-" set directory=~/.vim/tmp/swap//   " swap files
+" set undodir=~/.vim/tmp/undo/     " undo files
+" set directory=~/.vim/tmp/swap/   " swap files
 
 set fillchars=diff:⣿
 
@@ -370,7 +370,7 @@ nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " Ack for the last search.
 nnoremap <silent> <leader>? :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
-map <leader>a :Ack! 
+map <leader>a :Ack!
 
 function! s:PulseCursorLine()
   let current_window = winnr()
@@ -466,15 +466,15 @@ command! -nargs=+ -complete=command TabMessage call <SID>TabMessage(<q-args>)
 " Easymotion {{{
 " https://github.com/Lokaltog/vim-easymotion
 " let g:EasyMotion_do_mapping = 0
-" 
+"
 " nnoremap <silent> <leader>f      :call EasyMotionF(0, 0)<CR>
 " onoremap <silent> <leader>f      :call EasyMotionF(0, 0)<CR>
 " vnoremap <silent> <leader>f :<C-U>call EasyMotionF(1, 0)<CR>
-" 
+"
 " nnoremap <silent> <leader>F      :call EasyMotionF(0, 1)<CR>
 " onoremap <silent> <leader>F      :call EasyMotionF(0, 1)<CR>
 " vnoremap <silent> <leader>F :<C-U>call EasyMotionF(1, 1)<CR>
-" 
+"
 " onoremap <silent> <leader>t      :call EasyMotionT(0, 0)<CR>
 " onoremap <silent> <leader>T      :call EasyMotionT(0, 1)<CR>
 
@@ -574,6 +574,9 @@ inoremap <silent> <F3> <C-O>:call BufferList()<CR>
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_debug = 1
 let g:gundo_preview_bottom = 1
+
+let g:tmp_path = split(globpath(&rtp, 'tmp/'), "\n")[0]
+let g:yankring_history_dir = g:tmp_path
 
 " https://github.com/othree/html5.vim
 " let g:event_handler_attributes_complete = 0
@@ -1268,7 +1271,7 @@ if has("autocmd")
   augroup vimrcAllBuffers
     autocmd!
     autocmd BufRead * set modeline number
-"   autocmd FileType * set fo=tcroq2 nocin si com& 
+"   autocmd FileType * set fo=tcroq2 nocin si com&
   augroup END
   augroup vimrcWindows
     autocmd!
@@ -1304,7 +1307,7 @@ function! s:ExecuteInShell(command) " {{{
     echo 'Shell command ' . command . ' executed.'
 endfunction " }}}
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
-nnoremap <leader>! :Shell 
+nnoremap <leader>! :Shell
 
 " Use sane regexes.
 nnoremap / /\v
