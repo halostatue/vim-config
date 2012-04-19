@@ -15,6 +15,7 @@ BUNDLES = {
     github://danro/rename.vim
     github://ervandew/supertab
     github://godlygeek/tabular
+    github://gregsexton/gitv
     github://henrik/vim-open-url
     github://henrik/vim-reveal-in-finder
     github://henrik/vim-ruby-runner
