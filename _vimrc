@@ -262,6 +262,9 @@ noremap <M-Left>   <C-W>h
 noremap <M-Right>  <C-W>l
 noremap <leader>v  <C-W>v
 
+nnoremap <Leader>c :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
+vnoremap <Leader>c :s/\%V\(\w\)\(\w*\)\%V/\u\1\L\2/g<CR>
+
 " Synstack {{{
 " Show the stack of syntax hilighting classes affecting whatever is under the
 " cursor.
@@ -423,12 +426,14 @@ endfunction
 function! s:setupTextWrapping()
   setlocal wrap
   setlocal wrapmargin=2
-  setlocal textwidth=72
+  setlocal textwidth=75
+  setlocal number
   " setlocal formatoptions=tqrn1
 endfunction
 
 function! s:setupMarkdown()
   call s:setupTextWrapping()
+  setlocal textwidth=78
   " map <buffer> <leader>p :Hammer<CR>
 endfunction
 
@@ -847,6 +852,12 @@ let g:ruby_operators=1
 " sh.vim
 let g:sh_fold_enabled=1
 let g:is_bash=1
+
+" TeXish stuff
+let g:tex_fold_enabled=1
+let g:tex_commont_nospell=1
+let g:tex_stylish=1
+let g:plaintex_delimiters=1
 
 " vim.vim
 " g:vimsyn_embed defaults to lmpPr (lua, mzscheme, perl, Python, and Ruby)
@@ -1517,6 +1528,8 @@ call pathogen#infect()
 " call pathogen#helptags()
 syntax on
 filetype plugin indent on
+
+let g:syntastic_ruby_exec="~/.rbenv/versions/1.9.2-p318/bin/ruby"
 
 " % to bounce from do to end etc.
 runtime! macros/matchit.vim

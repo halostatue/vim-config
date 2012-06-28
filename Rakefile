@@ -81,6 +81,7 @@ BUNDLES = {
     github://tpope/vim-vividchalk
     github://vim-ruby/vim-ruby
     github://vim-scripts/Align
+    github://vim-scripts/AnsiEsc.vim
     github://vim-scripts/Color-Sampler-Pack
     github://vim-scripts/ColorX
     github://vim-scripts/IndexedSearch
