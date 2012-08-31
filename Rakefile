@@ -218,6 +218,7 @@ class BundleInstaller
       yield
     end
     task :install => [ name ]
+    task :helptags => [ task_name ]
   end
 
   def update_task_name(name)
@@ -276,6 +277,7 @@ class BundleInstaller
       Dir.chdir(bdir) { svn.up }
     end
     task :install => [ btsk ]
+    task :helptags => [ task_name ]
 
     file bsvn => [ bundle_path ] do
       Dir.chdir(bundle_path) { svn.checkout repo, name }
@@ -294,6 +296,7 @@ class BundleInstaller
       end
     end
     task :install => btsk
+    task :helptags => [ task_name ]
   end
 
   def base_tasks
@@ -310,6 +313,7 @@ class BundleInstaller
     end
     task :pathogen => vimfiles_path('autoload', 'pathogen.vim')
     task :install => :pathogen
+    task :helptags => [ task_name ]
 
     task target('.vimrc') do |t|
       remove_file t.name
