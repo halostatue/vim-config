@@ -7,6 +7,7 @@ BUNDLES = {
 #   github://robgleeson/hammer.vim
 #   github://fholgado/minibufexpl.vim
   :git => %W(
+    github://adamlowe/vim-slurper
     github://ajf/puppet-vim
     github://altercation/vim-colors-solarized
     github://bdd/vim-scala
@@ -40,6 +41,7 @@ BUNDLES = {
     github://mrtazz/molokai.vim
     github://msanders/cocoa.vim
     github://msanders/snipmate.vim
+    github://myusuf3/numbers.vim
     github://nathanaelkane/vim-indent-guides
     github://nelstrom/vim-textobj-rubyblock
     github://pangloss/vim-javascript
@@ -251,6 +253,7 @@ class BundleInstaller
       }
     end
     task :install => [ task_name ]
+    task :helptags => [ task_name ]
 
     file git_target => [ parent ] do
       puts "Cloning #{name}…"
