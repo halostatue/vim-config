@@ -286,8 +286,8 @@ function! MyFoldText()
   let line = getline(v:foldstart)
 
   let nucolwidth = &fdc + &number * &numberwidth
-  let windowwidth = winwidth(0) - nucolwidth - 3
-  let foldedlinecount = v:foldend - v:foldstart
+  let windowwidth = winwidth(0) - nucolwidth - 13
+  let foldedlinecount = v:foldend - v:foldstart + 1
 
   " expand tabs into spaces
   let onetab = strpart('          ', 0, &tabstop)
@@ -295,7 +295,7 @@ function! MyFoldText()
 
   let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
   let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 2
-  return line . '…' . repeat(" ", fillcharcount) . foldedlinecount . '…' . ' '
+  return line . '… ' . repeat(" ", fillcharcount) . foldedlinecount . ' lines'
 endfunction
 set foldtext=MyFoldText()
 

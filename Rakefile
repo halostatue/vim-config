@@ -33,6 +33,7 @@ BUNDLES = {
     github://kana/vim-textobj-indent
     github://kana/vim-textobj-user
     github://kchmck/vim-coffee-script
+    github://majutsushi/tagbar
     github://mattn/gist-vim
     github://michaeljsmith/vim-indent-object
     github://mikewest/vimroom
@@ -86,6 +87,7 @@ BUNDLES = {
     github://vim-scripts/AnsiEsc.vim
     github://vim-scripts/Color-Sampler-Pack
     github://vim-scripts/ColorX
+    github://vim-scripts/EasyGrep
     github://vim-scripts/IndexedSearch
     github://vim-scripts/YankRing.vim
     github://vim-scripts/ZoomWin
@@ -100,6 +102,7 @@ BUNDLES = {
     github://vim-scripts/cmakeref
     github://vim-scripts/jQuery
     github://vim-scripts/matchit.zip
+    github://vim-scripts/mru.vim
     github://vim-scripts/number-marks
     github://vim-scripts/searchfold.vim
     github://vim-scripts/taglist.vim
@@ -218,7 +221,7 @@ class BundleInstaller
       yield
     end
     task :install => [ name ]
-    task :helptags => [ task_name ]
+    task :helptags => [ name ]
   end
 
   def update_task_name(name)
@@ -277,7 +280,7 @@ class BundleInstaller
       Dir.chdir(bdir) { svn.up }
     end
     task :install => [ btsk ]
-    task :helptags => [ task_name ]
+    task :helptags => [ btsk ]
 
     file bsvn => [ bundle_path ] do
       Dir.chdir(bundle_path) { svn.checkout repo, name }
@@ -296,7 +299,7 @@ class BundleInstaller
       end
     end
     task :install => btsk
-    task :helptags => [ task_name ]
+    task :helptags => [ btsk ]
   end
 
   def base_tasks
@@ -313,7 +316,7 @@ class BundleInstaller
     end
     task :pathogen => vimfiles_path('autoload', 'pathogen.vim')
     task :install => :pathogen
-    task :helptags => [ task_name ]
+    task :helptags => [ :pathogen ]
 
     task target('.vimrc') do |t|
       remove_file t.name
