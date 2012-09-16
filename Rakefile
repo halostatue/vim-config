@@ -45,6 +45,7 @@ BUNDLES = {
     github://myusuf3/numbers.vim
     github://nathanaelkane/vim-indent-guides
     github://nelstrom/vim-textobj-rubyblock
+    github://othree/html5.vim
     github://pangloss/vim-javascript
     github://scrooloose/nerdcommenter
     github://scrooloose/nerdtree
@@ -77,6 +78,7 @@ BUNDLES = {
     github://tpope/vim-markdown
     github://tpope/vim-ragtag
     github://tpope/vim-rails
+    github://tpope/vim-rake
     github://tpope/vim-repeat
     github://tpope/vim-speeddating
     github://tpope/vim-surround
