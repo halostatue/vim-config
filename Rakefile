@@ -14,6 +14,7 @@ BUNDLES = {
     github://bootleq/vim-textobj-rubysymbol
     github://bsl/obviousmode
     github://danro/rename.vim
+    github://epmatsw/ag.vim
     github://ervandew/supertab
     github://godlygeek/tabular
     github://gregsexton/gitv
