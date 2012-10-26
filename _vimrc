@@ -118,6 +118,11 @@ set wildignore+=*.rbc                            " Rubinius byte code
 " set wildignore+=classes
 " set wildignore+=lib
 
+function! Sum(number)
+  let b:S = b:S + a:number
+  return a:number
+endfunction
+
 set cursorline
 
 if has("win32")

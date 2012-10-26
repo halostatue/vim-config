@@ -1,127 +1,10 @@
 # -*- ruby encoding: utf-8 -*-
 
 require 'fileutils'
+require 'psych'
+require 'yaml'
 
-BUNDLES = {
-#   github://astashov/vim-ruby-debugger
-#   github://robgleeson/hammer.vim
-#   github://fholgado/minibufexpl.vim
-  :git => %W(
-    github://adamlowe/vim-slurper
-    github://ajf/puppet-vim
-    github://altercation/vim-colors-solarized
-    github://bdd/vim-scala
-    github://bootleq/vim-textobj-rubysymbol
-    github://bsl/obviousmode
-    github://danro/rename.vim
-    github://epmatsw/ag.vim
-    github://ervandew/supertab
-    github://godlygeek/tabular
-    github://gregsexton/gitv
-    github://henrik/vim-open-url
-    github://henrik/vim-reveal-in-finder
-    github://henrik/vim-ruby-runner
-    github://henrik/vim-yaml-flattener
-    github://hsitz/VimOrganizer
-    github://jceb/vim-orgmode
-    github://jeetsukumaran/vim-buffergator
-    github://kana/vim-ku
-    github://kana/vim-scratch
-    github://kana/vim-textobj-datetime
-    github://kana/vim-textobj-diff
-    github://kana/vim-textobj-entire
-    github://kana/vim-textobj-function
-    github://kana/vim-textobj-indent
-    github://kana/vim-textobj-user
-    github://kchmck/vim-coffee-script
-    github://majutsushi/tagbar
-    github://mattn/gist-vim
-    github://michaeljsmith/vim-indent-object
-    github://mikewest/vimroom
-    github://mileszs/ack.vim
-    github://millermedeiros/vim-statline
-    github://mrtazz/molokai.vim
-    github://msanders/cocoa.vim
-    github://msanders/snipmate.vim
-    github://myusuf3/numbers.vim
-    github://nathanaelkane/vim-indent-guides
-    github://nelstrom/vim-textobj-rubyblock
-    github://othree/html5.vim
-    github://pangloss/vim-javascript
-    github://scrooloose/nerdcommenter
-    github://scrooloose/nerdtree
-    github://scrooloose/syntastic
-    github://sjbach/lusty
-    github://sjl/gundo.vim
-    github://sjl/threesome.vim
-    github://sunaku/vim-ruby-minitest
-    github://taq/vim-rspec
-    github://thinca/vim-fontzoom
-    github://thinca/vim-ft-markdown_fold
-    github://thinca/vim-ft-vim_fold
-    github://thinca/vim-prettyprint
-    github://thinca/vim-quickrun
-    github://thinca/vim-textobj-comment
-    github://thinca/vim-textobj-function-javascript
-    github://thinca/vim-textobj-function-perl
-    github://timcharper/textile.vim
-    github://tjennings/git-grep-vim
-    github://tomtom/quickfixsigns_vim
-    github://tpope/vim-abolish
-    github://tpope/vim-bundler
-    github://tpope/vim-commentary
-    github://tpope/vim-cucumber
-    github://tpope/vim-endwise
-    github://tpope/vim-fugitive
-    github://tpope/vim-git
-    github://tpope/vim-haml
-    github://tpope/vim-liquid
-    github://tpope/vim-markdown
-    github://tpope/vim-ragtag
-    github://tpope/vim-rails
-    github://tpope/vim-rake
-    github://tpope/vim-repeat
-    github://tpope/vim-speeddating
-    github://tpope/vim-surround
-    github://tpope/vim-unimpaired
-    github://tpope/vim-vividchalk
-    github://vim-ruby/vim-ruby
-    github://vim-scripts/Align
-    github://vim-scripts/AnsiEsc.vim
-    github://vim-scripts/Color-Sampler-Pack
-    github://vim-scripts/ColorX
-    github://vim-scripts/EasyGrep
-    github://vim-scripts/IndexedSearch
-    github://vim-scripts/YankRing.vim
-    github://vim-scripts/ZoomWin
-    github://vim-scripts/a.vim
-    github://vim-scripts/applescript.vim
-    github://vim-scripts/argtextobj.vim
-    github://vim-scripts/bufexplorer.zip
-    github://vim-scripts/bufferlist.vim
-    github://vim-scripts/calendar.vim--Matsumoto
-    github://vim-scripts/cmake.vim
-    github://vim-scripts/cmake.vim-syntax
-    github://vim-scripts/cmakeref
-    github://vim-scripts/jQuery
-    github://vim-scripts/matchit.zip
-    github://vim-scripts/mru.vim
-    github://vim-scripts/number-marks
-    github://vim-scripts/searchfold.vim
-    github://vim-scripts/taglist.vim
-    github://vim-scripts/taskpaper.vim
-    github://vim-scripts/vim-textobj-quoted
-    github://wgibbs/vim-irblack
-  ),
-  :svn => {
-    "conque_2.3" => "http://conque.googlecode.com/svn/trunk/"
-  },
-  :copy => %W(
-    janus
-    google-golang
-    manpageview
-  ),
-}
+BUNDLES = YAML.load_file('Bundles')
 
 # http://drchip.0sites.net/astronaut/vim/vbafiles/manpageview.vba.gz
 
@@ -352,13 +235,18 @@ class BundleInstaller
   end
 
   def simple_tasks(bundles)
-    bundles.each_pair { |key, values|
-      case key
-      when :git
+    install = bundles['install']
+    raise "Invalid Bundle format; missing the 'install' key." unless install
+
+    install.each_pair { |key, values|
+      case key.to_s
+      when 'github'
+        values.each { |repo| git_task("github://#{repo}") }
+      when 'git'
         values.each { |repo| git_task(repo) }
-      when :svn
+      when 'svn'
         values.each_pair { |name, repo| svn_task(name, repo) }
-      when :copy
+      when 'copy'
         values.each { |path| filecopy_task(path) }
       end
     }
