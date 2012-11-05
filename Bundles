@@ -112,7 +112,7 @@ install:
     - vim-scripts/taglist.vim
     - vim-scripts/taskpaper.vim
     - vim-scripts/vim-textobj-quoted
-    - vimez/showmarks
+    - vimez/vim-showmarks
     - wgibbs/vim-irblack
   svn:
     conque_2.3: http://conque.googlecode.com/svn/trunk/
