@@ -103,6 +103,7 @@ install:
     - vim-scripts/cmake.vim
     - vim-scripts/cmake.vim-syntax
     - vim-scripts/cmakeref
+    - vim-scripts/gdbmgr
     - vim-scripts/jQuery
     - vim-scripts/matchit.zip
     - vim-scripts/mru.vim
