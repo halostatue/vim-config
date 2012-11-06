@@ -94,7 +94,7 @@ set shortmess=aIo scrolloff=0 sidescrolloff=0 scrolljump=2
 set mouse=ar laststatus=2 keymodel=startsel,stopsel
 set tabstop=2 shiftwidth=2 softtabstop=2 shiftround expandtab smarttab
 set winminheight=0 winminwidth=0 helpheight=10
-set list listchars=tab:▸\ ,eol:¬,extends:›,precedes:‹,trail:•
+set list listchars=tab:▸\ ,eol:⏎,extends:›,precedes:‹,trail:•
 set whichwrap=b,s,h,l,<,>,~,[,] viminfo='100,<100,s10,h,!
 set linebreak showmode visualbell
 
