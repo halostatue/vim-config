@@ -59,7 +59,7 @@ syntax match cStyleNiceOperator ">>" containedin=ALL conceal cchar=»
 syntax match cStyleNiceOperator "->" containedin=ALL conceal cchar=→
 " syntax match cStyleNiceOperator "->" containedin=ALL conceal cchar=➞
 
-if ft == 'cpp' || ft == 'objcpp'
+if s:ft == 'cpp' || s:ft == 'objcpp'
   syntax match cStyleNiceOperator "::" containedin=ALL conceal cchar=∷
 endif
 
@@ -94,7 +94,7 @@ if exists('b:c_style_fancychars_names') || exists('g:c_style_fancychars_names')
   syntax keyword cStructure struct conceal cchar=⊇
   syntax keyword cOperator sizeof conceal cchar=𝔠
 
-  if ft == 'cpp' || ft == 'objcpp'
+  if s:ft == 'cpp' || s:ft == 'objcpp'
     syntax keyword cppStructure class conceal cchar=⋑
   endif
 
