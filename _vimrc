@@ -26,6 +26,10 @@ if has("gui_macvim") && has("gui_running")
     endif
   endif
 
+  if executable(expand("$HOME/.brew/bin/git"))
+    let g:fugitive_git_executable = expand("$HOME/.brew/bin/git")
+  endif
+
   " MacVIM shift+arrow-keys behavior (required in .vimrc)
   " let g:macvim_hig_shift_movement=1
 endif
@@ -94,7 +98,8 @@ set shortmess=aIo scrolloff=0 sidescrolloff=0 scrolljump=2
 set mouse=ar laststatus=2 keymodel=startsel,stopsel
 set tabstop=2 shiftwidth=2 softtabstop=2 shiftround expandtab smarttab
 set winminheight=0 winminwidth=0 helpheight=10
-set list listchars=tab:▸\ ,eol:⏎,extends:›,precedes:‹,trail:•
+" set list listchars=tab:▸\ ,eol:⏎,extends:›,precedes:‹,trail:•
+set list listchars=tab:▸\ ,eol:◂,extends:›,precedes:‹,trail:•
 set whichwrap=b,s,h,l,<,>,~,[,] viminfo='100,<100,s10,h,!
 set linebreak showmode visualbell
 
@@ -122,6 +127,8 @@ function! Sum(number)
   let b:S = b:S + a:number
   return a:number
 endfunction
+
+map <Leader>logsum :let b:S=0 \| :%s/\v^(\s+)(\d+)(:.*)/\=submatch(1) . Sum(submatch(2)) . submatch(3)/ \| :let @"=b:S<CR>
 
 set cursorline
 
