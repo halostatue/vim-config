@@ -14,79 +14,79 @@ if (s:ft == 'objcpp' || s:ft == 'cpp') && exists('g:no_cpp_fancychars')
 endif
 
 " Assignment operator
-syntax match cStyleNiceOperator "=" containedin=ALL conceal cchar=←
-" syntax match cStyleNiceOperator "=" containedin=ALL conceal cchar=⟵
+syntax match cStyleNiceOperator "[^=!]=[^=]"ms=s+1,me=e-1 containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=←
+" syntax match cStyleNiceOperator "=" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=⟵
 
 " Arithmetic operators
-" syntax match cStyleNiceOperator "\s+\s"ms=s+1,me=e-1 containedin=ALL conceal cchar=+
-syntax match cStyleNiceOperator "\s-\s"ms=s+1,me=e-1 containedin=ALL conceal cchar=−
-syntax match cStyleNiceOperator "\s\*\s"ms=s+1,me=e-1 containedin=ALL conceal cchar=×
-syntax match cStyleNiceOperator "\s/\s"ms=s+1,me=e-1 containedin=ALL conceal cchar=÷
-" syntax match cStyleNiceOperator "\s%\s"ms=s%1,me=e-1 containedin=ALL conceal cchar=%
+" syntax match cStyleNiceOperator "\s+\s"ms=s+1,me=e-1 containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=+
+syntax match cStyleNiceOperator "\s-\s"ms=s+1,me=e-1 containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=−
+syntax match cStyleNiceOperator "\s\*\s"ms=s+1,me=e-1 containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=×
+syntax match cStyleNiceOperator "\s/\s"ms=s+1,me=e-1 containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=÷
+" syntax match cStyleNiceOperator "\s%\s"ms=s%1,me=e-1 containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=%
 
 if exists('b:c_style_fancychars_incrdecr') || exists('g:c_style_fancychars_incrdecr')
-  syntax match cNiceOperator "++" containedin=ALL conceal cchar=Δ " ++ increment
-  syntax match cNiceOperator "--" containedin=ALL conceal cchar=∇ " -- decrement
+  syntax match cNiceOperator "++" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=Δ " ++ increment
+  syntax match cNiceOperator "--" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=∇ " -- decrement
 endif
 
 " Comparison/relational operators
-syntax match cStyleNiceOperator "==" containedin=ALL conceal cchar=≡ " equivalence
-syntax match cStyleNiceOperator "!=" containedin=ALL conceal cchar=≠ " unequivalence
-syntax match cStyleNiceOperator "<=" containedin=ALL conceal cchar=≤ " less than or equal to
-syntax match cStyleNiceOperator ">=" containedin=ALL conceal cchar=≥ " greater than or eqal to
-" syntax match cStyleNiceOperator "<" containedin=ALL conceal cchar=< " less than
-" syntax match cStyleNiceOperator ">" containedin=ALL conceal cchar=> " greater than
+syntax match cStyleNiceOperator "==" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=≡ " equivalence
+syntax match cStyleNiceOperator "!=" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=≠ " unequivalence
+syntax match cStyleNiceOperator "<=" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=≤ " less than or equal to
+syntax match cStyleNiceOperator ">=" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=≥ " greater than or eqal to
+" syntax match cStyleNiceOperator "<" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=< " less than
+" syntax match cStyleNiceOperator ">" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=> " greater than
 
 " Logical operators
 if exists('b:c_style_fancychars_logical') || exists('g:c_style_fancychars_logical')
-  syntax match cStyleNiceOperator "![^=]"me=e-1 containedin=ALL conceal cchar=¬
-  syntax match cStyleNiceOperator "&&" containedin=ALL conceal cchar=∧
-  syntax match cStyleNiceOperator "||" containedin=ALL conceal cchar=∨
+  syntax match cStyleNiceOperator "![^=]"me=e-1 containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=¬
+  syntax match cStyleNiceOperator "&&" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=∧
+  syntax match cStyleNiceOperator "||" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=∨
 endif
 
 " Bitwise operators
-" syntax match cStyleNiceOperator "~" containedin=ALL conceal cchar=~
-" syntax match cStyleNiceOperator "&" containedin=ALL conceal cchar=&
-" syntax match cStyleNiceOperator "|" containedin=ALL conceal cchar=|
-" syntax match cStyleNiceOperator "^" containedin=ALL conceal cchar=^
-" syntax match cStyleNiceOperator "^" containedin=ALL conceal cchar=⊻
-"syntax match cStyleNiceOperator "<<" containedin=ALL conceal cchar=≪
-syntax match cStyleNiceOperator "<<" containedin=ALL conceal cchar=«
-"syntax match cStyleNiceOperator ">>" containedin=ALL conceal cchar=≫
-syntax match cStyleNiceOperator ">>" containedin=ALL conceal cchar=»
+" syntax match cStyleNiceOperator "~" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=~
+" syntax match cStyleNiceOperator "&" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=&
+" syntax match cStyleNiceOperator "|" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=|
+" syntax match cStyleNiceOperator "^" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=^
+" syntax match cStyleNiceOperator "^" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=⊻
+"syntax match cStyleNiceOperator "<<" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=≪
+syntax match cStyleNiceOperator "<<" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=«
+"syntax match cStyleNiceOperator ">>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=≫
+syntax match cStyleNiceOperator ">>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=»
 
 " Dereference
-syntax match cStyleNiceOperator "->" containedin=ALL conceal cchar=→
-" syntax match cStyleNiceOperator "->" containedin=ALL conceal cchar=➞
+syntax match cStyleNiceOperator "->" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=→
+" syntax match cStyleNiceOperator "->" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=➞
 
 if s:ft == 'cpp' || s:ft == 'objcpp'
-  syntax match cStyleNiceOperator "::" containedin=ALL conceal cchar=∷
+  syntax match cStyleNiceOperator "::" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=∷
 endif
 
 " Trigraphs
-syntax match cStyleNiceOperator "??=" containedin=ALL conceal cchar=#
-syntax match cStyleNiceOperator "??/" containedin=ALL conceal cchar=\
-syntax match cStyleNiceOperator "??'" containedin=ALL conceal cchar=^
-syntax match cStyleNiceOperator "??(" containedin=ALL conceal cchar=[
-syntax match cStyleNiceOperator "??)" containedin=ALL conceal cchar=]
-syntax match cStyleNiceOperator "??!" containedin=ALL conceal cchar=|
-syntax match cStyleNiceOperator "??<" containedin=ALL conceal cchar={
-syntax match cStyleNiceOperator "??>" containedin=ALL conceal cchar=}
-syntax match cStyleNiceOperator "??-" containedin=ALL conceal cchar=~
+syntax match cStyleNiceOperator "??=" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=#
+syntax match cStyleNiceOperator "??/" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=\
+syntax match cStyleNiceOperator "??'" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=^
+syntax match cStyleNiceOperator "??(" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=[
+syntax match cStyleNiceOperator "??)" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=]
+syntax match cStyleNiceOperator "??!" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=|
+syntax match cStyleNiceOperator "??<" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar={
+syntax match cStyleNiceOperator "??>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=}
+syntax match cStyleNiceOperator "??-" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=~
 
 " Alternative tokens
-syntax match cStyleNiceOperator "<%" containedin=ALL conceal cchar={
-syntax match cStyleNiceOperator "%>" containedin=ALL conceal cchar=}
-syntax match cStyleNiceOperator "<:" containedin=ALL conceal cchar=[
-syntax match cStyleNiceOperator ":>" containedin=ALL conceal cchar=]
-syntax match cStyleNiceOperator "%:" containedin=ALL conceal cchar=#
-syntax match cStyleNiceOperator "\<and\>" containedin=ALL conceal cchar=∧
-syntax match cStyleNiceOperator "\<or\>" containedin=ALL conceal cchar=∨
-syntax match cStyleNiceOperator "\<not\>" containedin=ALL conceal cchar=¬
-syntax match cStyleNiceOperator "\<not_eq\>" containedin=ALL conceal cchar=≠
+syntax match cStyleNiceOperator "<%" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar={
+syntax match cStyleNiceOperator "%>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=}
+syntax match cStyleNiceOperator "<:" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=[
+syntax match cStyleNiceOperator ":>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=]
+syntax match cStyleNiceOperator "%:" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=#
+syntax match cStyleNiceOperator "\<and\>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=∧
+syntax match cStyleNiceOperator "\<or\>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=∨
+syntax match cStyleNiceOperator "\<not\>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=¬
+syntax match cStyleNiceOperator "\<not_eq\>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=≠
 
 " Ellipsis; varargs
-syntax match cStyleNiceOperator "\.\.\." containedin=ALL conceal cchar=…
+syntax match cStyleNiceOperator "\.\.\." containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=…
 
 if exists('b:c_style_fancychars_names') || exists('g:c_style_fancychars_names')
   syntax keyword cStructure enum conceal cchar=∈
@@ -108,7 +108,7 @@ if exists('b:c_style_fancychars_names') || exists('g:c_style_fancychars_names')
   syntax keyword cType int short conceal cchar=ℤ
   syntax keyword cType float double conceal cchar=ℝ
 
-  syntax match cStyleNiceOperator "\<\(std::\|\)sqrt\>" containedin=ALL conceal cchar=√
+  syntax match cStyleNiceOperator "\<\(std::\|\)sqrt\>" containedin=ALLBUT,cComment,cCommentL,cString,cCppString,cCommentString conceal cchar=√
 endif
 
 hi link cStyleNiceOperator Operator
