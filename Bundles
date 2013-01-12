@@ -88,7 +88,7 @@ install:
     - vim-ruby/vim-ruby
     - vim-scripts/Align
     - vim-scripts/AnsiEsc.vim
-    - vim-scripts/Color-Sampler-Pack
+    - vim-scripts/Colour-Sampler-Pack
     - vim-scripts/ColorX
     - vim-scripts/EasyGrep
     - vim-scripts/IndexedSearch
