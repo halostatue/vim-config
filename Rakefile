@@ -311,7 +311,7 @@ class BundleInstaller
   end
 end
 
-desc "Install vim configuration ino the user's home directory."
+desc "Install vim configuration into the user's home directory."
 task :install
 
 inst = BundleInstaller.new(CURRENT_PATH, File.expand_path(ENV['HOME']))
