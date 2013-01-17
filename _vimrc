@@ -128,7 +128,7 @@ function! Sum(number)
   return a:number
 endfunction
 
-map <Leader>logsum :let b:S=0 \| :%s/\v^(\s+)(\d+)(:.*)/\=submatch(1) . Sum(submatch(2)) . submatch(3)/ \| :let @"=b:S<CR>
+map <silent> <Leader>logsum :let b:S=0 \| :%s/\v^(\s+)(\d+)(:.*)/\=submatch(1) . Sum(submatch(2)) . submatch(3)/ \| :let @"=b:S<CR>
 
 set cursorline
 
@@ -182,14 +182,14 @@ vnoremap ad a[
 " Next and Last {{{
 " Motion for "next/last object". For example, "din(" would go to the next "()" pair
 " and delete its contents.
-onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
-xnoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+onoremap <silent> an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+xnoremap <silent> an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+onoremap <silent> in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+xnoremap <silent> in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+onoremap <silent> al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+xnoremap <silent> al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+onoremap <silent> il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+xnoremap <silent> il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
 function! s:NextTextObject(motion, dir)
   let c = nr2char(getchar())
   if c ==# "b"
@@ -294,7 +294,7 @@ function! s:VSetSearch()
   let @@ = temp
 endfunction
 
-function! MyFoldText()
+function! CleanFoldText()
   let line = getline(v:foldstart)
 
   let nucolwidth = &fdc + &number * &numberwidth
@@ -309,10 +309,37 @@ function! MyFoldText()
   let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 2
   return line . '… ' . repeat(" ", fillcharcount) . foldedlinecount . ' lines'
 endfunction
-set foldtext=MyFoldText()
+let g:default_foldtext_function='CleanFoldText'
 
-vnoremap * :<C-U>call <SID>VSetSearch()<CR>//<CR><c-o>
-vnoremap # :<C-U>call <SID>VSetSearch()<CR>??<CR><c-o>
+function! s:SmartSetFoldText()
+  let l:ftf=&foldtext
+
+  if l:ftf =~ 'getline(v:foldstart)'
+    if exists("g:default_foldtext_function")
+      let l:ftf=g:default_foldtext_function . '()'
+      let &foldtext=l:ftf
+
+"     if type(g:default_foldtext_function) == type("")
+"       let l:ftf=function(g:default_foldtext_function)
+"     elseif type(g:default_foldtext_function) == type(function("type"))
+"       let l:ftf=g:default_foldtext_function
+"     endif
+"
+"     if type(l:ftf) == type(function("type"))
+"       let l:ftf=string(l:ftf)
+"     endif
+"
+"     let &foldtext=l:ftf
+    else
+      set foldtext=foldtext()
+    endif
+  endif
+endfunction
+command! SmartSetFoldText call <SID>SmartSetFoldText()
+SmartSetFoldText
+
+vnoremap <silent> * :<C-U>call <SID>VSetSearch()<CR>//<CR><c-o>
+vnoremap <silent> # :<C-U>call <SID>VSetSearch()<CR>??<CR><c-o>
 
 " Destroy infuriating keys ------------------------------------------------
 " Fuck you, help key.
@@ -333,12 +360,12 @@ cnoremap <C-E> <End>
 cnoremap <C-D> <Del>
 
 " Clear matches with this.
-noremap <leader><Space> :noh<CR>:call clearmatches()<CR>
+noremap <silent> <leader><Space> :noh<CR>:call clearmatches()<CR>
 
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
-nnoremap n nzzzv:call <SID>PulseCursorLine()<CR>
-nnoremap N Nzzzv:call <SID>PulseCursorLine()<CR>
+nnoremap <silent> n nzzzv:call <SID>PulseCursorLine()<CR>
+nnoremap <silent> N Nzzzv:call <SID>PulseCursorLine()<CR>
 
 " Don't move on *
 nnoremap * *<c-o>
@@ -588,12 +615,17 @@ inoremap <expr> <PageUp>   <SID>WhenPUMVisible("\<PageUp>\<C-P>\<C-N>", "\<PageU
 noremap <silent> <F3> :call BufferList()<CR>
 inoremap <silent> <F3> <C-O>:call BufferList()<CR>
 
-nnoremap <F5> :GundoToggle<CR>
+" The number marks plug-in overrides the preferred default.
+nnoremap <silent> <S-F5> :GundoToggle<CR>
+inoremap <silent> <S-F5> <C-O>:GundoToggle<CR>
 let g:gundo_debug = 1
 let g:gundo_preview_bottom = 1
 
 let g:tmp_path = split(globpath(&rtp, 'tmp/'), "\n")[0]
 let g:yankring_history_dir = g:tmp_path
+
+let g:erlangFold=1
+let g:erlangFoldSplitFunction=1
 
 " https://github.com/othree/html5.vim
 " let g:event_handler_attributes_complete = 0
@@ -625,9 +657,10 @@ imap <C-F> <C-R>=expand("%")<CR>
 " Visual mode: D
 vmap D y'>p
 
+
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
-vmap P p :call setreg('"', getreg('0')) <CR>
+vmap <silent> P p :call setreg('"', getreg('0')) <CR>
 
 " if has("mac") || has("macunix")
 "   command! -bar -nargs=1 OpenURL :silent call <SID>OpenURL(<q-args>)<CR>
@@ -650,44 +683,9 @@ vmap P p :call setreg('"', getreg('0')) <CR>
 "   map <leader>w :silent call <SID>OpenURL()<CR>
 " endif
 
-" Indent Guides {{{
-let g:indentguides_state = 0
-function! s:IndentGuides()
-  if g:indentguides_state
-    let g:indentguides_state = 0
-    2match None
-  else
-    let g:indentguides_state = 1
-    execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
-  endif
-endfunction
-nnoremap <leader>i :call <SID>IndentGuides()<CR>
-
 " Insert Mode Completion {{{
 inoremap <C-L> <C-X><C-L>
-inoremap <C-F> <C-X><C-F>
-
-" }}}
-" Block Colors {{{
-
-let g:blockcolor_state = 0
-function! s:BlockColor() " {{{
-  if g:blockcolor_state
-    let g:blockcolor_state = 0
-    call matchdelete(77880)
-    call matchdelete(77881)
-    call matchdelete(77882)
-    call matchdelete(77883)
-  else
-    let g:blockcolor_state = 1
-    call matchadd("BlockColor1", '^ \{4}.*', 1, 77880)
-    call matchadd("BlockColor2", '^ \{8}.*', 2, 77881)
-    call matchadd("BlockColor3", '^ \{12}.*', 3, 77882)
-    call matchadd("BlockColor4", '^ \{16}.*', 4, 77883)
-  endif
-endfunction " }}}
-nnoremap <leader>B :call BlockColor()<CR>
-
+inoremap <S-C-F> <C-X><C-F>
 " }}}
 
 " Easy filetype switching {{{
@@ -1287,9 +1285,11 @@ if has("autocmd")
           \   exe "normal g`\"" |
           \ endif
 
+    autocmd BufReadPost * SmartSetFoldText
+
     " Automatically load .vimrc source when saved
-    autocmd BufWritePost .vimrc source $MYVIMRC
-    autocmd BufWritePost .gvimrc source $MYGVIMRC
+    autocmd BufWritePost .vimrc,_vimrc source $MYVIMRC
+    autocmd BufWritePost .gvimrc,_gvimrc source $MYGVIMRC
   augroup END
   augroup vimrcAllBuffers
     autocmd!
