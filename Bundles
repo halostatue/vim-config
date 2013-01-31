@@ -10,6 +10,7 @@ install:
     - bsl/obviousmode
     - chrisbra/csv.vim
     - danro/rename.vim
+    - depuracao/vim-rdoc
     - derekwyatt/vim-scala
     - epmatsw/ag.vim
     - ervandew/supertab

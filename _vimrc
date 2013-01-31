@@ -128,7 +128,7 @@ function! Sum(number)
   return a:number
 endfunction
 
-map <silent> <Leader>logsum :let b:S=0 \| :%s/\v^(\s+)(\d+)(:.*)/\=submatch(1) . Sum(submatch(2)) . submatch(3)/ \| :let @"=b:S<CR>
+map <silent> <Leader>logsum :let b:S=0 \| :%s/\v^(\s+)(\d+)(:.*)/\=submatch(1) . Sum(submatch(2)) . submatch(3)/ \| :let @"='(' . b:S . ')' \| :let @/=""<CR>
 
 set cursorline
 
