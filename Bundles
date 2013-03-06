@@ -3,6 +3,7 @@ install:
   github:
     - aaronjensen/vim-sass-status
     - adamlowe/vim-slurper
+    - airblade/vim-gitgutter
     - ajf/puppet-vim
     - altercation/vim-colors-solarized
     - austintaylor/vim-indentobject
