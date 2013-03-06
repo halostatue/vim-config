@@ -76,6 +76,8 @@ set noundofile undoreload=10000
 
 set fillchars=diff:⣿
 
+set tags+=gems.tags
+
 " set colorcolumn=+1
 
 if has('title')
