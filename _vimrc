@@ -314,12 +314,12 @@ endfunction
 let g:default_foldtext_function='CleanFoldText'
 
 function! s:SmartSetFoldText()
-  let l:ftf=&foldtext
+  let l:ftf=&l:foldtext
 
   if l:ftf =~ 'getline(v:foldstart)'
     if exists("g:default_foldtext_function")
       let l:ftf=g:default_foldtext_function . '()'
-      let &foldtext=l:ftf
+      let &l:foldtext=l:ftf
 
 "     if type(g:default_foldtext_function) == type("")
 "       let l:ftf=function(g:default_foldtext_function)
@@ -333,7 +333,7 @@ function! s:SmartSetFoldText()
 "
 "     let &foldtext=l:ftf
     else
-      set foldtext=foldtext()
+      setlocal foldtext=foldtext()
     endif
   endif
 endfunction
