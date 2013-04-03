@@ -15,7 +15,7 @@ set winaltkeys=no
 set fillchars+=vert:│
 
 if has("gui_macvim")
-  set guifont=Inconsolata\ Medium:h10,Anonymous\ Pro:h12,DejaVu\ Sans\ Mono:h10,Andale\ Mono:h11
+  set guifont=Source\ Code\ Pro:h11,Inconsolata\ Medium:h11,Anonymous\ Pro:h12,DejaVu\ Sans\ Mono:h10,Andale\ Mono:h11
   set fuoptions=maxvert,maxhorz
 
   " Command-T for CommandT
