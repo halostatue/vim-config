@@ -96,8 +96,8 @@ if has("gui_macvim")
   imap <D-M-Left> <C-w>h
 
   " Adjust viewports to the same size
-  map <Leader>= <C-w>=
-  imap <Leader>= <Esc> <C-w>=
+" map <Leader>= <C-w>=
+" imap <Leader>= <Esc> <C-w>=
 elseif has("gui_gtk2")
   set guifont=Inconsolata\ Medium\ 10,DejaVu\ Sans\ Mono\ 9,Luxi\ Mono\ 9
 elseif has("X11")
