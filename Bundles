@@ -57,8 +57,8 @@ install:
     - sjbach/lusty
     - sjl/gundo.vim
     - sjl/threesome.vim
+    - skwp/vim-rspec
     - sunaku/vim-ruby-minitest
-    - taq/vim-rspec
     - thinca/vim-fontzoom
     - thinca/vim-ft-markdown_fold
     - thinca/vim-ft-vim_fold
@@ -74,6 +74,7 @@ install:
     - tpope/vim-bundler
     - tpope/vim-commentary
     - tpope/vim-cucumber
+    - tpope/vim-dispatch
     - tpope/vim-endwise
     - tpope/vim-fugitive
     - tpope/vim-git
@@ -106,6 +107,8 @@ install:
     - vim-scripts/cmake.vim
     - vim-scripts/cmake.vim-syntax
     - vim-scripts/cmakeref
+    - vim-scripts/camelcasemotion
+    - vim-scripts/CamelCaseComplete
     - vim-scripts/gdbmgr
     - vim-scripts/jQuery
     - vim-scripts/matchit.zip
