@@ -34,6 +34,7 @@ install:
     - kana/vim-textobj-indent
     - kana/vim-textobj-user
     - kchmck/vim-coffee-script
+    - kien/ctrlp.vim
     - krisajenkins/vim-pipe
     - majutsushi/tagbar
     - mattn/gist-vim
@@ -59,6 +60,7 @@ install:
     - sjl/threesome.vim
     - skwp/vim-rspec
     - sunaku/vim-ruby-minitest
+    - thoughtbot/vim-rspec
     - thinca/vim-fontzoom
     - thinca/vim-ft-markdown_fold
     - thinca/vim-ft-vim_fold
@@ -130,7 +132,6 @@ ignore:
   github:
     - astashov/vim-ruby-debugger
     - fholgado/minibufexpl.vim
-    - kien/ctrlp.vim
     - maksimr/vim-jsbeautify
     - robgleeson/hammer.vim
 

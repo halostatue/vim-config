@@ -335,14 +335,15 @@ augroup END
   end
 end
 
-inst.git_task "github://wincent/Command-T" do |mode|
-  case mode
-  when :post_update
-    # TODO: Need a way to generically specify the 'system' Ruby regardless
-    # of what platform or whether you're using rvm or rbenv.
-    sh "/usr/bin/ruby -S rake make"
-  end
-end
+# inst.git_task "github://wincent/Command-T" do |mode|
+#   case mode
+#   when :post_update
+#     # TODO: Need a way to generically specify the 'system' Ruby regardless
+#     # of what platform or whether you're using rvm or rbenv.
+#     sh "/usr/bin/ruby -S rake make"
+#   end
+# end
+
 
 # Install mustache.vim
 partial = inst.partial_path('defunkt_mustache')
