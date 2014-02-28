@@ -9,6 +9,8 @@
 " first, because it changes other options as a side effect.
 set nocompatible
 
+runtime bundle/tpope_vim-pathogen/autoload/pathogen.vim
+
 setlocal verbose=0 " Turn off verbose mode for this file.
 
 " Get the value of $PATH from a login shell if MacVim.app was started from the
@@ -34,24 +36,12 @@ if has("gui_macvim") && has("gui_running")
   " let g:macvim_hig_shift_movement=1
 endif
 
-" vimrc.defaults: default values for vim settings.
-" ------------------------------------------------------------------------
-" Force the encoding to UTF-8 by default.
-set encoding=utf-8
-
-" Backspace over everything in insert mode
-set backspace=indent,eol,start
-
 " Make Vim able to edit crontab files again.
 set backupskip=/tmp/*,/private/tmp/*"
 
-set ruler " Show the cursor position all the time
-set showcmd " Display incomplete commands
-set incsearch " Perform searches incrementally.
 set ignorecase " Ignore case…
 set smartcase " Unless there's a capital letter
 
-set autoread " Automatically reload changed files.
 set autowrite " Automatically write changed buffers to disk.
 set modelines=5 " vim default
 
@@ -61,8 +51,6 @@ set lazyredraw
 set matchtime=3
 set showbreak=↪
 " set splitbelow splitright
-
-set history=500 " Keep 50 lines of command line history
 
 set foldlevelstart=0
 
@@ -88,7 +76,7 @@ endif
 " == ins-completion search order: current buffer; other window buffers;
 " unloaded buffers; tags; current and included files; spell checking
 " dictionary; files in 'dictionary'; files in 'thesaurus'
-set complete=.,w,b,u,t,i,kspell,k,s showfulltag
+set complete+=kspell,k,s showfulltag
 if has("insert_expand")
   set completeopt-=preview
 endif
@@ -96,17 +84,15 @@ endif
 set virtualedit+=block
 
 set showmatch hidden noequalalways hlsearch nostartofline nojoinspaces
-set shortmess=aIo scrolloff=0 sidescrolloff=0 scrolljump=2
-set mouse=ar laststatus=2 keymodel=startsel,stopsel
-set tabstop=2 shiftwidth=2 softtabstop=2 shiftround expandtab smarttab
+set shortmess=aIo scrolljump=2
+set mouse=ar keymodel=startsel,stopsel
+set tabstop=2 shiftwidth=2 softtabstop=2 shiftround expandtab
 set winminheight=0 winminwidth=0 helpheight=10
-" set list listchars=tab:▸\ ,eol:⏎,extends:›,precedes:‹,trail:•
-set list listchars=tab:▸\ ,eol:◂,extends:›,precedes:‹,trail:•
 set whichwrap=b,s,h,l,<,>,~,[,] viminfo='100,<100,s10,h,!
 set linebreak showmode visualbell
 
 " Wildmenu matching rules
-set wildcharm=<C-Z> wildmenu wildmode=list:longest,list:full
+set wildcharm=<C-Z> wildmode=list:longest,list:full
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
@@ -497,17 +483,11 @@ command! -nargs=+ -complete=command TabMessage call <SID>TabMessage(<q-args>)
 
 " Ctrl-P {{{
 " https://github.com/kien/ctrlp.vim
-" let g:ctrlp_map = '<leader>,'
-" let g:ctrlp_working_path_mode = 0
-" let g:ctrlp_match_window_reversed = 1
-" let g:ctrlp_split_window = 0
-" let g:ctrlp_prompt_mappings = {
-" \ 'PrtSelectMove("j")':   ['<c-j>', '<down>', '<s-tab>'],
-" \ 'PrtSelectMove("k")':   ['<c-k>', '<up>', '<tab>'],
-" \ 'PrtHistory(-1)':       ['<c-n>'],
-" \ 'PrtHistory(1)':        ['<c-p>'],
-" \ 'ToggleFocus()':        ['<c-tab>'],
-" \ }
+let g:ctrlp_map = ',,'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_switch_buffer = 'Et'
+let g:ctrlp_extensions = [ 'tag', 'dir', 'mixed' ]
+let g:ctrlp_working_path_mode = 'ra'
 
 " Easymotion {{{
 " https://github.com/Lokaltog/vim-easymotion
@@ -548,14 +528,6 @@ map <S-Insert> :set paste<CR>:call <SID>NormalPaste()<CR>:set nopaste<CR>
 imap <S-Insert> x<ESC>:set paste<CR>:call <SID>NormalPaste()<CR>:set nopaste<CR>s
 cmap <S-Insert> <C-R>*
 vmap <S-Insert> "-x:set paste<CR>:call <SID>SelectPaste()<CR>:set nopaste<CR>
-
-" CTRL-Tab is Next window
-noremap <C-Tab> <C-W>w
-inoremap <C-Tab> <C-O><C-W>w
-cmap <C-Tab> <C-C><C-Tab>
-noremap <C-S-Tab> <C-W>W
-inoremap <C-S-Tab> <C-O><C-W>W
-cmap <C-S-Tab> <C-C><C-S-Tab>
 
 " Easier to type, and I never use the default behavior.
 noremap H ^
@@ -989,7 +961,7 @@ augroup END
 " let g:rbpt_max = 16
 
 " Command-T configuration
-let g:CommandTMaxHeight=20
+" let g:CommandTMaxHeight=20
 
 " Sparkup
 " https://github.com/rstacruz/sparkup
@@ -1002,7 +974,8 @@ let g:slimv_repl_split = 4
 let g:slimv_repl_syntax = 1
 
 " Supertab
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-p>"
 let g:SuperTabLongestHighlight = 1
 
 " Scratch
@@ -1306,8 +1279,6 @@ if has("autocmd")
     " Resize splits when the window is resized
     autocmd VimResized * exe "normal! \<C-W>="
   augroup END
-else
-  set autoindent
 endif
 
 " config_files: Useful maps for managing config files
@@ -1543,7 +1514,7 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
-let g:syntastic_ruby_exec="~/.rbenv/versions/1.9.2-p318/bin/ruby"
+" let g:syntastic_ruby_exec="~/.rbenv/versions/1.9.2-p318/bin/ruby"
+let g:solarized_menu=0
 
-" % to bounce from do to end etc.
-runtime! macros/matchit.vim
+nnoremap <silent> <F9> :TagbarToggle<CR>

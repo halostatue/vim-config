@@ -1,17 +1,16 @@
 ---
 install:
   github:
-    - aaronjensen/vim-sass-status
-    - adamlowe/vim-slurper
-    - airblade/vim-gitgutter
-    - ajf/puppet-vim
-    - altercation/vim-colors-solarized
-    - austintaylor/vim-indentobject
-    - bootleq/vim-textobj-rubysymbol
-    - bsl/obviousmode
-    - chrisbra/csv.vim
-    - danro/rename.vim
-    - depuracao/vim-rdoc
+    - tpope/vim-pathogen # The basis of everything.
+    - tpope/vim-sensible
+    - aaronjensen/vim-sass-status #keep
+    - ajf/puppet-vim #keep
+    - altercation/vim-colors-solarized #?
+    - bling/vim-airline #new
+    - bootleq/vim-textobj-rubysymbol #keep
+    - chrisbra/csv.vim #keep
+    - danro/rename.vim #keep
+    - depuracao/vim-rdoc #keep
     - derekwyatt/vim-scala
     - epmatsw/ag.vim
     - ervandew/supertab
@@ -25,21 +24,32 @@ install:
     - hsitz/VimOrganizer
     - jceb/vim-orgmode
     - jeetsukumaran/vim-buffergator
-    - kana/vim-ku
-    - kana/vim-scratch
-    - kana/vim-textobj-datetime
-    - kana/vim-textobj-diff
-    - kana/vim-textobj-entire
-    - kana/vim-textobj-function
-    - kana/vim-textobj-indent
-    - kana/vim-textobj-user
+    - kana/vim-gf-user # gf context file definitions
+    - kana/vim-gf-diff # gf for file under diff
+    - kana/vim-grex # g/RE/X
+    - kana/vim-ku # Interface for anything
+    - kana/vim-niceblock # Improve blockwise selection
+    - kana/vim-scratch # Provide a scratch buffer like emacs
+    - kana/vim-smartinput # Smartly input surrounds
+      # - kana/vim-smartwords # Smart w/b/e/ge word movement
+    - kana/vim-textobj-datetime # text object for date/time
+    - kana/vim-textobj-diff # text object for diff output
+    - kana/vim-textobj-entire # text object for buffer
+    - kana/vim-textobj-fold # text object for folds
+    - kana/vim-textobj-function # text object for functions
+    - kana/vim-textobj-help # Navigation in helpfiles
+    - kana/vim-textobj-indent # text object for indentation levels
+    - kana/vim-textobj-lastpat # text object for last search pattern
+    - kana/vim-textobj-line # text object for current line
+    - kana/vim-textobj-syntax # Select 
+    - kana/vim-textobj-user # Textobject definitions
     - kchmck/vim-coffee-script
     - kien/ctrlp.vim
     - krisajenkins/vim-pipe
     - majutsushi/tagbar
     - mattn/gist-vim
     - mattn/zencoding-vim
-    - michaeljsmith/vim-indent-object
+    - mhinz/vim-signify #new (replaces airblade/vim-gitgutter)
     - mikewest/vimroom
     - mileszs/ack.vim
     - millermedeiros/vim-statline
@@ -60,7 +70,6 @@ install:
     - sjl/threesome.vim
     - skwp/vim-rspec
     - sunaku/vim-ruby-minitest
-    - thoughtbot/vim-rspec
     - thinca/vim-fontzoom
     - thinca/vim-ft-markdown_fold
     - thinca/vim-ft-vim_fold
@@ -69,6 +78,7 @@ install:
     - thinca/vim-textobj-comment
     - thinca/vim-textobj-function-javascript
     - thinca/vim-textobj-function-perl
+    - thoughtbot/vim-rspec
     - timcharper/textile.vim
     - tjennings/git-grep-vim
     - tomtom/quickfixsigns_vim
@@ -134,5 +144,12 @@ ignore:
     - fholgado/minibufexpl.vim
     - maksimr/vim-jsbeautify
     - robgleeson/hammer.vim
+    - adamlowe/vim-slurper # Only needed for Pivotal Tracker.
+    - Shougo/unite.vim # CmdT/CtrlP replacement?
+    - itchyny/lightline.vim # Possible alternative to airline
+    - edkolev/promptline.vim # Prompt line based on airline
+    - jmcantrell/vim-virtualenv # Python
+    - Shougo/vimproc.vim # Investigate further
+    - tpope/vim-scriptease
 
 # vim: ft=yaml
