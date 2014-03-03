@@ -141,7 +141,6 @@ install:
     conque_2.3: http://conque.googlecode.com/svn/trunk/
 
   copy:
-    - google-golang
     - manpageview
 
 ignore:
