@@ -1514,7 +1514,13 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
-" let g:syntastic_ruby_exec="~/.rbenv/versions/1.9.2-p318/bin/ruby"
 let g:solarized_menu=0
+
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
 
 nnoremap <silent> <F9> :TagbarToggle<CR>

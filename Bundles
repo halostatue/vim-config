@@ -1,35 +1,63 @@
 ---
 install:
   github:
-    - tpope/vim-pathogen # The basis of everything.
-    - tpope/vim-sensible
-    - aaronjensen/vim-sass-status #keep
-    - ajf/puppet-vim #keep
-    - altercation/vim-colors-solarized #?
-    - bling/vim-airline #new
-    - bootleq/vim-textobj-rubysymbol #keep
-    - chrisbra/csv.vim #keep
-    - danro/rename.vim #keep
-    - depuracao/vim-rdoc #keep
+    - tpope/vim-pathogen # How I manage plugins within vimrc
+    - tpope/vim-sensible # Sensible VIM defaults
+
+      # Syntax
+    - ajf/puppet-vim
+    - cespare/vim-toml
+    - depuracao/vim-rdoc
     - derekwyatt/vim-scala
-    - epmatsw/ag.vim
-    - ervandew/supertab
-    - godlygeek/tabular
-    - gregsexton/gitv
     - groenewege/vim-less
-    - henrik/vim-open-url
-    - henrik/vim-reveal-in-finder
-    - henrik/vim-ruby-runner
-    - henrik/vim-yaml-flattener
-    - hsitz/VimOrganizer
-    - jceb/vim-orgmode
-    - jeetsukumaran/vim-buffergator
-    - kana/vim-gf-user # gf context file definitions
-    - kana/vim-gf-diff # gf for file under diff
-    - kana/vim-grex # g/RE/X
+    - kchmck/vim-coffee-script
+    - msanders/cocoa.vim
+    - mustache/vim-mustache-handlebars
+    - othree/html5.vim
+    - pangloss/vim-javascript
+    - sunaku/vim-ruby-minitest
+    - timcharper/textile.vim
+    - tpope/vim-git
+    - tpope/vim-haml
+    - tpope/vim-liquid
+    - tpope/vim-markdown
+    - tpope/vim-rails
+    - vim-ruby/vim-ruby
+    - vim-scripts/applescript.vim
+    - vim-scripts/cmake.vim
+    - vim-scripts/cmake.vim-syntax
+    - vim-scripts/jQuery
+    - vim-scripts/taskpaper.vim
+
+      # Status Lines
+    - bling/vim-airline
+    - aaronjensen/vim-sass-status
+
+      # Colors & Display Management
+    - altercation/vim-colors-solarized
+    - mrtazz/molokai.vim
+    - thinca/vim-fontzoom
+    - thinca/vim-ft-markdown_fold
+    - thinca/vim-ft-vim_fold
+    - tomtom/quickfixsigns_vim
+    - tpope/vim-vividchalk
+    - vim-scripts/AnsiEsc.vim
+    - vim-scripts/Colour-Sampler-Pack
+    - vim-scripts/ZoomWin
+    - vim-scripts/bufferlist.vim
+    - wgibbs/vim-irblack
+
+      # Vim Functions
+    - thinca/vim-prettyprint
+    - tomtom/tlib_vim
     - kana/vim-ku # Interface for anything
-    - kana/vim-niceblock # Improve blockwise selection
-    - kana/vim-scratch # Provide a scratch buffer like emacs
+    - tpope/vim-repeat
+    - tpope/vim-speeddating
+    - tpope/vim-surround
+
+      # Text Objects and Movements
+    - bootleq/vim-textobj-rubysymbol
+    - kana/vim-niceblock
     - kana/vim-smartinput # Smartly input surrounds
       # - kana/vim-smartwords # Smart w/b/e/ge word movement
     - kana/vim-textobj-datetime # text object for date/time
@@ -43,45 +71,52 @@ install:
     - kana/vim-textobj-line # text object for current line
     - kana/vim-textobj-syntax # Select 
     - kana/vim-textobj-user # Textobject definitions
-    - kchmck/vim-coffee-script
-    - kien/ctrlp.vim
-    - krisajenkins/vim-pipe
-    - majutsushi/tagbar
-    - mattn/gist-vim
-    - mattn/zencoding-vim
-    - mhinz/vim-signify #new (replaces airblade/vim-gitgutter)
-    - mikewest/vimroom
-    - mileszs/ack.vim
-    - millermedeiros/vim-statline
-    - mrtazz/molokai.vim
-    - msanders/cocoa.vim
-    - msanders/snipmate.vim
-    - myusuf3/numbers.vim
-    - nathanaelkane/vim-indent-guides
     - nelstrom/vim-textobj-rubyblock
-    - nono/vim-handlebars
-    - othree/html5.vim
-    - pangloss/vim-javascript
-    - scrooloose/nerdcommenter
-    - scrooloose/nerdtree
-    - scrooloose/syntastic
-    - sjbach/lusty
-    - sjl/gundo.vim
-    - sjl/threesome.vim
-    - skwp/vim-rspec
-    - sunaku/vim-ruby-minitest
-    - thinca/vim-fontzoom
-    - thinca/vim-ft-markdown_fold
-    - thinca/vim-ft-vim_fold
-    - thinca/vim-prettyprint
-    - thinca/vim-quickrun
     - thinca/vim-textobj-comment
     - thinca/vim-textobj-function-javascript
     - thinca/vim-textobj-function-perl
+    - vim-scripts/argtextobj.vim
+    - vim-scripts/camelcasemotion
+    - vim-scripts/vim-textobj-quoted
+
+      # (gf) goto file extensions
+    - kana/vim-gf-user
+    - kana/vim-gf-diff
+
+      # Tools
+    - chrisbra/csv.vim
+    - gregsexton/gitv
+    - danro/rename.vim
+    - epmatsw/ag.vim
+    - ervandew/supertab
+    - garbas/vim-snipmate
+    - godlygeek/tabular
+    - henrik/vim-open-url
+    - henrik/vim-reveal-in-finder
+    - henrik/vim-ruby-runner
+    - henrik/vim-yaml-flattener
+    - honza/vim-snippets
+    - vim-voom/VOoM
+    - jceb/vim-orgmode
+    - kana/vim-grex # g/RE/X
+    - kana/vim-scratch # Provide a scratch buffer like emacs
+    - kien/ctrlp.vim
+    - krisajenkins/vim-pipe
+    - majutsushi/tagbar
+    - marcweber/vim-addon-mw-utils
+    - mattn/gist-vim
+    - mhinz/vim-signify #new (replaces airblade/vim-gitgutter)
+    - mikewest/vimroom
+    - myusuf3/numbers.vim
+    - nathanaelkane/vim-indent-guides
+    - scrooloose/syntastic
+    - sjbach/lusty
+    - sjl/gundo.vim
+    - sjl/splice.vim
+    - skwp/vim-rspec
+    - thinca/vim-quickrun
     - thoughtbot/vim-rspec
-    - timcharper/textile.vim
     - tjennings/git-grep-vim
-    - tomtom/quickfixsigns_vim
     - tpope/vim-abolish
     - tpope/vim-bundler
     - tpope/vim-commentary
@@ -89,55 +124,26 @@ install:
     - tpope/vim-dispatch
     - tpope/vim-endwise
     - tpope/vim-fugitive
-    - tpope/vim-git
-    - tpope/vim-haml
-    - tpope/vim-liquid
-    - tpope/vim-markdown
     - tpope/vim-ragtag
-    - tpope/vim-rails
     - tpope/vim-rake
-    - tpope/vim-repeat
-    - tpope/vim-speeddating
-    - tpope/vim-surround
     - tpope/vim-unimpaired
-    - tpope/vim-vividchalk
-    - vim-ruby/vim-ruby
-    - vim-scripts/Align
-    - vim-scripts/AnsiEsc.vim
-    - vim-scripts/CamelCaseComplete
     - vim-scripts/ColorX
-    - vim-scripts/Colour-Sampler-Pack
     - vim-scripts/EasyGrep
     - vim-scripts/IndexedSearch
     - vim-scripts/ShowMarks7
     - vim-scripts/YankRing.vim
-    - vim-scripts/ZoomWin
-    - vim-scripts/a.vim
-    - vim-scripts/applescript.vim
-    - vim-scripts/argtextobj.vim
-    - vim-scripts/bufexplorer.zip
-    - vim-scripts/bufferlist.vim
     - vim-scripts/calendar.vim--Matsumoto
-    - vim-scripts/camelcasemotion
-    - vim-scripts/cmake.vim
-    - vim-scripts/cmake.vim-syntax
-    - vim-scripts/cmakeref
-    - vim-scripts/gdbmgr
-    - vim-scripts/jQuery
     - vim-scripts/matchit.zip
-    - vim-scripts/mru.vim
     - vim-scripts/number-marks
     - vim-scripts/searchfold.vim
-    - vim-scripts/taglist.vim
-    - vim-scripts/taskpaper.vim
-    - vim-scripts/vim-textobj-quoted
-    - wgibbs/vim-irblack
+
   svn:
     conque_2.3: http://conque.googlecode.com/svn/trunk/
+
   copy:
-    - janus
     - google-golang
     - manpageview
+
 ignore:
   github:
     - astashov/vim-ruby-debugger
@@ -151,5 +157,6 @@ ignore:
     - jmcantrell/vim-virtualenv # Python
     - Shougo/vimproc.vim # Investigate further
     - tpope/vim-scriptease
+    - millermedeiros/vim-statline
 
 # vim: ft=yaml
