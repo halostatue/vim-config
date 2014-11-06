@@ -344,35 +344,6 @@ end
 #   end
 # end
 
-
-# Install mustache.vim
-partial = inst.partial_path('defunkt_mustache')
-bundle  = inst.bundle_path('defunkt_mustache')
-syntax  = File.join(bundle, 'syntax', 'mustache.vim')
-detect  = File.join(bundle, 'ftdetect', 'mustache.vim')
-options = { :path => partial, :task_name => 'partial_defunkt_mustache' }
-
-name = inst.git_task "github://defunkt/mustache", options
-file syntax => name do |t|
-  source = File.join(partial, 'contrib', File.basename(t.name))
-  inst.fileops.mkdir_p File.dirname(t.name)
-  inst.fileops.cp source, t.name
-end
-file detect => name do |t|
-  inst.fileops.mkdir_p File.dirname(t.name)
-  File.open(t.name, 'w') do |f|
-    f.puts <<-EOS
-" Mustache File Detection Support
-augroup mustacheFiles
-  autocmd!
-  autocmd BufNewFile,BufRead *.mustache setfiletype mustache
-augroup END
-    EOS
-  end
-end
-task :update_defunkt_mustache => [ syntax, detect ]
-task :install => :update_defunkt_mustache
-
 desc "Sets the install target name."
 task :target, [ :name ] do |t, args|
   inst.target_path = File.expand_path(args.name)
