@@ -87,11 +87,11 @@ install:
     - chrisbra/csv.vim
     - gregsexton/gitv
     - danro/rename.vim
+    - embear/vim-localvimrc
     - epmatsw/ag.vim
     - ervandew/supertab
     - garbas/vim-snipmate
     - godlygeek/tabular
-    - henrik/vim-open-url
     - henrik/vim-reveal-in-finder
     - henrik/vim-ruby-runner
     - henrik/vim-yaml-flattener

@@ -1523,4 +1523,6 @@ if exists(":Tabularize")
   vmap <Leader>a: :Tabularize /:\zs<CR>
 endif
 
+let g:localvimrc_whitelist=expand("$HOME/dev")
+
 nnoremap <silent> <F9> :TagbarToggle<CR>
