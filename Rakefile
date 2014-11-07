@@ -42,32 +42,22 @@ class BundleInstaller
     end
   end
 
-  Svn      = BundleInstaller::VCS.new('svn')
-  SvnNull  = BundleInstaller::VCS.new('svn', :null)
   Git      = BundleInstaller::VCS.new('git')
   GitNull  = BundleInstaller::VCS.new('git', :null)
-  Hg       = BundleInstaller::VCS.new('hg')
-  HgNull   = BundleInstaller::VCS.new('hg', :null)
 
   attr_reader :source_path
   attr_accessor :target_path
 
   attr_reader :fileops
   attr_reader :git
-  attr_reader :svn
-  attr_reader :hg
 
   def noop(value)
     if !!value
       @fileops  = FileUtils::NullOps
-      @svn      = SvnNull
       @git      = GitNull
-      @hg       = HgNull
     else
       @fileops  = FileUtils
-      @svn      = Svn
       @git      = Git
-      @hg       = Hg
     end
 
     @noop = !!value
@@ -115,79 +105,6 @@ class BundleInstaller
   end
   private :update_task_name
 
-  def git_task(url, options = {})
-    case url
-    when %r{^git://([^/]+)/(.+).git$}
-      repo = url
-      name = "#{$1}_#{$2.split(%r{/}).join('-')}"
-    when %r{^github://([^/]+)/(.+)$}
-      repo = "git://github.com/#{$1}/#{$2}.git"
-      name = "#{$1}_#{$2}"
-    else
-      raise "Unsupported git url format: #{repo}"
-    end
-
-    name = options[:name] || name
-    path = options[:path] || bundle_path(name)
-    parent = File.dirname(path)
-
-    git_target  = File.join(path, '.git')
-    task_name   = options[:task_name] || update_task_name(name)
-
-    task task_name => [ git_target ] do
-      puts "Updating #{name}…"
-      Dir.chdir(path) {
-        yield :pre_update if block_given?
-        git.pull
-        yield :post_update if block_given?
-      }
-    end
-    task :install => [ task_name ]
-    task :helptags => [ task_name ]
-
-    file git_target => [ parent ] do
-      puts "Cloning #{name}…"
-      yield :pre_clone if block_given?
-      Dir.chdir(parent) {
-        git.clone! repo, name
-        yield :post_clone if block_given?
-      }
-    end
-
-    task_name
-  end
-
-  def svn_task(name, repo)
-    btsk = "update_#{name.gsub(%{[^_A-Za-z0-9]}, '-')}".to_sym
-    bdir = bundle_path(name)
-    bsvn = File.join(bdir, '.svn')
-
-    task btsk => [ bsvn ] do
-      Dir.chdir(bdir) { svn.up }
-    end
-    task :install => [ btsk ]
-    task :helptags => [ btsk ]
-
-    file bsvn => [ bundle_path ] do
-      Dir.chdir(bundle_path) { svn.checkout repo, name }
-    end
-  end
-
-  def filecopy_task(path)
-    name = File.basename(path)
-    path = source('installable', path)
-    btsk = "update_#{name}".to_sym
-    bdir = bundle_path(name)
-
-    task btsk => [ path ] do
-      Dir.chdir(bundle_path) do
-        fileops.cp_r(path, name)
-      end
-    end
-    task :install => btsk
-    task :helptags => [ btsk ]
-  end
-
   def base_tasks
     directory vimfiles_path('tmp')
     directory bundle_path
@@ -232,24 +149,6 @@ class BundleInstaller
       sh %Q(vim -c 'silent! exe "call pathogen#helptags() | qa"')
     end
     task :install => :helptags
-  end
-
-  def simple_tasks(bundles)
-    install = bundles['install']
-    raise "Invalid Bundle format; missing the 'install' key." unless install
-
-    install.each_pair { |key, values|
-      case key.to_s
-      when 'github'
-        values.each { |repo| git_task("github://#{repo}") }
-      when 'git'
-        values.each { |repo| git_task(repo) }
-      when 'svn'
-        values.each_pair { |name, repo| svn_task(name, repo) }
-      when 'copy'
-        values.each { |path| filecopy_task(path) }
-      end
-    }
   end
 
   def backup_file(target)
@@ -317,30 +216,20 @@ task :install
 inst = BundleInstaller.new(CURRENT_PATH, File.expand_path(ENV['HOME']))
 
 inst.base_tasks
-inst.simple_tasks(BUNDLES)
 
-inst.git_task "github://vim-scripts/Arduino-syntax-file" do |mode|
-  case mode
-  when :post_update
-    inst.fileops.mkdir_p 'ftdetect'
-    File.open(File.join('ftdetect', 'arduino.vim'), 'w') do |file|
-      file.puts <<-EOS
-" Arduino File Detection Support
-augroup arduinoFiles
-  autocmd!
-  autocmd BufNewFile,BufRead *.pde setfiletype arduino
-augroup END
-      EOS
-    end
-  end
-end
-
-# inst.git_task "github://wincent/Command-T" do |mode|
+# inst.git_task "github://vim-scripts/Arduino-syntax-file" do |mode|
 #   case mode
 #   when :post_update
-#     # TODO: Need a way to generically specify the 'system' Ruby regardless
-#     # of what platform or whether you're using rvm or rbenv.
-#     sh "/usr/bin/ruby -S rake make"
+#     inst.fileops.mkdir_p 'ftdetect'
+#     File.open(File.join('ftdetect', 'arduino.vim'), 'w') do |file|
+#       file.puts <<-EOS
+# " Arduino File Detection Support
+# augroup arduinoFiles
+#   autocmd!
+#   autocmd BufNewFile,BufRead *.pde setfiletype arduino
+# augroup END
+#       EOS
+#     end
 #   end
 # end
 
