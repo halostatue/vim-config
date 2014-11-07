@@ -4,6 +4,15 @@ install:
     - tpope/vim-pathogen # How I manage plugins within vimrc
     - tpope/vim-sensible # Sensible VIM defaults
 
+      # Tools
+    - - Shougo/vimproc.vim
+      - build:
+          windows: 'tools\\update-dll-mingw'
+          cygwin:  'make -f make_cygwin.mak'
+          mac:     'make -f make_mac.mak'
+          linux:   'make'
+          unix:    'gmake'
+
       # Syntax
     - ajf/puppet-vim
     - andreimaxim/vim-io
@@ -137,9 +146,6 @@ install:
     - vim-scripts/matchit.zip
     - vim-scripts/number-marks
     - vim-scripts/searchfold.vim
-
-  svn:
-    conque_2.3: http://conque.googlecode.com/svn/trunk/
 
   copy:
     - manpageview

@@ -1,0 +1,316 @@
+# tagbar [+ Taghighlight ]
+noremap <F1> :TagbarToggle<CR>
+inoremap <F1> <ESC>:TagbarToggle<CR>
+let g:tagbar_type_vimwiki = {
+            \ 'ctagstype' : 'wiki',
+            \ 'kinds'     : [
+            \ 'h:headers'
+            \ ]
+            \ }
+let g:tagbar_type_mkd= {
+            \ 'ctagstype' : 'md',
+            \ 'kinds' : [
+            \ 'h:headings'
+            \ ],
+            \ 'sort' : 0,
+            \ }
+let g:tagbar_type_css= {
+            \ 'ctagstype' : 'css',
+            \ 'kinds' : [
+            \ 'c:classes',
+            \ 'i:ids',
+            \ 't:tags',
+            \ 'm:media',
+            \ 'f:fonts',
+            \ 'k:keyframes'
+            \ ],
+            \ 'sort' : 0,
+            \ }
+let g:tagbar_type_html= {
+            \ 'ctagstype' : 'html',
+            \ 'kinds'     : [
+            \ 'i:ids',
+            \ 'c:classes',
+            \ ]
+            \ }
+let g:tagbar_type_vhdl = {
+            \ 'ctagstype': 'vhdl',
+            \ 'kinds' : [
+            \'d:prototypes',
+            \'b:package bodies',
+            \'e:entities',
+            \'a:architectures',
+            \'t:types',
+            \'p:processes',
+            \'f:functions',
+            \'r:procedures',
+            \'c:constants',
+            \'T:subtypes',
+            \'r:records',
+            \'C:components',
+            \'P:packages',
+            \'l:locals'
+            \]
+            \}
+
+# vimshell
+let g:vimshell_enable_smart_case   = 1
+let g:vimshell_prompt              = '➤  '
+let g:vimshell_user_prompt         = 'fnamemodify(getcwd(), ":~")'
+let g:vimshell_right_prompt        = 'system("date")'
+let g:vimshell_temporary_directory = "~/tmp/vimshell"
+
+# unite/ctrlp
+let g:ctrlp_map                 = '<C-space>'
+let g:ctrlp_cmd                 = 'CtrlP'
+let g:ctrlp_show_hidden         = 1
+let g:ctrlp_use_caching         = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir           = $HOME.'/tmp/ctrlp'
+let g:ctrlp_extensions          = ['funky']
+nnoremap <F5> :CtrlPFunky<CR>
+nnoremap <F6> :CtrlPChange<CR>
+nnoremap <F7> :CtrlPTag<CR>
+set wildignore+=*/.cache/*,*/tmp/*,*/.git/*,*/.neocon/*,*.log,*.so,*.swp,*.zip,*.gz,*.bz2,*.bmp,*.ppt
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.dll
+
+let g:unite_enable_ignore_case  = 1
+let g:unite_enable_smart_case   = 1
+let g:unite_enable_start_insert = 1
+let g:unite_winheight           = 10
+let g:unite_split_rule          = 'botright'
+let g:unite_prompt              = '➤ '
+let g:unite_data_directory      = $HOME.'/tmp/unite'
+command!  Mru :Unite file_mru
+command!  Uhelp :Unite help
+nnoremap <leader><space>b :Unite -quick-match buffer<CR>
+nnoremap <leader><space>f :Unite file<CR>
+nnoremap <leader><space>l :Unite locate<CR>
+nnoremap <leader><space>u :Unite source<CR>
+
+# neocomplete
+let g:neocomplete#enable_at_startup       = 1
+let g:neocomplete#disable_auto_complete   = 1
+let g:neocomplete#enable_ignore_case      = 1
+let g:neocomplete#enable_fuzzy_completion = 1
+let g:neocomplete#data_directory          = '~/tmp/.neocomplete'
+
+" let g:neosnippet#enable_preview = 0
+" set completeopt+=preview
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: "\<TAB>"
+
+if has('conceal')
+    set conceallevel=2 concealcursor=i
+endif
+
+# airline
+if !s:getwinvar(a:winnr, 'airline_left_only', 0)
+let sl.='%='.g:airline_externals_tagbar
+let sl.=' '.s:get_section(a:winnr, 'x').' '
+let sl.=l:info_sep_color
+let sl.=a:active ? g:airline_right_sep : g:airline_right_alt_sep
+let sl.=l:info_color
+let sl.=' '.s:get_section(a:winnr, 'y').' '
+let sl.=l:mode_sep_color
+let sl.=a:active ? g:airline_right_sep : g:airline_right_alt_sep
+let sl.=l:mode_color
+let sl.=' '.s:get_section(a:winnr, 'z').' '
+let sl.="%#Al3#"
+let sl.='%{g:airline_detect_white_space && search(" $","nw") ? " ✹ " : ""}'
+
+
+# Neovim contexthighlighting
+let s:source = {
+            \ 'name': 'vimwiki',
+            \ 'kind': 'ftplugin',
+            \ 'filetypes': {'vimwiki': 1},
+            \ 'mark': '[image]',
+            \ 'max_candidates': 15,
+            \ 'is_volatile' : 1,
+            \ }
+
+function! s:source.gather_candidates(context)
+    let line = getline('.')
+    let start = match(line, '\v\{\{.{-}\/\zs') " god damn liquid exception
+    if start == -1
+        return []
+    endif
+    let line = line[start :]
+    let prefix = matchstr(line, '.*\/')
+    let end = match(line, '}}$')
+    let a:context.complete_str = line[len(prefix): end-1]
+    let a:context.complete_pos = start+len(prefix)
+    let path = g:vimwiki_list[0].path_html . prefix
+    let output = system('ls ' . path)
+    if output =~ 'No such file or directory'
+        return []
+    endif
+    let list = split(output, '\n')
+    return list
+endfunction
+
+function! neocomplete#sources#vimwiki#define()
+    return s:source
+endfunction
+
+# Settings
+(grepprg/grepformat -- instead of Ag?)
+(undodir/backupdir/directory -- // usesfullpath?)
+(wildignore)
+(path)
+
+# vimwiki, local file completion 
+function vimwiki#OmniComplete(findstart, base)
+    if a:findstart
+        let line = getline('.')
+        if line =~ '{'.'{local:.*'
+            return searchpos('local:', 'bn', line('.'))[1] + 5
+        endif
+        return -3
+    else
+        let prefix = matchstr(a:base, '.*\/')
+        let suffix = a:base[len(prefix):]
+        let path = g:vimwiki_list[0].path . prefix
+        let output = system('ls ' . path)
+        if output =~ 'No such file or directory'
+            return []
+        endif
+        let list = filter(split(output, '\n'), 'v:val =~ suffix')
+        let list = map(list, 'prefix . v:val')
+        return list
+    endif
+
+endfunction
+
+setlocal omnifunc=vimwiki#OmniComplete
+if exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns.vimwiki = '{'.'{local:.*\/'
+endif
+
+# unite-gtags config
+set csprg=gtags-cscope
+cscope add /foo/bar/GTAGS
+
+...
+
+nnoremap <leader>gg :execute 'Unite gtags/def:'.expand('<cword>')<CR>
+nnoremap <leader>gc :execute 'Unite gtags/context'<CR>
+nnoremap <leader>gr :execute 'Unite gtags/ref'<CR>
+nnoremap <leader>ge :execute 'Unite gtags/grep'<CR>
+vnoremap <leader>gg <ESC>:execute 'Unite gtags/def:'.GetVisualSelection()<CR>
+
+# Rainbow-parentheses
+let g:rainbow_load_separately = [
+\   [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+\   [ 'tex' , [['(', ')'], ['\[', '\]']] ],
+\   [ 'html' , [] ],
+\   [ 'css' , [] ],
+\   [ 'mkd', [] ],
+\   [ 'wiki', [] ]
+\   ]
+
+vimshell
+neosnippet
+neocomplete
+colorizer
+context_filetype
+neco-look
+vim-translator
+unite-workflow
+vim-multiple-cursors
+vim-ref
+vim-dash
+gtags.vim
+unite-gtags
+unite-grep
+python - jedi
+js - tern
+go completion
+ruby completion
+
+# K with :Man
+runtime ftplugin/man.vim
+nmap K :Man <cword><CR>
+vmap K <ESC>:execute "Man ".GetVisualSelection()<CR>
+abcdefg
+function! GetVisualSelection()
+    let [s:lnum1, s:col1] = getpos("'<")[1:2]  " 坑爹的高亮
+    let [s:lnum2, s:col2] = getpos("'>")[1:2]
+    let s:lines = getline(s:lnum1, s:lnum2)
+    let s:lines[-1] = s:lines[-1][: s:col2 - (&selection == 'inclusive' ? 1 : 2)]
+    let s:lines[0] = s:lines[0][s:col1 - 1:]
+    return join(s:lines, " ")
+endfunction
+
+# compl-spelling
+nnoremap <C-y> :call <SID>SpellCorrect()<CR>
+function! s:SpellCorrect()
+  let s:oldspell = &spell
+  set spell
+  normal! 1z=
+  let &spell = s:oldspell
+  unlet s:oldspell
+endfunction
+
+# unite source structure
+let s:source = {} " options
+
+function! s:source.gather_candidates(args, context) " return a list/dict of candidates
+...
+endfunction
+
+function! s:source.hooks.on_init(args, context) " function called on init if needed
+...
+endfunction
+
+function! s:source.hooks.on_close(args, context) " function called on close if needed
+...
+endfunction
+
+let s:source.action_table.action_name= { " define an action
+      \ 'description' : 'description string',
+      \ 'is_quit' : 0,
+      \ }
+function! s:source.action_table.action_name.func(candidate) " function called with the action
+...
+endfunction
+
+# NeoBundle (hints for startup)
+ " Note: Skip initialization for vim-tiny or vim-small.
+ if !1 | finish | endif
+
+ if has('vim_starting')
+   set nocompatible               " Be iMproved
+
+   " Required:
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
+ endif
+
+ " Required:
+ call neobundle#begin(expand('~/.vim/bundle/'))
+
+ " Let NeoBundle manage NeoBundle
+ " Required:
+ NeoBundleFetch 'Shougo/neobundle.vim'
+
+ " My Bundles here:
+ " Refer to |:NeoBundle-examples|.
+ " Note: You don't set neobundle setting in .gvimrc!
+
+ call neobundle#end()
+
+ " Required:
+ filetype plugin indent on
+
+ " If there are uninstalled bundles found on startup,
+ " this will conveniently prompt you to install them.
+ NeoBundleCheck
