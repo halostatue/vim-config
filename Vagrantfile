@@ -11,14 +11,19 @@ sudo apt-get install -y git zsh rake ruby-dev
 sudo locale-gen en_CA.UTF-8
 sudo chsh -s/bin/zsh vagrant
 
+as_vagrant() {
+  su -c "${*}" vagrant
+}
+
 rm -rf .dotfiles
-git clone https://github.com/halostatue/dotfiles
-git checkout halozsh-binary-experiment
-bin/halozsh bootstrap
-bin/halozsh install
+as_vagrant git clone https://github.com/halostatue/dotfiles .dotfiles
+cd .dotfiles
+as_vagrant git checkout halozsh-binary-experiment
+as_vagrant bin/halozsh bootstrap
+as_vagrant bin/halozsh install --force
 
 rm -f .vim-config
-ln -s /vagrant .vim-config
+as_vagrant ln -s /vagrant .vim-config
 
 sudo apt-get autoremove -y
 EOS
