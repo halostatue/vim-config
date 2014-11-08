@@ -1,42 +1,25 @@
-kien/ctrlp.vim
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
 majutsushi/tagbar
-
-Shougo/vimproc.vim
-Shougo/unite.vim # Completion builder
-Shougo/vimfiler.vim
-
-Shougo/vimshell.vim
-Shougo/neossh.vim
-
-Shougo/vinarise.vim # Hex editing
 
 bling/vim-airline
 
+    echo "NeoBundle 'tpope/vim-fugitive'"
+    echo "NeoBundle 'flazz/vim-colorschemes'"
 
-https://github.com/aaronjensen/vim-sass-status
-https://github.com/adamlowe/vim-slurper
-https://github.com/ajf/puppet-vim
-https://github.com/altercation/vim-colors-solarized
-https://github.com/astashov/vim-ruby-debugger
-https://github.com/bootleq/vim-textobj-rubysymbol
-https://github.com/cespare/vim-toml
-https://github.com/chrisbra/csv.vim
-https://github.com/danro/rename.vim
-https://github.com/depuracao/vim-rdoc
-https://github.com/derekwyatt/vim-scala
-https://github.com/edkolev/promptline.vim
-https://github.com/embear/vim-localvimrc
-https://github.com/epmatsw/ag.vim
-https://github.com/ervandew/supertab
-https://github.com/fholgado/minibufexpl.vim
-https://github.com/garbas/vim-snipmate
-https://github.com/godlygeek/tabular
-https://github.com/gregsexton/gitv
-https://github.com/groenewege/vim-less
-https://github.com/henrik/vim-reveal-in-finder
-https://github.com/henrik/vim-ruby-runner
-https://github.com/henrik/vim-yaml-flattener
-https://github.com/honza/vim-snippets
 https://github.com/itchyny/lightline.vim
 https://github.com/jceb/vim-orgmode
 https://github.com/jmcantrell/vim-virtualenv
@@ -44,7 +27,6 @@ https://github.com/kana/vim-gf-diff
 https://github.com/kana/vim-gf-user
 https://github.com/kana/vim-grex
 https://github.com/kana/vim-ku
-https://github.com/kana/vim-niceblock
 https://github.com/kana/vim-scratch
 https://github.com/kana/vim-smartinput
 https://github.com/kana/vim-textobj-datetime
