@@ -3,15 +3,66 @@
 " The options set in this file are known to work with Vim 7.3 or later.
 " Earlier versions may need some changes.
 "
-" Cribbed in part from Steve Losh and other sources over the years.
+" This has been cribbed from a number of sources over the years.
 
-" Use Vim settings, rather then Vi settings (much better!).  This must be
-" first, because it changes other options as a side effect.
-set nocompatible
+" Skip initialization for a vim-tiny or vim-small environment.
+if !1 | finish | endif
 
-runtime bundle/tpope_vim-pathogen/autoload/pathogen.vim
+if has('vim_starting')
+  " Use Vim settings, rather then Vi settings (much better!). This must be
+  " first, because it changes other options as a side effect.
+  set nocompatible
+endif
 
 setlocal verbose=0 " Turn off verbose mode for this file.
+
+" Source a configuration file (~/.vim/config/…)
+function! s:SourceConfig(path)
+  execute 'source' fnameescape(expand('~/.vim/config/' . a:path))
+endfunction
+command! -nargs=1 SourceConfig call <SID>SourceConfig(<q-args>)
+
+" Source a file if it’s readable.
+function! s:TrySource(path)
+  if filereadable(fnameescape(expand(a:path)))
+    execute 'source' fnameescape(expand(a:path))
+  endif
+endfunction
+command! -nargs=1 TrySource call <SID>TrySource(<q-args>)
+
+SourceConfig init.vim
+
+" let g:vimfiler_as_default_explorer = 1
+call neobundle#begin(expand('$CACHE/neobundle'))
+
+if neobundle#has_cache()
+  NeoBundleLoadCache
+else
+  SourceConfig('neobundle.vim')
+  NeoBundleSaveCache
+endif
+
+if filereadable('vimrc_local.vim') ||
+      \ findfile('vimrc_local.vim', '.;') != ''
+  " Load develop version.
+  call neobundle#local(fnamemodify(
+        \ findfile('vimrc_local.vim', '.;'), ':h'))
+endif
+
+NeoBundleLocal ~/.vim/bundle
+
+" NeoBundle configurations.
+" NeoBundleDisable neocomplcache.vim
+
+call neobundle#end()
+
+filetype plugin indent on
+syntax enable
+
+" Installation check.
+NeoBundleCheck
+
+":::: HERE
 
 " Get the value of $PATH from a login shell if MacVim.app was started from the
 " Finder.
@@ -594,9 +645,6 @@ nnoremap <silent> <S-F5> :GundoToggle<CR>
 inoremap <silent> <S-F5> <C-O>:GundoToggle<CR>
 let g:gundo_debug = 1
 let g:gundo_preview_bottom = 1
-
-let g:tmp_path = split(globpath(&rtp, 'tmp/'), "\n")[0]
-let g:yankring_history_dir = g:tmp_path
 
 let g:erlangFold=1
 let g:erlangFoldSplitFunction=1
@@ -1511,7 +1559,7 @@ if filereadable(expand("~/.vimrc.local"))
 endif
 
 " The last thing we do is load bundles via Pathogen.
-call pathogen#infect()
+" call pathogen#infect()
 " call pathogen#helptags()
 syntax on
 filetype plugin indent on
