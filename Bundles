@@ -6,9 +6,11 @@ install:
 
       # Syntax
     - ajf/puppet-vim
+    - andreimaxim/vim-io
     - cespare/vim-toml
     - depuracao/vim-rdoc
     - derekwyatt/vim-scala
+    - fatih/vim-go
     - groenewege/vim-less
     - kchmck/vim-coffee-script
     - msanders/cocoa.vim
@@ -58,7 +60,6 @@ install:
       # Text Objects and Movements
     - bootleq/vim-textobj-rubysymbol
     - kana/vim-niceblock
-    - kana/vim-smartinput # Smartly input surrounds
       # - kana/vim-smartwords # Smart w/b/e/ge word movement
     - kana/vim-textobj-datetime # text object for date/time
     - kana/vim-textobj-diff # text object for diff output
