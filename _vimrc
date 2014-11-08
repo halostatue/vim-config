@@ -37,7 +37,7 @@ if has("gui_macvim") && has("gui_running")
 endif
 
 " Make Vim able to edit crontab files again.
-set backupskip=/tmp/*,/private/tmp/*"
+set backupskip=/tmp/*,/private/tmp/*
 
 set ignorecase " Ignore case…
 set smartcase " Unless there's a capital letter
@@ -743,6 +743,8 @@ iab cfdatetime <C-R>=strftime("%Y.%m.%d %%H:%M")<CR>
 iab clongdate <C-R>=strftime("%a %b %#d %X %z %Y")<CR>
 " formatted long date
 iab cpdate <C-R>=strftime("%A, %#d %B %Y")<CR>
+" ISO datetime
+iab cisodt <C-R>=strftime("%Y-%m-%dT%H:%M:%S%z")<CR>
 
 " Fugitive {{{
 nnoremap <leader>gd :Gdiff<cr>
@@ -1517,10 +1519,14 @@ filetype plugin indent on
 let g:solarized_menu=0
 
 if exists(":Tabularize")
-  nmap <Leader>a= :Tabularize /=<CR>
-  vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a: :Tabularize /:\zs<CR>
-  vmap <Leader>a: :Tabularize /:\zs<CR>
+  AddTabularPattern! eq /=
+  AddTabularPattern! json_hash /^[^:]*\zs:
+  AddTabularPattern! ruby_hash /^[^:]*:
+
+  nmap <Leader>a= :Tabularize eq<CR>
+  vmap <Leader>a= :Tabularize eq<CR>
+  nmap <Leader>a: :Tabularize ruby_hash<CR>
+  vmap <Leader>a: :Tabularize ruby_hash<CR>
 endif
 
 let g:localvimrc_whitelist=expand("$HOME/dev")
