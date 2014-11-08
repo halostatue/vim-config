@@ -1,9 +1,0 @@
-[submodule "vendor/pickled-vim"]
-	path = vendor/pickled-vim
-	url = https://github.com/technicalpickles/pickled-vim
-[submodule "vendor/vim-powerline"]
-	path = vendor/vim-powerline
-	url = git://github.com/Lokaltog/vim-powerline.git
-[submodule "vendor/powerline"]
-	path = vendor/powerline
-	url = git://github.com/Lokaltog/powerline.git
