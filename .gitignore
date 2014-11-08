@@ -4,8 +4,8 @@
 .rake_tasks~
 .DS_Store
 tags
-vimfiles/bundle/
+vimfiles/bundle
 vimfiles/.netrwhist
 vimfiles/tmp/
-partial/
-vimfiles/autoload/pathogen.vim
+.vagrant
+vendor/
