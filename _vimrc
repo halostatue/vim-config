@@ -23,12 +23,12 @@ endfunction
 command! -nargs=1 SourceConfig call <SID>SourceConfig(<q-args>)
 
 " Source a file if it’s readable.
-function! s:TrySource(path)
+function! s:SourceIf(path)
   if filereadable(fnameescape(expand(a:path)))
     execute 'source' fnameescape(expand(a:path))
   endif
 endfunction
-command! -nargs=1 TrySource call <SID>TrySource(<q-args>)
+command! -nargs=1 SourceIf call <SID>SourceIf(<q-args>)
 
 SourceConfig init.vim
 
@@ -62,101 +62,44 @@ syntax enable
 " Installation check.
 NeoBundleCheck
 
-":::: HERE
+" Encoding:
+" Setting of the encoding to use for a save and reading.
+set encoding=utf-8 " Make it normal in UTF-8 in Unix.
+set fileformat=unix " Default fileformat.
+set fileformats=unix,dos,mac " Automatic recognition of a new line cord.
 
-" Get the value of $PATH from a login shell if MacVim.app was started from the
-" Finder.
-if has("gui_macvim") && has("gui_running")
-  " ps -xc: just the command, not the command-line; including non-terminal processes
-  " grep -wsc: suppress errors; word boundary; count of matches.
-  if system("ps -xc | grep -wsc Vim") > 0
-    " If your shell is not on this list, it may be just because we have not
-    " tested it.  Try adding it to the list and see if it works. If so, please
-    " post a note to the vim-mac list!
-    if $SHELL =~ '/\(sh\|csh\|bash\|tcsh\|zsh\)$'
-      let s:path = system("echo echo VIMPATH'${PATH}' | $SHELL -l")
-      let $PATH = matchstr(s:path, 'VIMPATH\zs.\{-}\ze\n')
-    endif
-  endif
-
-  if executable(expand("$HOME/.brew/bin/git"))
-    let g:fugitive_git_executable = expand("$HOME/.brew/bin/git")
-  endif
-
-  " MacVIM shift+arrow-keys behavior (required in .vimrc)
-  " let g:macvim_hig_shift_movement=1
-endif
-
-" Make Vim able to edit crontab files again.
-set backupskip=/tmp/*,/private/tmp/*
-
+" Search:
 set ignorecase " Ignore case…
 set smartcase " Unless there's a capital letter
+set wrapscan " Searches wrap around the end of the file.
+
+" Edit:
+SourceConfig edit.vim
+
+" View:
+SourceConfig view.vim
+
+" FileType:
+SourceConfig filetype.vim
 
 set autowrite " Automatically write changed buffers to disk.
 set modelines=5 " vim default
 
 set norelativenumber
 
-set lazyredraw
-set matchtime=3
-set showbreak=↪
-" set splitbelow splitright
-
 set foldlevelstart=0
-
-" Make a backup of a file while we're writing it, and then delete it. This
-" prevents us from having unsighly ~ files.
-set nobackup writebackup
-" set backupdir=~/.vim/tmp/backup/ " backups
-set noundofile undoreload=10000
-" set undodir=~/.vim/tmp/undo/     " undo files
-" set directory=~/.vim/tmp/swap/   " swap files
 
 set fillchars=diff:⣿
 
 set tags+=gems.tags
 
-" set colorcolumn=+1
-
-if has('title')
-  set title
-endif
-
-" = Keyword completion options
-" == ins-completion search order: current buffer; other window buffers;
-" unloaded buffers; tags; current and included files; spell checking
-" dictionary; files in 'dictionary'; files in 'thesaurus'
-set complete+=kspell,k,s showfulltag
-if has("insert_expand")
-  set completeopt-=preview
-endif
-
-set virtualedit+=block
-
-set showmatch hidden noequalalways hlsearch nostartofline nojoinspaces
-set shortmess=aIo scrolljump=2
+set showmatch hidden
+set hlsearch nojoinspaces
+set scrolljump=2
 set mouse=ar keymodel=startsel,stopsel
-set tabstop=2 shiftwidth=2 softtabstop=2 shiftround expandtab
-set winminheight=0 winminwidth=0 helpheight=10
-set whichwrap=b,s,h,l,<,>,~,[,] viminfo='100,<100,s10,h,!
+set viminfo='100,<100,s10,h,!
 set linebreak showmode visualbell
 
-" Wildmenu matching rules
-set wildcharm=<C-Z> wildmode=list:longest,list:full
-set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.so,*.dylib                     " compiled object files
-set wildignore+=*.class                          " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.sw?                            " Vim swap files
-set wildignore+=*.DS_Store                       " OSX bullshit
-set wildignore+=*.luac                           " Lua byte code
-set wildignore+=migrations                       " Django migrations
-set wildignore+=*.pyc                            " Python byte code
-set wildignore+=*.rbc                            " Rubinius byte code
 
 " Clojure/Leiningen
 " set wildignore+=classes
