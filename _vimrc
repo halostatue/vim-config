@@ -16,21 +16,33 @@ endif
 
 setlocal verbose=0 " Turn off verbose mode for this file.
 
-" Source a configuration file (~/.vim/config/…)
-function! s:SourceConfig(path)
-  execute 'source' fnameescape(expand('~/.vim/config/' . a:path))
-endfunction
-command! -nargs=1 SourceConfig call <SID>SourceConfig(<q-args>)
+let g:config = {}
 
-" Source a file if it’s readable.
-function! s:SourceIf(path)
+function! config.name(path) dict
+  return expand('~/.vim/config/' . a:path . '.config.vim')
+endfunction
+
+function! config.plugin(path) dict
+  return g:config.name('plugins/' . a:path)
+endfunction
+
+function! config.source_if(path) dict
   if filereadable(fnameescape(expand(a:path)))
     execute 'source' fnameescape(expand(a:path))
   endif
 endfunction
-command! -nargs=1 SourceIf call <SID>SourceIf(<q-args>)
 
-SourceConfig init.vim
+function! config.source(path) dict
+  call g:config.source_if(g:config.name(a:path))
+endfunction
+
+" Source a configuration file (~/.vim/config/…)
+command! -nargs=1 SourceConfig call config.source(<q-args>)
+
+" Source a file if it’s readable.
+command! -nargs=1 SourceIf call config.source_if(<q-args>)
+
+SourceConfig init
 
 " let g:vimfiler_as_default_explorer = 1
 call neobundle#begin(expand('$CACHE/neobundle'))
@@ -38,7 +50,7 @@ call neobundle#begin(expand('$CACHE/neobundle'))
 if neobundle#has_cache()
   NeoBundleLoadCache
 else
-  SourceConfig('neobundle.vim')
+  SourceConfig neobundle
   NeoBundleSaveCache
 endif
 
@@ -74,13 +86,16 @@ set smartcase " Unless there's a capital letter
 set wrapscan " Searches wrap around the end of the file.
 
 " Edit:
-SourceConfig edit.vim
+SourceConfig edit
 
 " View:
-SourceConfig view.vim
+SourceConfig view
 
 " FileType:
-SourceConfig filetype.vim
+SourceConfig filetype
+
+" Plugins:
+SourceConfig plugins
 
 set autowrite " Automatically write changed buffers to disk.
 set modelines=5 " vim default
@@ -1509,7 +1524,7 @@ filetype plugin indent on
 
 let g:solarized_menu=0
 
-if exists(":Tabularize")
+if exists(":Tabularize") && exists(':AddTabularPattern')
   AddTabularPattern! eq /=
   AddTabularPattern! json_hash /^[^:]*\zs:
   AddTabularPattern! ruby_hash /^[^:]*:

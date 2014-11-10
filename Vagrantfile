@@ -16,14 +16,13 @@ as_vagrant() {
 }
 
 rm -rf .dotfiles
-as_vagrant git clone https://github.com/halostatue/dotfiles .dotfiles
-cd .dotfiles
-as_vagrant git checkout halozsh-binary-experiment
-as_vagrant bin/halozsh bootstrap
-as_vagrant bin/halozsh install --force
+as_vagrant "cd ~vagrant && git clone https://github.com/halostatue/dotfiles .dotfiles"
+as_vagrant "cd ~vagrant/.dotfiles && git checkout halozsh-binary-experiment"
+as_vagrant "cd ~vagrant/.dotfiles && bin/halozsh bootstrap"
+as_vagrant "cd ~vagrant/.dotfiles && bin/halozsh install --force"
 
 rm -f .vim-config
-as_vagrant ln -s /vagrant .vim-config
+as_vagrant ln -s /vagrant ~/vagrant.vim-config
 
 sudo apt-get autoremove -y
 EOS

@@ -63,7 +63,9 @@ set isfname-== " Exclude = from isfilename.
 
 " Reload vimrc behaviours automatically
 if has('autocmd')
-  augroup HSAutoCmd | autocmd! | augroup END
+  augroup HSAutoCmd
+    autocmd!
+  augroup END
 endif
 
 " Automatically load .vimrc source when saved
@@ -111,7 +113,7 @@ autocmd HSAutoCmd InsertLeave * if &l:diff | diffupdate | endif
 " --------------------------------------
 " http://vim-users.jp/2011/02/hack202/
 
-autocmd MyAutoCmd BufWritePre *
+autocmd HSAutoCmd BufWritePre *
       \ call s:mkdir_as_necessary(expand('<afile>:p:h'), v:cmdbang)
 function! s:mkdir_as_necessary(dir, force)
   if !isdirectory(a:dir) && &l:buftype == '' &&
@@ -122,6 +124,6 @@ function! s:mkdir_as_necessary(dir, force)
 endfunction
 
 " Use autofmt.
-if function('autofmt#compat#formatexpr')
+if exists('*autofmt#compat#formatexpr')
   set formatexpr=autofmt#compat#formatexpr()
 end

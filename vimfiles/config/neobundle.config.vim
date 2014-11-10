@@ -177,7 +177,7 @@ NeoBundleLazy 'danro/rename.vim',
 " }}}2
 
 " {{{2 ag.vim: Search with ag
-NeoBundleLazy 'empatsw/ag.vim'
+NeoBundleLazy 'rking/ag.vim'
 " }}}2
 
 " {{{2 supertab: Supertab allows insert completion with tab key
@@ -284,7 +284,7 @@ NeoBundleLazy 'tjennings/git-grep-vim'
 " }}}2
 
 " {{{2 quickfixsigns_vim: Mark quickfix & location list items with signs
-NeoBundleLazy 'tjennings/quickfixsigns_vim', \ { 'depends' : [ 'tomtom/tlib_vim' ] }
+NeoBundleLazy 'tomtom/quickfixsigns_vim', { 'depends' : [ 'tomtom/tlib_vim' ] }
 " }}}2
 
 " {{{2 vim-abolish: Language friendly searches, substitutions, and abbreviations
@@ -514,13 +514,13 @@ NeoBundleLazy 'thinca/vim-textobj-comment',
 " }}}2
 
 " {{{2 vim-textobj-perl: Text objects for functions in perl
-NeoBundleLazy 'thinca/vim-textobj-perl',
+NeoBundleLazy 'thinca/vim-textobj-function-perl',
       \ { 'depends' : [ 'kana/vim-textobj-function' ],
       \ }
 " }}}2
 
 " {{{2 vim-textobj-javascript: Text objects for functions in javascript
-NeoBundleLazy 'thinca/vim-textobj-javascript',
+NeoBundleLazy 'thinca/vim-textobj-function-javascript',
       \ { 'depends' : [ 'kana/vim-textobj-function' ],
       \ }
 " }}}2
@@ -586,7 +586,7 @@ NeoBundleLazy 'msanders/cocoa.vim'
 " }}}2
 
 " {{{2 vim-mustache-handlebars: Vim syntax for Mustache & Handlebars syntax
-NeoBundleLazy 'msanders/vim-mustache-handlebars'
+NeoBundleLazy 'mustache/vim-mustache-handlebars'
 " }}}2
 
 " {{{2 html5.vim: Vim syntax for HTML5

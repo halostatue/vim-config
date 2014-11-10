@@ -40,9 +40,9 @@ if !isdirectory(expand($CACHE))
   call mkdir(expand($CACHE), 'p')
 endif
 
-" Create a MyAutoCmd autogroup
-augroup MyAutoCmd
-  autocmd
+" Create a HSAutoCmd autogroup
+augroup HSAutoCmd
+  autocmd!
 augroup END
 
 SourceIf ~/.secret.vimrc
