@@ -1,0 +1,3 @@
+" For Mac:
+
+SourceConfig unix

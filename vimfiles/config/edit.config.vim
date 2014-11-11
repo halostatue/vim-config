@@ -4,7 +4,6 @@ set tabstop=2     " <Tab> is two spaces
 set softtabstop=2 " <Tab> is substituted with spaces
 set shiftwidth=2  " Autoindent width of two spaces
 set shiftround    " Round indent by shiftwidth
-set smarttab      " Smart insert tab setting
 set expandtab     " Exchange tab to spaces
 
 set modeline      " Turn on modeline.
@@ -15,8 +14,6 @@ if has('unnamedplus')
 else
   set clipboard& clipboard+=unnamed
 endif
-
-set backspace=indent,eol,start " Enable backspace delete indent and newline.
 
 " Highlight parenthesis.
 set showmatch
@@ -73,7 +70,7 @@ autocmd HSAutoCmd BufWritePost .vimrc,_vimrc,config/*.vim source $MYVIMRC
 autocmd HSAutoCmd BufWritePost .gvimrc,_gvimrc,config/*.g.vim source $MYGVIMRC
 
 " Keymapping timeout.
-set timeout timeoutlen=3000 ttimeoutlen=100
+set timeout timeoutlen=3000
 
 " CursorHold time.
 set updatetime=1000

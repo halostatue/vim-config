@@ -162,12 +162,6 @@ function! neocomplete#sources#vimwiki#define()
     return s:source
 endfunction
 
-# Settings
-(grepprg/grepformat -- instead of Ag?)
-(undodir/backupdir/directory -- // usesfullpath?)
-(wildignore)
-(path)
-
 # vimwiki, local file completion 
 function vimwiki#OmniComplete(findstart, base)
     if a:findstart

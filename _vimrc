@@ -74,16 +74,8 @@ syntax enable
 " Installation check.
 NeoBundleCheck
 
-" Encoding:
-" Setting of the encoding to use for a save and reading.
-set encoding=utf-8 " Make it normal in UTF-8 in Unix.
-set fileformat=unix " Default fileformat.
-set fileformats=unix,dos,mac " Automatic recognition of a new line cord.
-
 " Search:
-set ignorecase " Ignore case…
-set smartcase " Unless there's a capital letter
-set wrapscan " Searches wrap around the end of the file.
+set ignorecase smartcase wrapscan
 
 " Edit:
 SourceConfig edit
@@ -96,6 +88,51 @@ SourceConfig filetype
 
 " Plugins:
 SourceConfig plugins
+
+" Mappings:
+SourceConfig mappings
+
+" Commands:
+" Display diff with the file.
+command! -nargs=1 -complete=file Diff vertical diffsplit <args>
+" Display diff from last save.
+command! DiffOrig vert new | setlocal bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+" Disable diff mode.
+command! -nargs=0 Undiff setlocal nodiff noscrollbind wrap
+
+" Platform:
+if IsWindows()
+  SourceConfig windows
+elseif IsMac()
+  SourceConfig mac
+else
+  SourceConfig unix
+endif
+
+" Using the mouse on a terminal.
+if has('mouse')
+  set mouse=a
+  if has('mouse_sgr') || v:version > 703 ||
+        \ v:version == 703 && has('patch632')
+    set ttymouse=sgr
+  else
+    set ttymouse=xterm2
+  endif
+
+  " Paste.
+  nnoremap <RightMouse> "+p
+  xnoremap <RightMouse> "+p
+  inoremap <RightMouse> <C-r><C-o>+
+  cnoremap <RightMouse> <C-r>+
+endif
+
+" GUI:
+if has('gui_running')
+  SourceConfig gui
+endif
+
+" Default home directory
+let t:cwd = getcwd()
 
 set autowrite " Automatically write changed buffers to disk.
 set modelines=5 " vim default
@@ -114,7 +151,6 @@ set scrolljump=2
 set mouse=ar keymodel=startsel,stopsel
 set viminfo='100,<100,s10,h,!
 set linebreak showmode visualbell
-
 
 " Clojure/Leiningen
 " set wildignore+=classes
@@ -137,94 +173,10 @@ if has("balloon_eval")
   set ballooneval
 endif
 
-set sessionoptions=blank,buffers,curdir,folds,globals,help,options,resize,slash,unix,winpos,winsize
-
-" Use Ack instead of Grep when available
-if executable("ack-grep") " Debian
-  set grepprg=ack-grep\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
-elseif executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
-endif
-
 " vimrc.maps: default key mappings
 " ------------------------------------------------------------------------
-" Make folding open/close with the tab.
-nmap <Tab> za
-vmap <Tab> za
-omap <Tab> za
-
-" Move between buffers. Different on Mac vs not-Mac because option inserts
-" special characters on the Mac and the Command/Super key isn't available off
-" the Mac.
-if has("mac") || has("macunix")
-  map <D-<> :N<CR>
-  map <D->> :n<CR>
-else
-  map <A-<> :N<CR>
-  map <A->> :N<CR>
-endif
-
-" Make zO recursively open whatever top level fold we're in, no matter where the
-" cursor happens to be.
-nnoremap zO zCzO
-
-" Shortcut for [] {{{
-onoremap id i[
-onoremap ad a[
-vnoremap id i[
-vnoremap ad a[
 
 " }}}
-
-" Next and Last {{{
-" Motion for "next/last object". For example, "din(" would go to the next "()" pair
-" and delete its contents.
-onoremap <silent> an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-xnoremap <silent> an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
-onoremap <silent> in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-xnoremap <silent> in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
-onoremap <silent> al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-xnoremap <silent> al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
-onoremap <silent> il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
-xnoremap <silent> il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
-function! s:NextTextObject(motion, dir)
-  let c = nr2char(getchar())
-  if c ==# "b"
-    let c = "("
-  elseif c ==# "B"
-    let c = "{"
-  elseif c ==# "d"
-    let c = "["
-  endif
-  exe "normal! ".a:dir.c."v".a:motion.c
-endfunction
-
-" Ack motions ------------------------------------------------------------- {{{
-
-" Motions to Ack for things.  Works with pretty much everything, including:
-"   w, W, e, E, b, B, t*, f*, i*, a*, and custom text objects
-"
-" Awesome.
-" Note: If the text covered by a motion contains a newline it won't work.  Ack
-" searches line-by-line.
-nnoremap <silent> \a :set opfunc=<SID>AckMotion<CR>g@
-xnoremap <silent> \a :<C-U>call <SID>AckMotion(visualmode())<CR>
-function! s:CopyMotionForType(type)
-  if a:type ==# 'v'
-    silent execute "normal! `<" . a:type . "`>y"
-  elseif a:type ==# 'char'
-    silent execute "normal! `[v`]y"
-  endif
-endfunction
-function! s:AckMotion(type) abort
-  let reg_save = @@
-
-  call s:CopyMotionForType(a:type)
-
-  execute "normal! :Ack! --literal " . shellescape(@@) . "\<cr>"
-
-  let @@ = reg_save
-endfunction
 
 " Use ,z to "focus" the current fold.
 nnoremap <leader>z zMzvzz
@@ -234,33 +186,6 @@ noremap <C-^> <C-^>`"
 
 " Make "gf" rebound to last cursor position (line *and* column)
 noremap gf gf`"
-
-" Error toggles ----------------------------------------------------------- {{{
-command! ErrorsToggle call <SID>ErrorsToggle()
-function! s:ErrorsToggle() " {{{
-  if exists("w:is_error_window")
-    unlet w:is_error_window
-    exec "q"
-  else
-    exec "Errors"
-    lopen
-    let w:is_error_window = 1
-  endif
-endfunction " }}}
-
-command! -bang -nargs=? QFixToggle call <SID>QFixToggle(<bang>0)
-function! s:QFixToggle(forced) " {{{
-  if exists("g:qfix_win") && a:forced == 0
-    cclose
-    unlet g:qfix_win
-  else
-    copen 10
-    let g:qfix_win = bufnr("$")
-  endif
-endfunction " }}}
-
-nmap <silent> <leader>et :ErrorsToggle<cr>
-nmap <silent> <leader>qt :QFixToggle<cr>
 
 " Show more information under <C-G>
 noremap <C-G> 2<C-G>
@@ -568,10 +493,6 @@ nnoremap ; :
 
 " Faster ESC
 " inoremap jk <ESC>
-
-" Cmdheight switching
-nnoremap <leader>1 :set cmdheight=1<cr>
-nnoremap <leader>2 :set cmdheight=2<cr>
 
 " Source
 vnoremap <leader>S y:execute @@<cr>
@@ -1271,8 +1192,8 @@ if has("autocmd")
     autocmd BufReadPost * SmartSetFoldText
 
     " Automatically load .vimrc source when saved
-    autocmd BufWritePost .vimrc,_vimrc source $MYVIMRC
-    autocmd BufWritePost .gvimrc,_gvimrc source $MYGVIMRC
+    " autocmd BufWritePost .vimrc,_vimrc source $MYVIMRC
+    " autocmd BufWritePost .gvimrc,_gvimrc source $MYGVIMRC
   augroup END
   augroup vimrcAllBuffers
     autocmd!
@@ -1538,3 +1459,9 @@ endif
 let g:localvimrc_whitelist=expand("$HOME/dev")
 
 nnoremap <silent> <F9> :TagbarToggle<CR>
+
+call neobundle#call_hook('on_source')
+
+set secure
+
+" vim: foldmethod=marker

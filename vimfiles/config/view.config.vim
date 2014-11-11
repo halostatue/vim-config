@@ -7,18 +7,13 @@ endfunction
 
 set number
 
-" Show <TAB> and <CR>
-set list
-if IsWindows()
-  set listchars=tab:>-,trail:-,extends:>,precedes:<
-else
-  set listchars=tab:▸\ ,trail:-,extends:»,precedes:«,nbsp:%
-endif
-
-" Always display statusline.
-set laststatus=2
 " Height of command line.
-set cmdheight=1
+set cmdheight=2
+
+" Cmdheight switching
+nnoremap <leader>1 :set cmdheight=1<cr>
+nnoremap <leader>2 :set cmdheight=2<cr>
+
 " Not show command on statusline.
 set noshowcmd
 
@@ -119,8 +114,6 @@ set wildignore+=migrations                       " Django migrations
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*.rbc                            " Rubinius byte code
 
-" Increase history amount.
-set history=1000
 set showfulltag
 " Can supplement a tag in a command-line.
 set wildoptions=tagfile
@@ -133,9 +126,7 @@ set wildoptions=tagfile
 " unloaded buffers; tags; current and included files; spell checking
 " dictionary; files in 'dictionary'; files in 'thesaurus'
 set complete+=kspell,k,s complete-=w,b,u
-if has("insert_expand")
-  set completeopt-=preview
-endif
+if has("insert_expand") | set completeopt-=preview | endif
 
 " Set popup menu max height.
 set pumheight=20

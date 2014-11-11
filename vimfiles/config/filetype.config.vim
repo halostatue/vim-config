@@ -1,5 +1,5 @@
 " Enable smart indent.
-set autoindent smartindent
+set smartindent
 
 augroup HSAutoCmd
   autocmd FileType,Syntax * call s:my_on_filetype()
