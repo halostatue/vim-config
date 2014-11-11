@@ -204,39 +204,6 @@ module VimConfig
       replace_file(source, target) if replace
     end
 
-    def git_task(url, options = {})
-      case url
-      when %r{^git://([^/]+)/(.+).git$}
-        repo = url
-        name = "#{$1}_#{$2.split(%r{/}).join('-')}"
-      when %r{^github://([^/]+)/(.+)$}
-        repo = "git://github.com/#{$1}/#{$2}.git"
-        name = "#{$1}_#{$2}"
-      else
-        raise "Unsupported git url format: #{repo}"
-      end
-
-      name = options[:name] || name
-      path = options[:path] || bundle_path(name)
-      parent = File.dirname(path)
-
-      git_target  = File.join(path, '.git')
-      task_name   = options[:task_name] || update_task_name(name)
-
-      task task_name => [ git_target ] do
-        puts "Updating #{name}…"
-        Dir.chdir(path) {
-          yield :pre_update if block_given?
-          git.pull
-          yield :post_update if block_given?
-        }
-      end
-    end
-
-    def update_task_name(name)
-      "update_#{name.gsub(%r{[^_A-Za-z0-9]}, '-')}".to_sym
-    end
-
     def link_tasks(*args)
       args.each { |arg| link_task(*Array(arg).flatten) }
     end
