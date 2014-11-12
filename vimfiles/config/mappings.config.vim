@@ -84,8 +84,8 @@ nnoremap <SID>(command-line-norange) q:<C-u>
 nmap ;;  <SID>(command-line-enter)
 xmap ;;  <SID>(command-line-enter)
 
-autocmd MyAutoCmd CmdwinEnter * call s:init_cmdwin()
-autocmd MyAutoCmd CmdwinLeave * let g:neocomplcache_enable_auto_select = 1
+autocmd HSAutoCmd CmdwinEnter * call s:init_cmdwin()
+autocmd HSAutoCmd CmdwinLeave * let g:neocomplcache_enable_auto_select = 1
 
 function! s:init_cmdwin()
   let g:neocomplcache_enable_auto_select = 0

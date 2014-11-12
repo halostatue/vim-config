@@ -65,7 +65,7 @@ else
   " Use guicolorscheme.vim
   NeoBundleSource vim-guicolorscheme
 
-  autocmd MyAutoCmd VimEnter,BufAdd *
+  autocmd HSAutoCmd VimEnter,BufAdd *
         \ if !exists('g:colors_name') | GuiColorScheme candy
 
   " Disable error messages.
