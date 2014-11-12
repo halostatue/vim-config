@@ -22,7 +22,7 @@ as_vagrant "cd ~vagrant/.dotfiles && bin/halozsh bootstrap"
 as_vagrant "cd ~vagrant/.dotfiles && bin/halozsh install --force"
 
 rm -f .vim-config
-as_vagrant ln -s /vagrant ~/vagrant.vim-config
+as_vagrant ln -s /vagrant ~vagrant/.vim-config
 
 sudo apt-get autoremove -y
 EOS
