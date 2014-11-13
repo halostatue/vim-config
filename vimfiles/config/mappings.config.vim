@@ -359,8 +359,8 @@ nnoremap Y y$
 nnoremap x "_x
 "}}}
 
-" Disable Ex-mode.
-nnoremap Q  q
+" Disable Ex-mode and make it reformat the current paragraph.
+nnoremap Q gqip
 
 " q: Quickfix  "{{{
 " The prefix key.
@@ -493,7 +493,7 @@ xnoremap <silent> gp o<ESC>p^
 xnoremap <silent> gP O<ESC>P^
 
 " Redraw.
-nnoremap <silent> <C-l>    :<C-u>redraw!<CR>
+nnoremap <silent> <C-l> :<C-u>redraw!<CR>
 
 " Folding."{{{
 " If press h on head, fold close.
@@ -671,3 +671,211 @@ endfunction " }}}
 nmap <silent> <leader>et :ErrorsToggle<cr>
 nmap <silent> <leader>qt :QFixToggle<cr>
 " }}}
+
+function! s:PulseCursorLine()
+  let current_window = winnr()
+
+  windo set nocursorline
+  execute current_window . 'wincmd w'
+
+  setlocal cursorline
+
+  redir => old_hi
+  silent execute 'hi CursorLine'
+  redir END
+  let old_hi = split(old_hi, '\n')[0]
+  let old_hi = substitute(old_hi, 'xxx', '', '')
+
+  hi CursorLine guibg=#2a2a2a ctermbg=233
+  redraw
+  sleep 20m
+
+  hi CursorLine guibg=#333333 ctermbg=235
+  redraw
+  sleep 20m
+
+  hi CursorLine guibg=#3a3a3a ctermbg=237
+  redraw
+  sleep 20m
+
+  hi CursorLine guibg=#444444 ctermbg=239
+  redraw
+  sleep 20m
+
+  hi CursorLine guibg=#3a3a3a ctermbg=237
+  redraw
+  sleep 20m
+
+  hi CursorLine guibg=#333333 ctermbg=235
+  redraw
+  sleep 20m
+
+  hi CursorLine guibg=#2a2a2a ctermbg=233
+  redraw
+  sleep 20m
+
+  execute 'hi ' . old_hi
+
+  windo set cursorline
+  execute current_window . 'wincmd w'
+endfunction
+
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap <silent> n nzzzv:call <SID>PulseCursorLine()<CR>
+nnoremap <silent> N Nzzzv:call <SID>PulseCursorLine()<CR>
+
+" Use <Leader>z to "focus" the current fold.
+nnoremap <Leader>z zMzvzz
+
+" Make CTRL-^ rebound to the line and *column* in the previous file
+noremap <C-^> <C-^>`"
+
+" Make "gf" rebound to last cursor position (line *and* column)
+noremap gf gf`"
+
+" Show more information under <C-G>
+noremap <C-G> 2<C-G>
+
+" Capitalize the first word or the selected text.
+nnoremap <Leader>cc :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<CR>
+vnoremap <Leader>cc :s/\%V\(\w\)\(\w*\)\%V/\u\1\L\2/g<CR>
+
+" Visual Mode */# from Scrooloose
+function! s:VSetSearch()
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
+endfunction
+
+vnoremap <silent> * :<C-U>call <SID>VSetSearch()<CR>//<CR><c-o>
+vnoremap <silent> # :<C-U>call <SID>VSetSearch()<CR>??<CR><c-o>
+
+" Typical command line stuff... -- emacsen-style
+cnoremap <C-A> <Home>
+cnoremap <C-F> <Right>
+cnoremap <C-B> <Left>
+cnoremap <C-E> <End>
+cnoremap <C-D> <Del>
+
+" Don't move on *
+nnoremap * *<c-o>
+
+" Same when jumping around
+nnoremap g; g;zz
+nnoremap g, g,zz
+
+" It's 2011.
+noremap j gj
+noremap k gk
+
+" Error navigation {{{
+"             Location List     QuickFix Window
+"            (e.g. Syntastic)     (e.g. Ack)
+"            ----------------------------------
+" Next      |     M-k               M-Down     |
+" Previous  |     M-l                M-Up      |
+"            ----------------------------------
+if IsMac()
+  nnoremap <D-M-K> :lnext<CR>zvzz
+  nnoremap <D-M-L> :lprevious<CR>zvzz
+  inoremap <D-M-K> <ESC>:lnext<CR>zvzz
+  inoremap <D-M-L> <ESC>:lprevious<CR>zvzz
+  nnoremap <D-M-Down> :cnext<CR>zvzz
+  nnoremap <D-M-Up> :cprevious<CR>zvzz
+else
+  nnoremap <M-K> :lnext<CR>zvzz
+  nnoremap <M-L> :lprevious<CR>zvzz
+  inoremap <M-K> <ESC>:lnext<CR>zvzz
+  inoremap <M-L> <ESC>:lprevious<CR>zvzz
+  nnoremap <M-Down> :cnext<CR>zvzz
+  nnoremap <M-Up> :cprevious<CR>zvzz
+endif
+
+" Heresy
+inoremap <C-A> <ESC>I
+inoremap <C-E> <ESC>A
+
+" Open a Quickfix window for the last search.
+nnoremap <silent> <Leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+" }}}
+
+" For keyboards that have Insert and Del keys (not Macs), make them do the
+" right thing.
+function! s:NormalPaste()
+  if @* != ""
+    normal "*gP
+  endif
+endfunction
+
+function! s:SelectPaste()
+  if @* != ""
+    if col(".") < col("'<")
+      normal "*gp
+    else
+      normal "*gP
+    endif
+  endif
+endfunction
+
+map <S-Del> "*x
+map <C-Insert> "*y
+map <S-Insert> :set paste<CR>:call <SID>NormalPaste()<CR>:set nopaste<CR>
+imap <S-Insert> x<ESC>:set paste<CR>:call <SID>NormalPaste()<CR>:set nopaste<CR>s
+cmap <S-Insert> <C-R>*
+vmap <S-Insert> "-x:set paste<CR>:call <SID>SelectPaste()<CR>:set nopaste<CR>
+
+" Easier linewise reselection
+nnoremap <leader>V V`]
+
+function! s:WhenPUMVisible(ifVisible, ifNotVisible)
+  if pumvisible()
+    return a:ifVisible
+  else
+    return a:ifNotVisible
+  endif
+endfunction
+
+" If a popupmenu is visible (pumvisible), change the behaviour of various
+" keys to do something meaningful with the menu.
+inoremap <expr> <ESC> <SID>WhenPUMVisible("\<C-E>", "\<ESC>")
+" inoremap <expr> <CR> <SID>WhenPUMVisible("\<C-Y>", "\<CR>")
+inoremap <expr> <Down> <SID>WhenPUMVisible("\<C-N>", "\<Down>")
+inoremap <expr> <Up> <SID>WhenPUMVisible("\<C-P>", "\<Up>")
+inoremap <expr> <PageDown> <SID>WhenPUMVisible("\<PageDown>\<C-P>\<C-N>", "\<PageDown>")
+inoremap <expr> <PageUp> <SID>WhenPUMVisible("\<PageUp>\<C-P>\<C-N>", "\<PageUp>")
+
+" Opens an edit command with the path of the currently edited file filled in
+" Normal mode: <leader>e
+map <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" Opens a tab edit command with the path of the currently edited file filled in
+" Normal mode: <leader>t
+map <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+" Inserts the path of the currently edited file into a command
+" Command mode: Ctrl+P
+cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+
+" Duplicate a selection
+" Visual mode: D
+vmap D y'>p
+
+" Shell
+function! s:ExecuteInShell(command) " {{{
+    let command = join(map(split(a:command), 'expand(v:val)'))
+    let winnr = bufwinnr('^' . command . '$')
+    silent! execute  winnr < 0 ? 'botright vnew ' . fnameescape(command) : winnr . 'wincmd w'
+    setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap nonumber
+    echo 'Execute ' . command . '...'
+    silent! execute 'silent %!'. command
+    silent! redraw
+    silent! execute 'autocmd BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+    silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>:AnsiEsc<CR>'
+    silent! execute 'nnoremap <silent> <buffer> q :q<CR>'
+    silent! execute 'AnsiEsc'
+    echo 'Shell command ' . command . ' executed.'
+endfunction " }}}
+command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+nnoremap <leader>! :Shell

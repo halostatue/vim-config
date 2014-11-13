@@ -90,7 +90,7 @@ module VimConfig
       directory bundle_path.to_s
       task install: bundle_path
 
-      link_tasks 'vimrc', 'gvimrc', 'vim' => 'vimfiles'
+      link_tasks 'vimrc', 'vim' => 'vimfiles'
 
       installer = self
 

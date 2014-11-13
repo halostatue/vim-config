@@ -1,151 +1,72 @@
 " GUI:
 
-"---------------------------------------------------------------------------
-" Fonts: "{{{
-set ambiwidth=double
+set winaltkeys=no " Do not use Windows ALT behaviour
 
-if has('win32') || has('win64')
-  " For Windows.
+" Fonts: {{{
+if has('gui_macvim')
+  " Command-Ctrl-F for Full-Screen
+  macmenu Window.Toggle\ Full\ Screen\ Mode key=<D-C-F>
 
-  "set guifontwide=VL\ Gothic:h11
-  "set guifontwide=MigMix\ 1M:h11
-  set guifontwide=Ricty:h12
+  set fuoptions=maxvert,maxhorz
 
-  set guifont=Ricty:h12
-  "set guifont=Anonymous\ Pro:h11
-  "set guifont=Courier\ New:h11
-  "set guifont=MS\ Gothic:h11
-  "set guifont=VL\ Gothic:h11
-  "set guifont=Consolas:h12
-  "set guifont=Bitstream\ Vera\ Sans\ Mono:h11
-  "set guifont=Inconsolata:h12
-  "set guifont=Terminal:h10:cSHIFTJIS
-
-  " Number of pixel lines inserted between characters.
-  set linespace=2
+  set guifont=Source\ Code\ Pro:h11,Inconsolata\ Medium:h11,Anonymous\ Pro:h12,DejaVu\ Sans\ Mono:h10,Andale\ Mono:h11
+elseif has('gui_gtk2')  || has('X11')
+  set guifont=Source\ Code\ Pro\ 11,Inconsolata\ Medium\ 11,Anonymous\ Pro\ 12,DejaVu\ Sans\ Mono\ 10,Andale\ Mono\ 11,Luxi\ Mono\ 9
+elseif has('win32') || has('win64')
+  set guifont=Source\ Code\ Pro:h11,Inconsolata\ Medium:h11,Anonymous\ Pro:h12,DejaVu\ Sans\ Mono:h10,Andale\ Mono:h11
 
   if has('patch-7.4.394')
     " Use DirectWrite
     set renderoptions=type:directx,gammma:2.2,mode:3
   endif
 
-  " Toggle font setting.
-  function! FontToggle()
-    if &guifont=~ '^VL Gothic:'
-      set guifont=Courier\ New:h11
-      set guifontwide=VL\ Gothic:h11
-
-      " Width of window.
-      set columns=155
-      " Height of window.
-      set lines=50
-    else
-      set guifont=VL\ Gothic:h11.5
-      set guifontwide=
-
-      " Width of window.
-      set columns=200
-      " Height of window.
-      set lines=43
-    endif
-  endfunction
-
-  nnoremap TF     :<C-u>call FontToggle()<CR>
-
-  if has('kaoriya')
-    " For Kaoriya only.
-    set ambiwidth=auto
-  endif
-elseif has('mac')
-  " For Mac.
-  set guifont=Osaka－等幅:h14
-else
-  " For Linux.
-  set guifontwide=VL\ Gothic\ 11
-  set guifont=Courier\ 10\ Pitch\ 11
-endif"}}}
+  map <A-Space> :simalt ~<CR>
+  imap <A-Space> <C-O>:simalt ~<CR>
+  cmap <A-Space> <C-C><A-Space>
+endif
+" }}}
 
 "---------------------------------------------------------------------------
 " Window:"{{{
 "
-if has('win32') || has('win64')
-  " Width of window.
-  set columns=230
-  " Height of window.
-  set lines=55
-
-  " Set transparency.
-  "autocmd GuiEnter * set transparency=221
-  " Toggle font setting.
-  command! TransparencyToggle let &transparency =
-        \ (&transparency != 255 && &transparency != 0)? 255 : 221
-  nnoremap TT     :<C-u>TransparencyToggle<CR>
-else
-  " Width of window.
-  set columns=151
-  " Height of window.
-  set lines=41
+if has('transparency')
+  set transparency=1 " 1% transparency
 endif
+
+set lines=60 columns=180
 
 " Don't override colorscheme.
 if !exists('g:colors_name')
-  execute 'colorscheme' globpath(&runtimepath,
-        \ 'colors/candy.vim') != '' ? 'candy' : 'desert'
-endif
-"}}}
-
-"---------------------------------------------------------------------------
-" Input Japanese:"{{{
-" For Linux
-if (has('multi_byte_ime') || has('xim')) && has('GUI_GTK')
-  " Disable uim when use skk.vim.
-  let &imdisable=1
-
-  " To use uim-anthy.
-  "let $GTK_IM_MODULE='uim-anthy'
-  "set imactivatekey=C-space
-
-  " To use ibus-mozc/fcitx.
-  let $GTK_IM_MODULE='xim'
+  colorscheme desertEx
 endif
 "}}}
 
 "---------------------------------------------------------------------------
 " Mouse:"{{{
-"
-set mousemodel=extend
+highlight Pmenu      term=NONE cterm=NONE ctermfg=7 ctermbg=5 gui=NONE guifg=White guibg=Magenta
+highlight PmenuSel   term=NONE cterm=NONE ctermfg=0 ctermbg=7 gui=NONE guifg=Black guibg=White
+highlight PmenuSbar  term=NONE cterm=NONE ctermfg=7 ctermbg=0 gui=NONE guifg=White guibg=Black
+highlight PmenuThumb term=NONE cterm=NONE ctermfg=0 ctermbg=7 gui=NONE guifg=Black guibg=White
 
 " Don't focus the window when the mouse pointer is moved.
 set nomousefocus
+
 " Hide mouse pointer on insert mode.
 set mousehide
 "}}}
 
 "---------------------------------------------------------------------------
 " Menu:"{{{
-"
-
 " Hide toolbar and menus.
 set guioptions-=Tt
 set guioptions-=m
 " Scrollbar is always off.
-set guioptions-=rL
-" Not guitablabel.
-set guioptions-=e
+set guioptions-=rLRlbh
+" Use guitablabel.
+set guioptions+=e
 
 " Confirm without window.
 set guioptions+=c
-"}}}
-
-"---------------------------------------------------------------------------
-" Views:"{{{
-"
-" Don't highlight search result.
-set nohlsearch
-
-" Don't flick cursor.
-set guicursor&
-set guicursor+=a:blinkon0
 "}}}
 
 " vim: foldmethod=marker

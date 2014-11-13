@@ -3,7 +3,7 @@
 " changelog.vim"{{{
 autocmd HSAutoCmd BufNewFile,BufRead *.changelog setf changelog
 let g:changelog_timeformat = "%Y-%m-%d"
-let g:changelog_username = "Shougo "
+let g:changelog_username = "Austin "
 "}}}
 
 " python.vim
@@ -14,6 +14,52 @@ let g:netrw_list_hide= '*.swp'
 " Change default directory.
 set browsedir=current
 "}}}
+
+if neobundle#tap('ctrlp.vim') "{{{
+  let neobundle#hooks.on_source = config.plugin('ctrlp')
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('vim-fugitive') "{{{
+  let neobundle#hooks.on_source = config.plugin('fugitive')
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('syntastic') "{{{
+  let neobundle#hooks.on_source = config.plugin('syntastic')
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('gist-vim') "{{{
+  let neobundle#hooks.on_source = config.plugin('gist')
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('supertab') "{{{
+  let neobundle#hooks.on_source = config.plugin('supertab')
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('vim-scratch') "{{{
+  let neobundle#hooks.on_source = config.plugin('scratch')
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('vim-statline') "{{{
+  " Statline integration
+  let g:statline_fugitive=1
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('tabular') "{{{
+  let neobundle#hooks.on_post_source = config.plugin('tabular.post.config.vim')
+  call neobundle#untap()
+endif "}}}
+
+if neobundle#tap('tagbar') "{{{
+  let neobundle#hooks.on_post_source = config.plugin('tagbar.post.config.vim')
+  call neobundle#untap()
+endif "}}}
 
 if neobundle#tap('neocomplete.vim') "{{{
   let g:neocomplete#enable_at_startup = 1

@@ -5,7 +5,11 @@ function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 
+" Show line numbers
 set number
+
+" Show search highlight
+set hlsearch
 
 " Height of command line.
 set cmdheight=2
@@ -62,7 +66,7 @@ function! s:my_tabline()  "{{{
   return s
 endfunction "}}}
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-set showtabline=0
+set showtabline=1
 
 " Set statusline.
 let &statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
@@ -113,6 +117,9 @@ set wildignore+=*.luac                           " Lua byte code
 set wildignore+=migrations                       " Django migrations
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*.rbc                            " Rubinius byte code
+set norelativenumber
+set foldlevelstart=0
+
 
 set showfulltag
 " Can supplement a tag in a command-line.
@@ -165,47 +172,89 @@ if v:version >= 703
   function! s:wcswidth(str)
     return strwidth(a:str)
   endfunction
-  finish
+else
+  function! s:wcswidth(str)
+    if a:str =~# '^[\x00-\x7f]*$'
+      return strlen(a:str)
+    end
+
+    let mx_first = '^\(.\)'
+    let str = a:str
+    let width = 0
+    while 1
+      let ucs = char2nr(substitute(str, mx_first, '\1', ''))
+      if ucs == 0
+        break
+      endif
+      let width += s:_wcwidth(ucs)
+      let str = substitute(str, mx_first, '', '')
+    endwhile
+    return width
+  endfunction
+
+  " UTF-8 only.
+  function! s:_wcwidth(ucs)
+    let ucs = a:ucs
+    if (ucs >= 0x1100
+          \  && (ucs <= 0x115f
+          \  || ucs == 0x2329
+          \  || ucs == 0x232a
+          \  || (ucs >= 0x2e80 && ucs <= 0xa4cf
+          \      && ucs != 0x303f)
+          \  || (ucs >= 0xac00 && ucs <= 0xd7a3)
+          \  || (ucs >= 0xf900 && ucs <= 0xfaff)
+          \  || (ucs >= 0xfe30 && ucs <= 0xfe6f)
+          \  || (ucs >= 0xff00 && ucs <= 0xff60)
+          \  || (ucs >= 0xffe0 && ucs <= 0xffe6)
+          \  || (ucs >= 0x20000 && ucs <= 0x2fffd)
+          \  || (ucs >= 0x30000 && ucs <= 0x3fffd)
+          \  ))
+      return 2
+    endif
+    return 1
+  endfunction
 endif
 
-function! s:wcswidth(str)
-  if a:str =~# '^[\x00-\x7f]*$'
-    return strlen(a:str)
-  end
+function! CleanFoldText()
+  let line = getline(v:foldstart)
 
-  let mx_first = '^\(.\)'
-  let str = a:str
-  let width = 0
-  while 1
-    let ucs = char2nr(substitute(str, mx_first, '\1', ''))
-    if ucs == 0
-      break
+  let nucolwidth = &fdc + &number * &numberwidth
+  let windowwidth = winwidth(0) - nucolwidth - 13
+  let foldedlinecount = v:foldend - v:foldstart + 1
+
+  " expand tabs into spaces
+  let onetab = strpart('          ', 0, &tabstop)
+  let line = substitute(line, '\t', onetab, 'g')
+
+  let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+  let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 2
+  return line . '… ' . repeat(" ", fillcharcount) . foldedlinecount . ' lines'
+endfunction
+let g:default_foldtext_function='CleanFoldText'
+
+function! s:SmartSetFoldText()
+  let l:ftf=&l:foldtext
+
+  if l:ftf =~ 'getline(v:foldstart)'
+    if exists("g:default_foldtext_function")
+      let l:ftf=g:default_foldtext_function . '()'
+      let &l:foldtext=l:ftf
+
+"     if type(g:default_foldtext_function) == type("")
+"       let l:ftf=function(g:default_foldtext_function)
+"     elseif type(g:default_foldtext_function) == type(function("type"))
+"       let l:ftf=g:default_foldtext_function
+"     endif
+"
+"     if type(l:ftf) == type(function("type"))
+"       let l:ftf=string(l:ftf)
+"     endif
+"
+"     let &foldtext=l:ftf
+    else
+      setlocal foldtext=foldtext()
     endif
-    let width += s:_wcwidth(ucs)
-    let str = substitute(str, mx_first, '', '')
-  endwhile
-  return width
-endfunction
-
-" UTF-8 only.
-function! s:_wcwidth(ucs)
-  let ucs = a:ucs
-  if (ucs >= 0x1100
-        \  && (ucs <= 0x115f
-        \  || ucs == 0x2329
-        \  || ucs == 0x232a
-        \  || (ucs >= 0x2e80 && ucs <= 0xa4cf
-        \      && ucs != 0x303f)
-        \  || (ucs >= 0xac00 && ucs <= 0xd7a3)
-        \  || (ucs >= 0xf900 && ucs <= 0xfaff)
-        \  || (ucs >= 0xfe30 && ucs <= 0xfe6f)
-        \  || (ucs >= 0xff00 && ucs <= 0xff60)
-        \  || (ucs >= 0xffe0 && ucs <= 0xffe6)
-        \  || (ucs >= 0x20000 && ucs <= 0x2fffd)
-        \  || (ucs >= 0x30000 && ucs <= 0x3fffd)
-        \  ))
-    return 2
   endif
-  return 1
 endfunction
-"}}}
+command! SmartSetFoldText call <SID>SmartSetFoldText()
+SmartSetFoldText

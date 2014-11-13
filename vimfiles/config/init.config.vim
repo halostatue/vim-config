@@ -17,6 +17,10 @@ function! IsMac()
       \     system('uname') =~? '^darwin'))
 endfunction
 
+function! IsSudo()
+  return s:is_sudo
+endfunction
+
 " Use ',' instead of '\' as <Leader> in global plugins.
 let g:mapleader = ','
 " Use 'm' as <LocalLeader> for filetype (buffer) plugins.

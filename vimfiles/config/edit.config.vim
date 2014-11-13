@@ -6,8 +6,11 @@ set shiftwidth=2  " Autoindent width of two spaces
 set shiftround    " Round indent by shiftwidth
 set expandtab     " Exchange tab to spaces
 
+set autowrite     " Automatically write changed buffers to disk.
 set modeline      " Turn on modeline.
-set modelines=5   " vim default
+set nojoinspaces  " Only one space after punctuation.
+set scrolljump=2  " Scroll at least two lines for offscreen moves
+set keymodel=startsel,stopsel " Selection with shift+arrows
 
 if has('unnamedplus')
   set clipboard& clipboard+=unnamedplus
@@ -100,7 +103,7 @@ autocmd HSAutoCmd WINENTER * checktime
 
 " Disable paste.
 autocmd HSAutoCmd InsertLeave *
-      \ if &paste | set nopaste mouse=a | echo 'nopaste' | endif |
+      \ if &paste | set nopaste mouse=ar | echo 'nopaste' | endif |
       \ if &l:diff | diffupdate | endif
 
 " Update diff.

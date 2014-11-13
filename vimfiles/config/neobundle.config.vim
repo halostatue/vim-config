@@ -85,7 +85,6 @@ NeoBundleLazy 'Shougo/vimfiler.vim',
       \   'mappings' : '<Plug>',
       \   'explorer' : 1,
       \ }
-" }}}3
 " }}}2
 " {{{2 vimproc: Asynchronous execution plugin for Vim
 NeoBundle 'Shougo/vimproc.vim',
@@ -311,6 +310,10 @@ NeoBundleLazy 'tpope/vim-endwise'
 NeoBundleLazy 'tpope/vim-fugitive'
 " }}}2
 
+" {{{2 vim-mercenary: A mercurial wrapper so awesome, you should give it money
+NeoBundleLazy 'jlfwong/vim-mercenary'
+" }}}2
+
 " {{{2 vim-sexp-mappings-for-regular-people: Sensible mappings for vim-sexp
 NeoBundleLazy 'tpope/vim-sexp-mappings-for-regular-people',
       \ { 'depends' : [
@@ -452,6 +455,18 @@ NeoBundleLazy 'majutsushi/tagbar'
 NeoBundle 'flazz/vim-colorschemes'
 " }}}2
 
+" {{{2 vim-erlang-compiler: Erlang syntax checking and compiler plugin
+NeoBundleLazy 'vim-erlang/vim-erlang-compiler'
+" }}}2
+"
+" {{{2 vim-erlang-omnicomplete: Erlang omnicomplete plugin
+NeoBundleLazy 'vim-erlang/vim-erlang-omnicomplete'
+" }}}2
+"
+" {{{2 vim-erlang-tags: Erlang ctags-support
+NeoBundleLazy 'vim-erlang/vim-erlang-tags'
+" }}}2
+
 " {{{1 Text Objects (navigation, selection, etc.)
 " {{{2 vim-textobj-rubysymbol: Text objects for ruby symbols
 NeoBundleLazy 'bootleq/vim-textobj-rubysymbol',
@@ -537,6 +552,10 @@ NeoBundleLazy 'vim-scripts/camelcasemotion'
 NeoBundleLazy 'vim-scripts/vim-textobj-quoted',
       \ { 'depends' : [ 'kana/vim-textobj-user' ],
       \ }
+" }}}2
+
+" {{{2 erlang-motions.vim: text motions for erlang
+NeoBundleLazy 'vim-erlang/erlang-motions.vim'
 " }}}2
 " }}}1
 
@@ -642,11 +661,19 @@ NeoBundleLazy 'tpope/vim-rails'
 " }}}2
 
 " {{{2 vim-markdown: Vim Markdown runtime files
-NeoBundleLazy 'tpope/vim-markdown'
+NeoBundleLazy 'plasticboy/vim-markdown'
+" }}}2
+
+" {{{2 vim-erlang-runtime: Erlang support
+NeoBundleLazy 'vim-erlang/vim-erlang-runtime'
 " }}}2
 
 " {{{2 vim-ruby: Ruby support
 NeoBundleLazy 'vim-ruby/vim-ruby'
+" }}}2
+
+" {{{2 apiblueprint.vim: Support for API Blueprint
+NeoBundleLazy 'kylef/apiblueprint.vim'
 " }}}2
 " }}}1
 

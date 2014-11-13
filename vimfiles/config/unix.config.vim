@@ -47,31 +47,6 @@ if &term =~# 'xterm'
   " let &t_CS = "y"
 endif
 
-if has('gui')
-  " Use CSApprox.vim
-  NeoBundleSource csapprox
-
-  " Convert colorscheme in Konsole.
-  let g:CSApprox_konsole = 1
-  let g:CSApprox_attr_map = {
-        \ 'bold' : 'bold',
-        \ 'italic' : '', 'sp' : ''
-        \ }
-  if !exists('g:colors_name')
-    execute 'colorscheme' globpath(&runtimepath,
-          \ 'colors/candy.vim') != '' ? 'candy' : 'desert'
-  endif
-else
-  " Use guicolorscheme.vim
-  NeoBundleSource vim-guicolorscheme
-
-  autocmd HSAutoCmd VimEnter,BufAdd *
-        \ if !exists('g:colors_name') | GuiColorScheme candy
-
-  " Disable error messages.
-  let g:CSApprox_verbose_level = 0
-endif
-
 " Change cursor shape.
 if &term =~ "xterm"
   let &t_SI = "\<Esc>]12;lightgreen\x7"
