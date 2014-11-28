@@ -230,7 +230,8 @@ function! CleanFoldText()
   let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 2
   return line . '… ' . repeat(" ", fillcharcount) . foldedlinecount . ' lines'
 endfunction
-let g:default_foldtext_function='CleanFoldText'
+let g:default_foldtext_function = 'CleanFoldText'
+let g:default_foldtext_function = 'FoldCCtext'
 
 function! s:SmartSetFoldText()
   let l:ftf=&l:foldtext
