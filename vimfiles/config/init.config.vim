@@ -22,9 +22,9 @@ function! IsSudo()
 endfunction
 
 " Use ',' instead of '\' as <Leader> in global plugins.
-let g:mapleader = ','
+" let g:mapleader = ','
 " Use 'm' as <LocalLeader> for filetype (buffer) plugins.
-let g:maplocalleader = 'm'
+" let g:maplocalleader = 'm'
 
 " Release 'm', ';', and ',' mappings for plug-in use with both normal (n) and
 " visual (x) maps.
