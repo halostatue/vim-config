@@ -35,6 +35,11 @@ if neobundle#tap('gist-vim') "{{{
   call neobundle#untap()
 endif "}}}
 
+if neobundle#tap('vim-signify') "{{{
+  let g:signify_vcs_list = [ 'git', 'hg' ]
+  call neobundle#untap()
+endif "}}}
+
 if neobundle#tap('supertab') "{{{
   let neobundle#hooks.on_source = config.plugin('supertab')
   call neobundle#untap()
@@ -52,12 +57,12 @@ if neobundle#tap('vim-statline') "{{{
 endif "}}}
 
 if neobundle#tap('tabular') "{{{
-  let neobundle#hooks.on_post_source = config.plugin('tabular.post.config.vim')
+  let neobundle#hooks.on_post_source = config.plugin('tabular.post')
   call neobundle#untap()
 endif "}}}
 
 if neobundle#tap('tagbar') "{{{
-  let neobundle#hooks.on_post_source = config.plugin('tagbar.post.config.vim')
+  let neobundle#hooks.on_post_source = config.plugin('tagbar.post')
   call neobundle#untap()
 endif "}}}
 
