@@ -3,11 +3,17 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " }}}1
 
 " {{{2 vim-niceblock: Make blockwise Visual mode more useful
-NeoBundleLazy 'kana/vim-niceblock', { 'mappings' : '<Plug>' }
+NeoBundleLazy 'kana/vim-niceblock',
+      \ { 'autoload' : { 'mappings' : '<Plug>' }
+      \ }
 " }}}2
 
 " {{{2 echodoc.vim: Print documentation in echo area
-NeoBundleLazy 'Shougo/echodoc.vim', { 'insert' : 1 }
+NeoBundleLazy 'Shougo/echodoc.vim',
+      \ { 'autoload' : {
+      \     'insert' : 1
+      \   }
+      \ }
 " }}}2
 
 " {{{2 neocomplete.vim: Next generation of auto completion framework
@@ -24,11 +30,13 @@ NeoBundleLazy 'Shougo/neosnippet.vim',
       \ { 'depends' : [
       \     'Shougo/neosnippet-snippets', 'Shougo/context_filetype.vim'
       \   ],
-      \   'insert' : 1,
-      \   'filetypes' : 'snippet',
-      \   'unite_sources' : [
-      \     'neosnippet', 'neosnippet/user', 'neosnippet/runtime'
-      \   ],
+      \   'autoload' : {
+      \     'insert' : 1,
+      \     'filetypes' : 'snippet',
+      \     'unite_sources' : [
+      \       'neosnippet', 'neosnippet/user', 'neosnippet/runtime'
+      \     ],
+      \   }
       \ }
 " }}}2
 
@@ -38,54 +46,82 @@ NeoBundle 'Shougo/neobundle-vim-recipes'
 
 " {{{2 Unite: Unite and create user interfaces
 NeoBundleLazy 'Shougo/unite.vim',
-      \ { 'commands' : [
-      \     { 'name' : 'Unite',
-      \       'complete' : 'customlist,unite#complete_source'
-      \     }
-      \   ]
+      \ { 'autoload' : {
+      \     'commands' : [
+      \       { 'name' : 'Unite',
+      \         'complete' : 'customlist,unite#complete_source'
+      \       }
+      \     ]
+      \   }
       \ }
 " }}}2
 
 " {{{2 unite-build: Build by unite interface
 NeoBundleLazy 'Shougo/unite-build', { 'depends' : [ 'Shougo/unite.vim' ] }
 " }}}2
+
 " {{{2 neossh: SSH interface for Vim plugins
 NeoBundleLazy 'Shougo/neossh.vim',
-      \ { 'filetypes' : [ 'vimfiler' ],
-      \   'sources' : 'ssh',
+      \ { 'autoload' : {
+      \     'filetypes' : [ 'vimfiler' ],
+      \     'unite_sources' : [ 'ssh' ],
+      \   }
       \ }
 " }}}2
+
 " {{{2 neomru: MRU plugin includes unite.vim MRU sources
-NeoBundle 'Shougo/neomru.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
+NeoBundleLazy 'Shougo/neomru.vim',
+      \ { 'depends' : [ 'Shougo/unite.vim' ],
+      \   'autoload' : { 'unite_sources' : [ 'mru' ] }
+      \ }
 " }}}2
+
 " {{{2 tabpagebuffer: Tabpage buffer interface
 NeoBundle 'Shougo/tabpagebuffer.vim'
 " }}}2
 
 " {{{2 vimshell-ssh: Run Vim over ssh on Vim
-NeoBundleLazy 'ujihisa/vimshell-ssh', { 'filetypes' : 'vimshell' }
+NeoBundleLazy 'ujihisa/vimshell-ssh',
+      \ { 'autoload' : { 'filetypes' : 'vimshell' }
+      \ }
 " }}}2
+
 " {{{2 unite-sudo: sudo source for unite
-NeoBundle 'Shougo/unite-sudo', { 'depends' : [ 'Shougo/unite.vim' ] }
+NeoBundle 'Shougo/unite-sudo',
+      \ { 'depends' : [ 'Shougo/unite.vim' ],
+      \   'autoload' : { 'unite_sources' : [ 'sudo' ] }
+      \ }
 " }}}2
+
 " {{{2 vim-vcs: Comprehensive VCS plug-ins
 " {{{3 -> vim-openbuf: Open and manage buffers
-NeoBundleLazy 'Shougo/vim-vcs', { 'depends' : 'thinca/vim-openbuf' }
+NeoBundleLazy 'Shougo/vim-vcs',
+      \ { 'depends' : 'thinca/vim-openbuf',
+      \   'autoload' : {
+      \     'functions' : [ 'vcs#info' ],
+      \     'commands' : [ 'Vcs' ]
+      \   },
+      \ }
 " }}}3
 " }}}2
+
 " {{{2 vimfiler: Powerful file explorer implemented by Vim script
 NeoBundleLazy 'Shougo/vimfiler.vim',
       \ { 'depends' : [ 'Shougo/unite.vim' ],
-      \   'commands' : [
-      \     { 'name' : [ 'VimFiler', 'Edit', 'Write' ],
-      \       'complete' : 'customlist,vimfiler#complete'
-      \     },
-      \     'Read', 'Source'
-      \   ],
-      \   'mappings' : '<Plug>',
-      \   'explorer' : 1,
+      \   'autoload' : {
+      \     'commands' : [
+      \       { 'name' : [ 'VimFiler', 'Edit', 'Write' ],
+      \         'complete' : 'customlist,vimfiler#complete'
+      \       },
+      \       'VimFilerExplorer',
+      \       'Edit', 'Read', 'Source', 'Write'
+      \     ],
+      \     'mappings' : '<Plug>',
+      \     'explorer' : 1,
+      \   }
       \ }
 " }}}2
+
 " {{{2 vimproc: Asynchronous execution plugin for Vim
 NeoBundle 'Shougo/vimproc.vim',
       \ { 'build' : {
@@ -96,64 +132,111 @@ NeoBundle 'Shougo/vimproc.vim',
       \   }
       \ }
 " }}}2
+
 " {{{2 vimshell: Powerful shell implemented by Vim script
 NeoBundleLazy 'Shougo/vimshell.vim',
-      \ { 'commands' : [
-      \     { 'name' : 'VimShell',
-      \       'complete' : 'customlist,vimshell#complete'
-      \     }
-      \   ],
-      \   'mappings' : '<Plug>'
+      \ { 'depends' : 'Shougo/vimproc.vim',
+      \   'autoload' : {
+      \     'commands' : [
+      \       { 'name' : 'VimShell',
+      \         'complete' : 'customlist,vimshell#complete'
+      \       },
+      \       'VimShellExecute',
+      \       'VimShellInteractive',
+      \       'VimShellTerminal',
+      \       'VimShellPop'
+      \     ],
+      \     'mappings' : '<Plug>'
+      \   }
+      \ }
+
+" }}}2
+
+" {{{2 vim-gitcomplete: completion of git commands
+NeoBundleLazy 'yomi322/vim-gitcomplete',
+      \ { 'autoload' : { 'filetypes' : [ 'vimshell' ] }
       \ }
 " }}}2
-" {{{2 vim-gitcomplete: completion of git commands
-NeoBundleLazy 'yomi322/vim-gitcomplete', { 'filetype' : 'vimshell' }
-" }}}2
+
 " {{{2  vinarise: Ultimate hex editing system with Vim
 NeoBundleLazy 'Shougo/vinarise.vim',
-      \ { 'commands' : [
-      \     { 'name' : 'Vinarise',
-      \       'complete' : 'file'
-      \     }
-      \   ]
+      \ { 'autoload' : {
+      \     'commands' : [
+      \       { 'name' : 'Vinarise',
+      \         'complete' : 'file'
+      \       }
+      \     ]
+      \   }
       \ }
 " }}}2
 
 " {{{2 vesting: VimL testing
-NeoBundleLazy 'Shougo/vesting', { 'unite_sources' : 'vesting' }
+NeoBundleLazy 'Shougo/vesting',
+      \ { 'autoload' : { 'unite_sources' : [ 'vesting' ] }
+      \ }
 " }}}2
 
 " {{{2 vim-jp/vital.vim: comprehensive Vim utility functions for Vim plugins
-NeoBundleLazy 'vim-jp/vital.vim', { 'commands' : [ 'Vitalize' ] }
+NeoBundleLazy 'vim-jp/vital.vim',
+      \ { 'autoload' : { 'commands' : [ 'Vitalize' ] }
+      \ }
 " }}}2
+
 " {{{2 junkfile: Create and work with a junkfile
-NeoBundleLazy 'Shougo/junkfile.vim', { 'unite_sources' : 'junkfile' }
-" }}}2
-
-" {{{2 unite-outline: Current buffer outline view with Unite
-NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
-" }}}2
-
-" {{{2 vim-css3-syntax: Extend CSS syntax highlighting for CSS3
-NeoBundleLazy 'hail2u/vim-css3-syntax'
-" }}}2
-
-" {{{2 vim-smartchr: Insert several candidates with a single key
-NeoBundleLazy 'kana/vim-smartchr', { 'insert' : 1 }
-" }}}2
-
-" {{{2 ctrlp: Fuzzy file, buffer, mru, tag, ... finder
-NeoBundleLazy 'ctrlpvim/ctrlp.vim'
-" }}}2
-" {{{2 foldCC: high-quality 'foldtext' function
-NeoBundleLazy 'LeafCage/foldCC.vim',
+NeoBundleLazy 'Shougo/junkfile.vim',
       \ { 'autoload' : {
-      \     'filetypes' : [ 'vim' ]
+      \     'commands' : [ 'JunkfileOpen' ],
+      \     'unite_sources' : [ 'junkfile', 'junkfile/new' ],
       \   }
       \ }
 " }}}2
-" {{{2 webapi-vim: Interface to various Web APIs
-NeoBundleLazy 'mattn/webapi-vim'
+
+" {{{2 unite-outline: Current buffer outline view with Unite
+NeoBundleLazy 'Shougo/unite-outline',
+      \ { 'depends' : [ 'Shougo/unite.vim' ],
+      \   'autoload' : { 'unite_sources' : [ 'outline' ] }
+      \ }
+" }}}2
+
+" {{{2 vim-css3-syntax: Extend CSS syntax highlighting for CSS3
+NeoBundleLazy 'hail2u/vim-css3-syntax',
+      \ { 'autoload' : { 'filetypes' : [ 'css', 'scss', 'html' ] }
+      \ }
+" }}}2
+
+" {{{2 vim-smartchr: Insert several candidates with a single key
+NeoBundleLazy 'kana/vim-smartchr',
+      \ { 'autoload' : { 'insert' : 1 }
+      \ }
+" }}}2
+
+" {{{2 vim-smartword: Insert several candidates with a single key
+NeoBundleLazy 'kana/vim-smartword',
+      \ { 'autoload' : {
+      \     'mappings' : [
+      \       '<Plug>(smartword-'
+      \     ]
+      \   }
+      \ }
+" }}}2
+
+" {{{2 ctrlp: Fuzzy file, buffer, mru, tag, ... finder
+NeoBundleLazy 'ctrlpvim/ctrlp.vim',
+      \ { 'autoload' : {
+      \     'commands' : [
+      \       'CtrlP', 'CtrlPBuffer', 'CtrlPMRU', 'CtrlPTag',
+      \       'CtrlPDir', 'CtrlPRTS', 'CtrlPUndo', 'CtrlPMixed'
+      \     ]
+      \   }
+      \ }
+" }}}2
+
+" {{{2 foldCC: high-quality 'foldtext' function
+NeoBundleLazy 'LeafCage/foldCC.vim',
+      \ { 'autoload' : {
+      \     'functions' : [ 'FoldCCtext' ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-slurper: companion to the slurper gem for Pivotal Tracker
@@ -166,21 +249,25 @@ NeoBundleLazy 'adamlowe/vim-slurper',
 
 " {{{2 rename.vim: Rename current file in vim buffer; retain relative path.
 NeoBundleLazy 'danro/rename.vim',
-      \ { 'commands' : [
-      \     { 'name' : [ 'Rename' ],
-      \       'complete' : 'customlist,SiblingFiles'
-      \     }
-      \   ],
-      \   'mappings' : '<Plug>',
+      \ { 'autoload' : {
+      \     'commands' : [
+      \       { 'name' : [ 'Rename' ],
+      \         'complete' : 'customlist,SiblingFiles'
+      \       }
+      \     ],
+      \     'mappings' : '<Plug>',
+      \   }
       \ }
 " }}}2
 
 " {{{2 ag.vim: Search with ag
-NeoBundleLazy 'rking/ag.vim'
+NeoBundleLazy 'rking/ag.vim',
+      \ { 'autoload' : { 'commands' : [ 'Ag', 'AgAdd', 'LAg', 'LAgAdd' ] }
+      \ }
 " }}}2
 
 " {{{2 supertab: Supertab allows insert completion with tab key
-NeoBundleLazy 'ervandew/supertab'
+NeoBundle 'ervandew/supertab'
 " }}}2
 
 " {{{2 tabular: Rename current file in vim buffer; retain relative path.
@@ -194,52 +281,62 @@ NeoBundleLazy 'godlygeek/tabular',
       \ }
 " }}}2
 
-" {{{2 minibufexpl.vim: Mini Buffer Explorer
-" NeoBundleLazy 'fholgado/minibufexpl.vim'
-" }}}2
-
 " {{{2 vim-gf-diff: Go to a hunk from diff output
-NeoBundleLazy 'kana/vim-gf-diff'
+NeoBundleLazy 'kana/vim-gf-diff',
+      \ { 'depends' : [ 'vim-gf-user' ],
+      \   'autoload' : { 'filetypes' : [ 'diff' ] }
+      \ }
 " }}}2
 
 " {{{2 vim-gf-user: A framework to open a file by context
-NeoBundleLazy 'kana/vim-gf-user'
+NeoBundle 'kana/vim-gf-user'
 " }}}2
 
 " {{{2 vim-grex: Operate on lines matched to the last search pattern (:g/re/x)
-NeoBundleLazy 'kana/vim-grex'
-" }}}2
-
-" {{{2 vim-ku: Interface for everything
-NeoBundleLazy 'kana/vim-ku'
+NeoBundleLazy 'kana/vim-grex',
+      \ { 'autoload' : {
+      \     'commands' : [ 'Grey', 'Gred' ],
+      \     'functions' : [ 'grex#delete', 'grex#yank' ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-scratch: Emacs like scratch buffer
-NeoBundleLazy 'kana/vim-scratch'
+NeoBundleLazy 'kana/vim-scratch',
+      \ { 'autoload' : {
+      \     'commands' : [ 'ScratchOpen' ],
+      \     'functions' : [ 'scratch#open' ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-smartinput: Provide smart input assistant
-NeoBundleLazy 'kana/vim-smartinput'
+" NeoBundleLazy 'kana/vim-smartinput'
 " }}}2
 
 " {{{2 vim-pipe: Pass the current buffer through a shell command, see the results
-NeoBundleLazy 'krisajenkins/vim-pipe'
+NeoBundle 'krisajenkins/vim-pipe'
 " }}}2
 
 " {{{2 gist-vim: Vimscript for creating gists (http://gist.github.com)
-NeoBundleLazy 'mattn/gist-vim'
+" {{{3 -> webapi-vim: Interface to various Web APIs
+NeoBundleLazy 'mattn/gist-vim',
+      \ { 'depends' : [ 'webapi-vim' ],
+      \   'autoload' : { 'commands' : [ 'Gist' ] }
+      \ }
+" }}}3
 " }}}2
 
 " {{{2 vim-signify: Indicate changed lines within a file using a VCS
-NeoBundleLazy 'mhinz/vim-signify'
+NeoBundle 'mhinz/vim-signify'
 " }}}2
 
 " {{{2 numbers.vim: A plugin for intelligently toggling line numbers
-NeoBundleLazy 'myusuf3/numbers.vim'
+NeoBundle 'myusuf3/numbers.vim'
 " }}}2
 
 " {{{2 syntastic: Syntax checking on the fly
-NeoBundleLazy 'scrooloose/syntastic'
+NeoBundle 'scrooloose/syntastic'
 " }}}2
 
 " {{{2 thoughtbot/vim-rspec: lightweight RSpec runner
@@ -251,75 +348,103 @@ NeoBundleLazy 'thoughtbot/vim-rspec',
 " }}}2
 
 " {{{2 vim-fontzoom: Fontsize controller for gVim.
-NeoBundleLazy 'thinca/vim-fontzoom'
+NeoBundle 'thinca/vim-fontzoom'
 " }}}2
 
 " {{{2 vim-prettyprint: Prettyprint vim variables
-NeoBundleLazy 'thinca/vim-prettyprint'
+NeoBundleLazy 'thinca/vim-prettyprint',
+      \ { 'autoload' : {
+      \     'commands' : [ 'PrettyPrint', 'PP' ],
+      \     'functions' : [ 'PrettyPrint', 'PP' ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-quickrun: Run a command and show its result quickly
-NeoBundleLazy 'thinca/vim-quickrun'
+NeoBundleLazy 'thinca/vim-quickrun',
+      \ { 'autoload' : { 'commands' : [ 'QuickRun' ] }
+      \ }
 " }}}2
 
 " {{{2 vim-quickmemo: Change an empty buffer to a memo buffer
-NeoBundleLazy 'thinca/vim-quickmemo'
+NeoBundle 'thinca/vim-quickmemo'
 " }}}2
 
 " {{{2 vim-qfreplace: Perform the replacement in quickfix
-NeoBundleLazy 'thinca/vim-qfreplace'
+NeoBundleLazy 'thinca/vim-qfreplace',
+      \ { 'autoload' : { 'commands' : [ 'Qfreplace' ] }
+      \ }
 " }}}2
 
 " {{{2 vim-unite-history: Unite source for command/search history
-NeoBundleLazy 'thinca/vim-unite-history', { 'depends' : [ 'Shougo/unite.vim' ] }
+NeoBundleLazy 'thinca/vim-unite-history',
+      \ { 'depends' : [ 'Shougo/unite.vim' ],
+      \   'autoload' : {
+      \     'unite_sources' : [ 'history' ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-localrc: Enable configuration file of each directory
-NeoBundleLazy 'thinca/vim-localrc'
+NeoBundle 'thinca/vim-localrc'
 " }}}2
 
 " {{{2 git-grep-vim: Search with git-grep
-NeoBundleLazy 'tjennings/git-grep-vim'
+NeoBundleLazy 'tjennings/git-grep-vim',
+      \ { 'autoload' : {
+      \     'commands' : [
+      \       'GitGrep', 'GitGrepAdd', 'LGitGrep', 'LGitGrepAdd'
+      \     ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 quickfixsigns_vim: Mark quickfix & location list items with signs
-NeoBundleLazy 'tomtom/quickfixsigns_vim', { 'depends' : [ 'tomtom/tlib_vim' ] }
+NeoBundle 'tomtom/quickfixsigns_vim', { 'depends' : [ 'tomtom/tlib_vim' ] }
 " }}}2
 
 " {{{2 vim-abolish: Language friendly searches, substitutions, and abbreviations
-NeoBundleLazy 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-abolish'
 " }}}2
 
 " {{{2 vim-bundler: Support for Ruby's Bundler
-NeoBundleLazy 'tpope/vim-bundler'
+NeoBundleLazy 'tpope/vim-bundler',
+      \ { 'autoload' : {
+      \     'commands' : [
+      \       'Bundle', 'Bopen', 'Bedit', 'Bsplit', 'Bvsplit',
+      \       'Btabedit', 'Bpedit'
+      \     ]
+      \   }
+      \ }
 " }}}2
 
-" {{{2 vim-commentary: Comment stuff out 
-NeoBundleLazy 'tpope/vim-commentary'
+" {{{2 vim-commentary: Comment stuff out
+NeoBundle 'tpope/vim-commentary'
 " }}}2
 
 " {{{2 vim-dispatch: Asynchronous build and test dispatcher
-NeoBundleLazy 'tpope/vim-dispatch'
+NeoBundle 'tpope/vim-dispatch'
 " }}}2
 
 " {{{2 vim-endwise: Wisely add 'end' to various programming languages.
-NeoBundleLazy 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-endwise'
 " }}}2
 
 " {{{2 vim-endwise: A Git wrapper so awesome, it should be illegal
-NeoBundleLazy 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive' }
 " }}}2
 
 " {{{2 vim-mercenary: A mercurial wrapper so awesome, you should give it money
-NeoBundleLazy 'jlfwong/vim-mercenary'
+NeoBundle 'jlfwong/vim-mercenary'
 " }}}2
 
+" Current cleanup HERE
 " {{{2 vim-sexp-mappings-for-regular-people: Sensible mappings for vim-sexp
 NeoBundleLazy 'tpope/vim-sexp-mappings-for-regular-people',
       \ { 'depends' : [
       \     'guns/vim-sexp', 'tpope/vim-repeat', 'tpope/vim-surround'
       \   ]
-      \ } 
+      \ }
 " }}}2
 
 " {{{2 vim-unimpaired: Pairs of handy bracket mappings
