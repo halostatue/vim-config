@@ -231,8 +231,8 @@ nnoremap <silent> [Window]o  :<C-u>only<CR>
 nnoremap <silent> q :<C-u>call <SID>smart_close()<CR>
 
 " A .vimrc snippet that allows you to move around windows beyond tabs
-nnoremap <silent> <Tab> :call <SID>NextWindow()<CR>
-nnoremap <silent> <S-Tab> :call <SID>PreviousWindowOrTab()<CR>
+nnoremap <silent> <C-Tab> :call <SID>NextWindow()<CR>
+nnoremap <silent> <C-S-Tab> :call <SID>PreviousWindowOrTab()<CR>
 
 function! s:smart_close()
   if winnr('$') != 1
@@ -879,3 +879,5 @@ function! s:ExecuteInShell(command) " {{{
 endfunction " }}}
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 nnoremap <leader>! :Shell
+
+nnoremap <silent> <C-P> :<c-u>CtrlP<CR>
