@@ -40,6 +40,11 @@ if neobundle#tap('vim-signify') "{{{
   call neobundle#untap()
 endif "}}}
 
+if neobundle#tap('vim-ragtag') "{{{
+  let g:ragtag_global_maps = 1
+  call neobundle#untap()
+endif "}}}
+
 if neobundle#tap('supertab') "{{{
   let neobundle#hooks.on_source = config.plugin('supertab')
   call neobundle#untap()

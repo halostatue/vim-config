@@ -513,44 +513,6 @@ noremap zz za
 " Substitute.
 xnoremap s :s//g<Left><Left>
 
-" Sticky shift in English keyboard."{{{
-" Sticky key.
-inoremap <expr> ;  <SID>sticky_func()
-cnoremap <expr> ;  <SID>sticky_func()
-snoremap <expr> ;  <SID>sticky_func()
-
-function! s:sticky_func()
-  let sticky_table = {
-        \',' : '<', '.' : '>', '/' : '?',
-        \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
-        \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
-        \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
-        \}
-  let special_table = {
-        \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
-        \}
-
-  if mode() !~# '^c'
-    echo 'Input sticky key: '
-  endif
-  let char = ''
-
-  while char == ''
-    let char = nr2char(getchar())
-  endwhile
-
-  if char =~ '\l'
-    return toupper(char)
-  elseif has_key(sticky_table, char)
-    return sticky_table[char]
-  elseif has_key(special_table, char)
-    return special_table[char]
-  else
-    return ''
-  endif
-endfunction
-"}}}
-
 " Easy escape."{{{
 inoremap jj           <ESC>
 " inoremap <expr> j       getline('.')[col('.') - 2] ==# 'j' ? "\<BS>\<ESC>" : 'j'
@@ -752,13 +714,6 @@ endfunction
 vnoremap <silent> * :<C-U>call <SID>VSetSearch()<CR>//<CR><c-o>
 vnoremap <silent> # :<C-U>call <SID>VSetSearch()<CR>??<CR><c-o>
 
-" Typical command line stuff... -- emacsen-style
-cnoremap <C-A> <Home>
-cnoremap <C-F> <Right>
-cnoremap <C-B> <Left>
-cnoremap <C-E> <End>
-cnoremap <C-D> <Del>
-
 " Don't move on *
 nnoremap * *<c-o>
 
@@ -792,10 +747,6 @@ else
   nnoremap <M-Down> :cnext<CR>zvzz
   nnoremap <M-Up> :cprevious<CR>zvzz
 endif
-
-" Heresy
-inoremap <C-A> <ESC>I
-inoremap <C-E> <ESC>A
 
 " Open a Quickfix window for the last search.
 nnoremap <silent> <Leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>

@@ -321,7 +321,7 @@ NeoBundle 'krisajenkins/vim-pipe'
 " {{{2 gist-vim: Vimscript for creating gists (http://gist.github.com)
 " {{{3 -> webapi-vim: Interface to various Web APIs
 NeoBundleLazy 'mattn/gist-vim',
-      \ { 'depends' : [ 'webapi-vim' ],
+      \ { 'depends' : [ 'mattn/webapi-vim' ],
       \   'autoload' : { 'commands' : [ 'Gist' ] }
       \ }
 " }}}3
@@ -438,65 +438,81 @@ NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive' }
 NeoBundle 'jlfwong/vim-mercenary'
 " }}}2
 
-" Current cleanup HERE
 " {{{2 vim-sexp-mappings-for-regular-people: Sensible mappings for vim-sexp
 NeoBundleLazy 'tpope/vim-sexp-mappings-for-regular-people',
       \ { 'depends' : [
       \     'guns/vim-sexp', 'tpope/vim-repeat', 'tpope/vim-surround'
-      \   ]
+      \   ],
+      \   'autoload' : {
+      \     'filetypes' : [ 'clojure,scheme,lisp,timl' ]
+      \   }
       \ }
 " }}}2
 
 " {{{2 vim-unimpaired: Pairs of handy bracket mappings
-NeoBundleLazy 'tpope/vim-unimpaired'
+NeoBundle 'tpope/vim-unimpaired'
 " }}}2
 
 " {{{2 vim-rsi: Readline style insertion
-NeoBundleLazy 'tpope/vim-rsi'
+NeoBundle 'tpope/vim-rsi'
 " }}}2
 
 " {{{2 vim-rake: It's like rails.vim without the rails
-NeoBundleLazy 'tpope/vim-rake', { 'depends' : [ 'tpope/vim-projectionist' ] }
+NeoBundleLazy 'tpope/vim-rake',
+      \ { 'depends' : [ 'tpope/vim-projectionist' ],
+      \   'autoload' : {
+      \     'commands' : [ 'Rake' ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-capslock: Software caps lock
-NeoBundleLazy 'tpope/vim-capslock'
+NeoBundle 'tpope/vim-capslock'
 " }}}2
 
 " {{{2 vim-surround: Plugin for deleting, changing, and adding "surroundings"
-NeoBundleLazy 'tpope/vim-surround'
+NeoBundle 'tpope/vim-surround'
 " }}}2
 
 " {{{2 vim-scriptease: Write Vim scripts with ease
-NeoBundleLazy 'tpope/vim-scriptease'
+NeoBundle 'tpope/vim-scriptease'
 " }}}2
 
 " {{{2 vim-characterize: Unicode character metadata
-NeoBundleLazy 'tpope/vim-characterize'
+NeoBundle 'tpope/vim-characterize'
 " }}}2
 
 " {{{2 vim-speeddating: Use CTRL-A/CTRL-X to increment dates, times, and more
-NeoBundleLazy 'tpope/vim-speeddating'
+NeoBundle 'tpope/vim-speeddating'
 " }}}2
 
 " {{{2 vim-ragtag: Ghetto XML/HTML mappings
-NeoBundleLazy 'tpope/vim-ragtag'
+NeoBundle 'tpope/vim-ragtag'
 " }}}2
 
 " {{{2 vim-jdaddy: JSON manipulation and pretty printing
-NeoBundleLazy 'tpope/vim-jdaddy'
+NeoBundle 'tpope/vim-jdaddy'
 " }}}2
 
 " {{{2 vim-repeat: enable repeating supported plugin maps with "."
-NeoBundleLazy 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-repeat'
 " }}}2
 
 " {{{2 vim-eunuch: Unix shell command file manipulation
-NeoBundleLazy 'tpope/vim-eunuch'
+NeoBundleLazy 'tpope/vim-eunuch',
+      \ { 'autoload' : {
+      \     'commands' : [
+      \       'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir',
+      \       'Find', 'Locate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
+      \     ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-obsession: Continuously updated session files
-NeoBundleLazy 'tpope/vim-obsession'
+NeoBundleLazy 'tpope/vim-obsession',
+      \ { 'autoload' : { 'commands' : [ 'Obsession' ] }
+      \ }
 " }}}2
 
 " {{{2 vim-sensible: Defaults everyone can agree on
@@ -504,8 +520,7 @@ NeoBundle 'tpope/vim-sensible'
 " }}}2
 
 " {{{2 vim-rhubarb: fugitive.vim extension for GitHub
-" let g:RHUBARB_TOKEN = '<token>'
-NeoBundleLazy 'tpope/vim-rhubarb'
+NeoBundle 'tpope/vim-rhubarb'
 " }}}2
 
 " {{{2 vim-vinegar: combine with netrw to create a delicious salad dressing
@@ -516,52 +531,52 @@ NeoBundleLazy 'tpope/vim-rhubarb'
 NeoBundleLazy 'tpope/vim-heroku',
       \ { 'depends' : [
       \     'tpope/vim-dispatch', 'tpope/vim-fugitive'
-      \   ]
+      \   ],
+      \   'autoload' : { 'commands' : [ 'Hk' ] }
       \ }
 " }}}2
 
 " {{{2 vim-liquid: Vim Liquid runtime files with Jekyll enhancements
-NeoBundleLazy 'tpope/vim-liquid'
+NeoBundleLazy 'tpope/vim-liquid',
+      \ { 'autoload' : { 'filetypes' : [ 'liquid' ] } }
 " }}}2
 
 " {{{2 vim-ansi-esc: Ansi Escape Sequence Visualization
 NeoBundleLazy 'halostatue/vim-ansi-esc',
-      \ { 'commands' : [ 'AnsiEsc' ],
+      \ { 'autoload' : { 'commands' : [ 'AnsiEsc' ] },
       \   'depends' : [ 'halostatue/vim-cecutil' ]
       \ }
 " }}}2
 
 " {{{2 ColorX: Insert Hex or RGB from Mac OS X colour picker
 " The plugin appropriately ignores itself if this is not a Mac.
-NeoBundleLazy 'vim-scripts/ColorX'
+NeoBundleLazy 'vim-scripts/ColorX',
+      \ { 'autoload' : {
+      \     'commands' : [ 'ColorRGB', 'ColorHEX' ]
+      \   }
+      \ }
 " }}}2
 
 " {{{2 vim-indexed-search: Show match count and index with search command
-NeoBundleLazy 'henrik/vim-indexed-search'
-" }}}2
-
-" {{{2 ShowMarks7: Provide a visual representation of location marks
-NeoBundleLazy 'vim-scripts/ShowMarks7'
+NeoBundle 'henrik/vim-indexed-search'
 " }}}2
 
 " {{{2 vim-zoom-win: Zoom a window into focus
-NeoBundleLazy 'halostatue/vim-zoom-win'
+NeoBundle 'halostatue/vim-zoom-win'
 " }}}2
 
 " {{{2 vim-calendar: Calendar utility for vim
-NeoBundleLazy 'halostatue/vim-calendar'
+NeoBundleLazy 'halostatue/vim-calendar',
+      \ { 'autoload' : { 'commands' : [ 'Calendar', 'CalendarH' ] }
+      \ }
 " }}}2
 
 " {{{2 matchit.zip: Extended "%" matching
-NeoBundleLazy 'vim-scripts/matchit.zip'
-" }}}2
-
-" {{{2 taskpaper.vim: TaskPaper support for VIM
-NeoBundleLazy 'davidoc/taskpaper.vim'
+NeoBundle 'vim-scripts/matchit.zip'
 " }}}2
 
 " {{{2 vim-regionsyntax: Dynamically highlight code blocks
-NeoBundleLazy 'farseer90718/vim-regionsyntax'
+NeoBundle 'farseer90718/vim-regionsyntax'
 " }}}2
 
 " {{{2 vim-startify: Showing recently used stuff like a boss
@@ -573,7 +588,9 @@ NeoBundle 'bling/vim-airline'
 " }}}2
 
 " {{{2 tagbar: Display tags of a file ordered by scope
-NeoBundleLazy 'majutsushi/tagbar'
+NeoBundleLazy 'majutsushi/tagbar',
+      \ { 'autoload' : { 'commands' : [ 'TagBar', 'TagBarToggle' ] }
+      \ }
 " }}}2
 
 " {{{2 vim-colorschemes: one colorscheme pack to rule them all
@@ -581,69 +598,75 @@ NeoBundle 'flazz/vim-colorschemes'
 " }}}2
 
 " {{{2 vim-erlang-compiler: Erlang syntax checking and compiler plugin
-NeoBundleLazy 'vim-erlang/vim-erlang-compiler'
+NeoBundleLazy 'vim-erlang/vim-erlang-compiler',
+      \ { 'autoload' : { 'filetypes' : [ 'erlang' ] }
+      \ }
 " }}}2
 "
 " {{{2 vim-erlang-omnicomplete: Erlang omnicomplete plugin
-NeoBundleLazy 'vim-erlang/vim-erlang-omnicomplete'
+NeoBundleLazy 'vim-erlang/vim-erlang-omnicomplete',
+      \ { 'autoload' : { 'filetypes' : [ 'erlang' ] }
+      \ }
 " }}}2
 "
 " {{{2 vim-erlang-tags: Erlang ctags-support
-NeoBundleLazy 'vim-erlang/vim-erlang-tags'
+NeoBundleLazy 'vim-erlang/vim-erlang-tags',
+      \ { 'autoload' : { 'filetypes' : [ 'erlang' ] }
+      \ }
 " }}}2
 
+" Current cleanup HERE
 " {{{1 Text Objects (navigation, selection, etc.)
 " {{{2 vim-textobj-rubysymbol: Text objects for ruby symbols
 NeoBundleLazy 'bootleq/vim-textobj-rubysymbol',
-      \ { 'autoload' : {
-      \     'filetypes' : [ 'ruby' ]
-      \   }
+      \ { 'autoload' : { 'filetypes' : [ 'ruby' ] }
       \ }
 " }}}2
 
 " {{{2 vim-textobj-datetime: Text objects for date and time
-NeoBundleLazy 'kana/vim-textobj-datetime'
+NeoBundle 'kana/vim-textobj-datetime'
 " }}}2
 
 " {{{2 vim-textobj-diff: Text objects for ouputs of diff(1)
-NeoBundleLazy 'kana/vim-textobj-diff'
+NeoBundle 'kana/vim-textobj-diff'
 " }}}2
 
 " {{{2 vim-textobj-entire: Text objects for entire buffer
-NeoBundleLazy 'kana/vim-textobj-entire'
+NeoBundle 'kana/vim-textobj-entire'
 " }}}2
 
 " {{{2 vim-textobj-fold: Text objects for foldings
-NeoBundleLazy 'kana/vim-textobj-fold'
+NeoBundle 'kana/vim-textobj-fold'
 " }}}2
 
 " {{{2 vim-textobj-function: Text objects for functions
-NeoBundleLazy 'kana/vim-textobj-function'
+NeoBundle 'kana/vim-textobj-function'
 " }}}2
 
 " {{{2 vim-textobj-help: Text objects for VIM help documents
-NeoBundleLazy 'kana/vim-textobj-help'
+NeoBundle 'kana/vim-textobj-help'
 " }}}2
 
 " {{{2 vim-textobj-indent: Text objects for indented blocks of lines
-NeoBundleLazy 'kana/vim-textobj-indent'
+NeoBundle 'kana/vim-textobj-indent'
 " }}}2
 
 " {{{2 vim-textobj-lastpat: Text objects for the last searched pattern
-NeoBundleLazy 'kana/vim-textobj-lastpat'
+NeoBundle 'kana/vim-textobj-lastpat'
 " }}}2
 
 " {{{2 vim-textobj-syntax: Text objects for syntax highlighted items
-NeoBundleLazy 'kana/vim-textobj-syntax'
+NeoBundle 'kana/vim-textobj-syntax'
 " }}}2
 
 " {{{2 vim-textobj-user: Create your own text objects
-NeoBundleLazy 'kana/vim-textobj-user'
+NeoBundle 'kana/vim-textobj-user'
 " }}}2
 
 " {{{2 vim-textobj-rubyblock: Text objects for ruby blocks
 NeoBundleLazy 'nelstrom/vim-textobj-rubyblock',
       \ { 'depends' : [ 'kana/vim-textobj-user' ],
+      \   'autoload' : { 'filetypes' : [ 'ruby' ] }
       \ }
 " }}}2
 
@@ -656,150 +679,157 @@ NeoBundleLazy 'thinca/vim-textobj-comment',
 " {{{2 vim-textobj-perl: Text objects for functions in perl
 NeoBundleLazy 'thinca/vim-textobj-function-perl',
       \ { 'depends' : [ 'kana/vim-textobj-function' ],
+      \   'autoload' : { 'filetypes' : [ 'perl' ] }
       \ }
 " }}}2
 
 " {{{2 vim-textobj-javascript: Text objects for functions in javascript
 NeoBundleLazy 'thinca/vim-textobj-function-javascript',
       \ { 'depends' : [ 'kana/vim-textobj-function' ],
+      \   'autoload' : { 'filetypes' : [ 'javascript' ] }
       \ }
 " }}}2
 
 " {{{2 argtextobj.vim: Text objects for function arguments.
-NeoBundleLazy 'vim-scripts/argtextobj.vim'
+NeoBundle 'vim-scripts/argtextobj.vim'
 " }}}2
 
 " {{{2 camelcasemotion: Motion through CamelCaseWords and underscore_notation
-NeoBundleLazy 'vim-scripts/camelcasemotion'
+NeoBundle 'vim-scripts/camelcasemotion'
 " }}}2
 
 " {{{2 vim-textobj-quoted: Text objects for quoted content
-NeoBundleLazy 'vim-scripts/vim-textobj-quoted',
+NeoBundle 'vim-scripts/vim-textobj-quoted',
       \ { 'depends' : [ 'kana/vim-textobj-user' ],
       \ }
 " }}}2
 
 " {{{2 erlang-motions.vim: text motions for erlang
-NeoBundleLazy 'vim-erlang/erlang-motions.vim'
+NeoBundleLazy 'vim-erlang/erlang-motions.vim',
+      \ { 'autoload' : { 'filetypes' : [ 'erlang' ] }
+      \ }
 " }}}2
 " }}}1
 
 " {{{1 Syntax formats
 " {{{2 puppet-vim: Vim support for Puppet file syntaxes
-NeoBundleLazy 'ajf/puppet-vim'
+NeoBundle 'ajf/puppet-vim'
 " }}}2
 
 " {{{2 vim-toml: Vim syntax for TOML
-NeoBundleLazy 'cespare/vim-toml'
+NeoBundle 'cespare/vim-toml'
 " }}}2
 
 " {{{2 csv: Vim syntax for CSV
-NeoBundleLazy 'chrisbra/csv.vim'
+NeoBundle 'chrisbra/csv.vim'
 " }}}2
 
 " {{{2 vim-reveal-in-finder:  Reveal in Finder plugin
-NeoBundleLazy 'henrik/vim-reveal-in-finder',
-      \ { 'commands' : [
-      \     { 'name' : [ 'Reveal' ] }
-      \   ],
+NeoBundle 'henrik/vim-reveal-in-finder',
+      \ { 'autoload' : { 'commands' : [ 'Reveal' ] }
       \ }
 " }}}2
 
 " {{{2 vim-rdoc: Vim syntax for RDoc
-NeoBundleLazy 'depuracao/vim-rdoc'
+NeoBundle 'depuracao/vim-rdoc'
 " }}}2
 
 " {{{2 vim-scala: Vim syntax for Scala
-NeoBundleLazy 'derekwyatt/vim-scala'
+NeoBundle 'derekwyatt/vim-scala'
 " }}}2
 
 " {{{2 vim-less: Vim syntax for LESS
-NeoBundleLazy 'groenewege/vim-less'
+NeoBundle 'groenewege/vim-less'
 " }}}2
 
 " {{{2 vim-orgmode: Text outlining for Vim (like Emacs' Org-Mode)
-NeoBundleLazy 'jceb/vim-orgmode'
+NeoBundle 'jceb/vim-orgmode'
 " }}}2
 
 " {{{2 vim-coffee-script: Vim syntax for CoffeeScript
-NeoBundleLazy 'kchmck/vim-coffee-script'
+NeoBundle 'kchmck/vim-coffee-script'
 " }}}2
 
 " {{{2 cocoa.vim: Vim syntax for Objective-C & Cocoa
-NeoBundleLazy 'msanders/cocoa.vim'
+NeoBundle 'msanders/cocoa.vim'
 " }}}2
 
 " {{{2 vim-mustache-handlebars: Vim syntax for Mustache & Handlebars syntax
-NeoBundleLazy 'mustache/vim-mustache-handlebars'
+NeoBundle 'mustache/vim-mustache-handlebars'
 " }}}2
 
 " {{{2 html5.vim: Vim syntax for HTML5
-NeoBundleLazy 'othree/html5.vim'
+NeoBundle 'othree/html5.vim'
 " }}}2
 
 " {{{2 vim-javascript: Vastly improved Javascript indentation and syntax support
-NeoBundleLazy 'pangloss/vim-javascript'
+NeoBundle 'pangloss/vim-javascript'
 " }}}2
 
 " {{{2 vim-ruby-minitest: Vim highlighting & completion for MiniTest
-NeoBundleLazy 'sunaku/vim-ruby-minitest'
+NeoBundle 'sunaku/vim-ruby-minitest'
 " }}}2
 
 " {{{2 vim-ft-markdown_fold: Folding setting for markdown syntax
-NeoBundleLazy 'thinca/vim-ft-markdown_fold'
+NeoBundle 'thinca/vim-ft-markdown_fold'
 " }}}2
 
 " {{{2 vim-ft-vim_fold: Folding setting for VimL syntax
-NeoBundleLazy 'thinca/vim-ft-vim_fold'
+NeoBundle 'thinca/vim-ft-vim_fold'
 " }}}2
 
 " {{{2 vim-ft-clojure: FileType support for Clojure
-NeoBundleLazy 'thinca/vim-ft-clojure'
+NeoBundle 'thinca/vim-ft-clojure'
 " }}}2
 
 " {{{2 vim-ft-help_fold: Folding settings for Vim help files
-NeoBundleLazy 'thinca/vim-ft-help_fold'
+NeoBundle 'thinca/vim-ft-help_fold'
 " }}}2
 
 " {{{2 vim-ft-diff_fold: Folding settings for diff
-NeoBundleLazy 'thinca/vim-ft-diff_fold'
+NeoBundle 'thinca/vim-ft-diff_fold'
 " }}}2
 
 " {{{2 textile.vim: Textile for VIM
-NeoBundleLazy 'timcharper/textile.vim'
+NeoBundle 'timcharper/textile.vim'
 " }}}2
 
 " {{{2 vim-cucumber: Vim Cucumber runtime files
-NeoBundleLazy 'tpope/vim-cucumber'
+NeoBundle 'tpope/vim-cucumber'
 " }}}2
 
 " {{{2 vim-git: Vim Git runtime files
-NeoBundleLazy 'tpope/vim-git'
+NeoBundle 'tpope/vim-git'
 " }}}2
 
 " {{{2 vim-haml: Vim runtime files for Haml, Sass, and SCSS
-NeoBundleLazy 'tpope/vim-haml'
+NeoBundle 'tpope/vim-haml'
 " }}}2
 
 " {{{2 vim-rails: Plugin for working with Ruby on Rails applications
-NeoBundleLazy 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rails'
 " }}}2
 
 " {{{2 vim-markdown: Vim Markdown runtime files
-NeoBundleLazy 'plasticboy/vim-markdown'
+NeoBundle 'plasticboy/vim-markdown'
 " }}}2
 
 " {{{2 vim-erlang-runtime: Erlang support
-NeoBundleLazy 'vim-erlang/vim-erlang-runtime'
+NeoBundle 'vim-erlang/vim-erlang-runtime'
 " }}}2
 
 " {{{2 vim-ruby: Ruby support
-NeoBundleLazy 'vim-ruby/vim-ruby'
+NeoBundle 'vim-ruby/vim-ruby'
 " }}}2
 
 " {{{2 apiblueprint.vim: Support for API Blueprint
-NeoBundleLazy 'kylef/apiblueprint.vim'
+NeoBundle 'kylef/apiblueprint.vim'
 " }}}2
+
+" {{{2 taskpaper.vim: TaskPaper support for VIM
+NeoBundle 'davidoc/taskpaper.vim'
+" }}}2
+
 " }}}1
 
 " vim: foldmethod=marker
