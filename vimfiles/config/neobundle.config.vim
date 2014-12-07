@@ -826,10 +826,17 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'kylef/apiblueprint.vim'
 " }}}2
 
-" {{{2 taskpaper.vim: TaskPaper support for VIM
+" {{{2 taskpaper.vim: TaskPaper support
 NeoBundle 'davidoc/taskpaper.vim'
 " }}}2
 
+" {{{2 vim-io: Io (language) support
+NeoBundle 'andreimaxim/vim-io'
+" }}}2
+
+" {{{2 vim-io: Go (language) support
+NeoBundle 'fatih/vim-go'
+" }}}2
 " }}}1
 
 " vim: foldmethod=marker
