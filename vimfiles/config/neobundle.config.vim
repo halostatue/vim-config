@@ -615,6 +615,10 @@ NeoBundleLazy 'vim-erlang/vim-erlang-tags',
       \ }
 " }}}2
 
+" {{{2 editorconfig-vim: Editorconfig support for Vim
+NeoBundle "editorconfig/editorconfig-vim"
+" }}}2
+
 " Current cleanup HERE
 " {{{1 Text Objects (navigation, selection, etc.)
 " {{{2 vim-textobj-rubysymbol: Text objects for ruby symbols
