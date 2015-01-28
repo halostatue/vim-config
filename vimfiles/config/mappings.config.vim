@@ -1,15 +1,9 @@
 "---------------------------------------------------------------------------
 " Key-mappings:
-"
 
-" Make folding open/close with the tab.
-nmap <Tab> za
-vmap <Tab> za
-omap <Tab> za
-
-" Use <C-Space>.
-nmap <C-Space>  <C-@>
-cmap <C-Space>  <C-@>
+" Use <C-Space> to trigger VimShellTerminal
+nmap <C-Space> <C-@>
+cmap <C-Space> <C-@>
 
 " Move between buffers. Different on Mac vs not-Mac because option inserts
 " special characters on the Mac and the Command/Super key isn't available off
@@ -21,22 +15,10 @@ else
   map <A-<> :N<CR>
   map <A->> :N<CR>
 endif
-"
-" Make zO recursively open whatever top level fold we're in, no matter where the
-" cursor happens to be.
-nnoremap zO zCzO
-
 
 " Indent
-nnoremap > >>
-nnoremap < <<
 xnoremap > >gv
 xnoremap < <gv
-
-if has('clipboard')
-  xnoremap <silent> y "*y:let [@+,@"]=[@*,@*]<CR>
-endif
-"}}}
 
 " Insert mode keymappings: "{{{
 " <C-t>: insert tab.
@@ -50,7 +32,7 @@ inoremap <C-w>  <C-g>u<C-w>
 inoremap <C-u>  <C-g>u<C-u>
 
 if has('gui_running')
-  inoremap <ESC> <ESC>
+  inoremap <Esc> <Esc>
 endif
 "}}}
 
@@ -95,16 +77,14 @@ function! s:init_cmdwin()
   nnoremap <buffer><silent> <TAB> :<C-u>quit<CR>
   inoremap <buffer><expr><CR> neocomplete#close_popup()."\<CR>"
   inoremap <buffer><expr><C-h> col('.') == 1 ?
-        \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
+        \ "\<Esc>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
   inoremap <buffer><expr><BS> col('.') == 1 ?
-        \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
+        \ "\<Esc>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
 
   " Completion.
   inoremap <buffer><expr><TAB>  pumvisible() ?
         \ "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
 
-  " Remove history lines.
-  silent execute printf("1,%ddelete _", min([&history - 20, line("$") - 20]))
   call cursor(line('$'), 0)
 
   startinsert!
@@ -113,6 +93,7 @@ endfunction"}}}
 " [Space]: Other useful commands "{{{
 " Smart space mapping.
 " Notice: when starting other <Space> mappings in noremap, disappeared [Space].
+
 nmap  <Space>   [Space]
 xmap  <Space>   [Space]
 nnoremap  [Space]   <Nop>
@@ -163,9 +144,6 @@ function! s:cd_buffer_dir() "{{{
 
   execute 'lcd' fnameescape(dir)
 endfunction"}}}
-
-" Easily syntax change.
-nnoremap <silent> [Space]ft :<C-u>Unite -start-insert filetype filetype/new<CR>
 
 " Exchange gj and gk to j and k. "{{{
 command! -nargs=? -bar -bang ToggleGJK call s:ToggleGJK()
@@ -219,155 +197,16 @@ function! ToggleVariable(variable_name)
 endfunction  "}}}
 "}}}
 
-" s: Windows and buffers(High priority) "{{{
-" The prefix key.
-nnoremap    [Window]   <Nop>
-nmap    s [Window]
-nnoremap <silent> [Window]p  :<C-u>call <SID>split_nicely()<CR>
-nnoremap <silent> [Window]v  :<C-u>vsplit<CR>
-nnoremap <silent> [Window]c  :<C-u>call <SID>smart_close()<CR>
-nnoremap <silent> -  :<C-u>call <SID>smart_close()<CR>
-nnoremap <silent> [Window]o  :<C-u>only<CR>
-nnoremap <silent> q :<C-u>call <SID>smart_close()<CR>
-
-" A .vimrc snippet that allows you to move around windows beyond tabs
-nnoremap <silent> <C-Tab> :call <SID>NextWindow()<CR>
-nnoremap <silent> <C-S-Tab> :call <SID>PreviousWindowOrTab()<CR>
-
-function! s:smart_close()
-  if winnr('$') != 1
-    close
-  else
-    call s:alternate_buffer()
-  endif
-endfunction
-
-function! s:NextWindow()
-  if winnr('$') == 1
-    silent! normal! ``z.
-  else
-    wincmd w
-  endif
-endfunction
-
-function! s:NextWindowOrTab()
-  if tabpagenr('$') == 1 && winnr('$') == 1
-    call s:split_nicely()
-  elseif winnr() < winnr("$")
-    wincmd w
-  else
-    tabnext
-    1wincmd w
-  endif
-endfunction
-
-function! s:PreviousWindowOrTab()
-  if winnr() > 1
-    wincmd W
-  else
-    tabprevious
-    execute winnr("$") . "wincmd w"
-  endif
-endfunction
-
-" Split nicely."{{{
-command! SplitNicely call s:split_nicely()
-function! s:split_nicely()
-  " Split nicely.
-  if winwidth(0) > 2 * &winwidth
-    vsplit
-  else
-    split
-  endif
-  wincmd p
-endfunction
-"}}}
-" Delete current buffer."{{{
-" Force delete current buffer.
-nnoremap <silent> [Window]D  :<C-u>call <SID>CustomBufferDelete(1)<CR>
-function! s:CustomBufferDelete(is_force)
-  let current = bufnr('%')
-
-  call s:alternate_buffer()
-
-  if a:is_force
-    silent! execute 'bdelete! ' . current
-  else
-    silent! execute 'bdelete ' . current
-  endif
-endfunction
-"}}}
-function! s:alternate_buffer() "{{{
-  let listed_buffer_len = len(filter(range(1, bufnr('$')),
-        \ 's:buflisted(v:val) && getbufvar(v:val, "&filetype") !=# "unite"'))
-  if listed_buffer_len <= 1
-    enew
-    return
-  endif
-
-  let cnt = 0
-  let pos = 1
-  let current = 0
-  while pos <= bufnr('$')
-    if s:buflisted(pos)
-      if pos == bufnr('%')
-        let current = cnt
-      endif
-
-      let cnt += 1
-    endif
-
-    let pos += 1
-  endwhile
-
-  if current > cnt / 2
-    bprevious
-  else
-    bnext
-  endif
-endfunction"}}}
-function! s:buflisted(bufnr) "{{{
-  return exists('t:unite_buffer_dictionary') ?
-        \ has_key(t:unite_buffer_dictionary, a:bufnr) && buflisted(a:bufnr) :
-        \ buflisted(a:bufnr)
-endfunction"}}}
-"}}}
-
-" e: Change basic commands "{{{
-" The prefix key.
-nnoremap [Alt]   <Nop>
-xnoremap [Alt]   <Nop>
-onoremap [Alt]   <Nop>
-nmap    e  [Alt]
-xmap    e  [Alt]
-omap    e  [Alt]
-
-nnoremap    [Alt]e   e
-xnoremap    [Alt]e   e
-
-" Indent paste.
-nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
-xnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
-nnoremap <silent> [Alt]P O<Esc>Pm``[=`]``^
-xnoremap <silent> [Alt]P O<Esc>Pm``[=`]``^
-" Insert blank line.
-nnoremap <silent> [Alt]o o<Space><BS><ESC>
-nnoremap <silent> [Alt]O O<Space><BS><ESC>
-" Yank to end line.
-nnoremap [Alt]y y$
-nnoremap Y y$
-nnoremap x "_x
-"}}}
-
 " Disable Ex-mode and make it reformat the current paragraph.
 nnoremap Q gqip
 
 " q: Quickfix  "{{{
 " The prefix key.
+nmap q [Quickfix]
 nnoremap [Quickfix]   <Nop>
 
 " Toggle quickfix window.
-nnoremap <silent> [Quickfix]<Space>
+nnoremap <silent> [Quickfix]q
       \ :<C-u>call <SID>toggle_quickfix_window()<CR>
 function! s:toggle_quickfix_window()
   let _ = winnr('$')
@@ -380,24 +219,11 @@ function! s:toggle_quickfix_window()
 endfunction
 "}}}
 
-" Jump mark can restore column."{{{
-nnoremap \  `
-" Useless command.
-nnoremap M  m
-"}}}
-
-" Smart <C-f>, <C-b>.
-nnoremap <silent> <C-f> <C-f>
-nnoremap <silent> <C-b> <C-b>
-
-" Disable ZZ.
-nnoremap ZZ  <Nop>
-
 " Like gv, but select the last changed text.
-" nnoremap gc  `[v`]
+nnoremap gz  `[v`]
 " Specify the last changed text as {motion}.
-" vnoremap <silent> gc  :<C-u>normal gc<CR>
-" onoremap <silent> gc  :<C-u>normal gc<CR>
+vnoremap <silent> gz  :<C-u>normal gz<CR>
+onoremap <silent> gz  :<C-u>normal gz<CR>
 
 " Auto escape / and ? in search command.
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
@@ -422,8 +248,8 @@ endfunction
 " Smart home and smart end."{{{
 nnoremap <silent> gh  :<C-u>call SmartHome('n')<CR>
 nnoremap <silent> gl  :<C-u>call SmartEnd('n')<CR>
-xnoremap <silent> gh  <ESC>:<C-u>call SmartHome('v')<CR>
-xnoremap <silent> gl  <ESC>:<C-u>call SmartEnd('v')<CR>
+xnoremap <silent> gh  <Esc>:<C-u>call SmartHome('v')<CR>
+xnoremap <silent> gl  <Esc>:<C-u>call SmartEnd('v')<CR>
 " Smart home function"{{{
 function! SmartHome(mode)
   let curcol = col('.')
@@ -487,71 +313,39 @@ xnoremap r <C-v>
 xnoremap v $h
 
 " Paste next line.
-nnoremap <silent> gp o<ESC>p^
-nnoremap <silent> gP O<ESC>P^
-xnoremap <silent> gp o<ESC>p^
-xnoremap <silent> gP O<ESC>P^
+nnoremap <silent> gp o<Esc>p^
+nnoremap <silent> gP O<Esc>P^
+xnoremap <silent> gp o<Esc>p^
+xnoremap <silent> gP O<Esc>P^
 
 " Redraw.
 nnoremap <silent> <C-l> :<C-u>redraw!<CR>
 
 " Folding."{{{
-" If press h on head, fold close.
-"nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zc' : 'h'
-" If press l on fold, fold open.
-nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
-" If press h on head, range fold close.
-"xnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zcgv' : 'h'
-" If press l on fold, range fold open.
-xnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+" <Tab> opens/closes the outermost fold.
+nmap <Tab> za
+vmap <Tab> za
+omap <Tab> za
+" <Shift-Tab> opens/closes all folds, recursively.
+nmap <S-Tab> za
+vmap <S-Tab> za
+omap <S-Tab> za
+
+" Make zO recursively open whatever top level fold we're in, no matter where
+" the cursor happens to be.
+nnoremap zO zCzO
+vnoremap zO zCzO
+
+" Jump folds.
 noremap [Space]j zj
 noremap [Space]k zk
-noremap zu :<C-u>Unite outline:foldings<CR>
-noremap zz za
+
+" Use <Leader>z to "focus" the current fold.
+nnoremap <Leader>z zMzvzz
 "}}}
 
 " Substitute.
 xnoremap s :s//g<Left><Left>
-
-" Easy escape."{{{
-inoremap jj           <ESC>
-" inoremap <expr> j       getline('.')[col('.') - 2] ==# 'j' ? "\<BS>\<ESC>" : 'j'
-cnoremap <expr> j       getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
-onoremap jj           <ESC>
-
-inoremap j<Space>     j
-onoremap j<Space>     j
-"}}}
-
-" Execute countable 'n.'.
-" EXAMPLE: 3@n
-let @n='n.'
-
-" a>, i], etc... "{{{
-" <angle>
-onoremap aa  a>
-xnoremap aa  a>
-onoremap ia  i>
-xnoremap ia  i>
-
-" [rectangle]
-onoremap ar  a]
-xnoremap ar  a]
-onoremap ir  i]
-xnoremap ir  i]
-
-" 'quote'
-onoremap aq  a'
-xnoremap aq  a'
-onoremap iq  i'
-xnoremap iq  i'
-
-" "double quote"
-onoremap ad  a"
-xnoremap ad  a"
-onoremap id  i"
-xnoremap id  i"
-"}}}
 
 " Move to top/center/bottom.
 noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?
@@ -561,39 +355,8 @@ noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?
 nnoremap gu gUiw`]
 
 " Clear highlight.
-nnoremap <ESC><ESC> :nohlsearch<CR>:match<CR>
+nnoremap <Esc><Esc> :nohlsearch<CR>:match<CR>
 "}}}
-
-" Improved increment.
-nmap <C-a> <SID>(increment)
-nmap <C-x> <SID>(decrement)
-nnoremap <silent> <SID>(increment)    :AddNumbers 1<CR>
-nnoremap <silent> <SID>(decrement)   :AddNumbers -1<CR>
-command! -range -nargs=1 AddNumbers
-      \ call s:add_numbers((<line2>-<line1>+1) * eval(<args>))
-function! s:add_numbers(num)
-  let prev_line = getline('.')[: col('.')-1]
-  let next_line = getline('.')[col('.') :]
-  let prev_num = matchstr(prev_line, '\d\+$')
-  if prev_num != ''
-    let next_num = matchstr(next_line, '^\d\+')
-    let new_line = prev_line[: -len(prev_num)-1] .
-          \ printf('%0'.len(prev_num . next_num).'d',
-          \    max([0, prev_num . next_num + a:num])) . next_line[len(next_num):]
-  else
-    let new_line = prev_line . substitute(next_line, '\d\+',
-          \ "\\=printf('%0'.len(submatch(0)).'d',
-          \         max([0, submatch(0) + a:num]))", '')
-  endif
-
-  if getline('.') !=# new_line
-    call setline('.', new_line)
-  endif
-endfunction
-
-" Search.
-nnoremap ;n  ;
-nnoremap ;m  ,
 
 " Read pdf
 if executable('pdftotext')
@@ -687,9 +450,6 @@ endfunction
 nnoremap <silent> n nzzzv:call <SID>PulseCursorLine()<CR>
 nnoremap <silent> N Nzzzv:call <SID>PulseCursorLine()<CR>
 
-" Use <Leader>z to "focus" the current fold.
-nnoremap <Leader>z zMzvzz
-
 " Make CTRL-^ rebound to the line and *column* in the previous file
 noremap <C-^> <C-^>`"
 
@@ -735,15 +495,15 @@ noremap k gk
 if IsMac()
   nnoremap <D-M-K> :lnext<CR>zvzz
   nnoremap <D-M-L> :lprevious<CR>zvzz
-  inoremap <D-M-K> <ESC>:lnext<CR>zvzz
-  inoremap <D-M-L> <ESC>:lprevious<CR>zvzz
+  inoremap <D-M-K> <Esc>:lnext<CR>zvzz
+  inoremap <D-M-L> <Esc>:lprevious<CR>zvzz
   nnoremap <D-M-Down> :cnext<CR>zvzz
   nnoremap <D-M-Up> :cprevious<CR>zvzz
 else
   nnoremap <M-K> :lnext<CR>zvzz
   nnoremap <M-L> :lprevious<CR>zvzz
-  inoremap <M-K> <ESC>:lnext<CR>zvzz
-  inoremap <M-L> <ESC>:lprevious<CR>zvzz
+  inoremap <M-K> <Esc>:lnext<CR>zvzz
+  inoremap <M-L> <Esc>:lprevious<CR>zvzz
   nnoremap <M-Down> :cnext<CR>zvzz
   nnoremap <M-Up> :cprevious<CR>zvzz
 endif
@@ -773,7 +533,7 @@ endfunction
 map <S-Del> "*x
 map <C-Insert> "*y
 map <S-Insert> :set paste<CR>:call <SID>NormalPaste()<CR>:set nopaste<CR>
-imap <S-Insert> x<ESC>:set paste<CR>:call <SID>NormalPaste()<CR>:set nopaste<CR>s
+imap <S-Insert> x<Esc>:set paste<CR>:call <SID>NormalPaste()<CR>:set nopaste<CR>s
 cmap <S-Insert> <C-R>*
 vmap <S-Insert> "-x:set paste<CR>:call <SID>SelectPaste()<CR>:set nopaste<CR>
 
@@ -790,8 +550,7 @@ endfunction
 
 " If a popupmenu is visible (pumvisible), change the behaviour of various
 " keys to do something meaningful with the menu.
-inoremap <expr> <ESC> <SID>WhenPUMVisible("\<C-E>", "\<ESC>")
-" inoremap <expr> <CR> <SID>WhenPUMVisible("\<C-Y>", "\<CR>")
+inoremap <expr> <Esc> <SID>WhenPUMVisible("\<C-E>", "\<Esc>")
 inoremap <expr> <Down> <SID>WhenPUMVisible("\<C-N>", "\<Down>")
 inoremap <expr> <Up> <SID>WhenPUMVisible("\<C-P>", "\<Up>")
 inoremap <expr> <PageDown> <SID>WhenPUMVisible("\<PageDown>\<C-P>\<C-N>", "\<PageDown>")
@@ -806,8 +565,8 @@ map <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Inserts the path of the currently edited file into a command
-" Command mode: Ctrl+P
-cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+" Command mode: Ctrl+R, Ctrl+P
+cmap <C-R><C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
 " Duplicate a selection
 " Visual mode: D
@@ -819,14 +578,12 @@ function! s:ExecuteInShell(command) " {{{
     let winnr = bufwinnr('^' . command . '$')
     silent! execute  winnr < 0 ? 'botright vnew ' . fnameescape(command) : winnr . 'wincmd w'
     setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap nonumber
-    echo 'Execute ' . command . '...'
     silent! execute 'silent %!'. command
     silent! redraw
     silent! execute 'autocmd BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
     silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>:AnsiEsc<CR>'
     silent! execute 'nnoremap <silent> <buffer> q :q<CR>'
     silent! execute 'AnsiEsc'
-    echo 'Shell command ' . command . ' executed.'
 endfunction " }}}
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 nnoremap <leader>! :Shell
