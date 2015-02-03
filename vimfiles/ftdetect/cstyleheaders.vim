@@ -1,4 +1,4 @@
-" .h files can be C, Ch C++, ObjC or ObjC++.
+" .h files can be C, Ch, C++, ObjC, or ObjC++.
 " Set c_syntax_for_h if you want C, ch_syntax_for_h if you want Ch. ObjC is
 " detected automatically.
 au BufNewFile,BufRead *.h			call s:FTcstyleheader()

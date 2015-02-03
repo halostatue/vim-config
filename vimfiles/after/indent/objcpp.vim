@@ -4,7 +4,7 @@
 "   Last Change:    2004 May 16
 "
 " Only load this indent file when no other was loaded.
-if exists("b:did_after_indent")
+if exists("b:did_after_indent_objcpp")
     finish
 endif
 
@@ -12,7 +12,7 @@ if exists("g:no_google_indentation") && g:no_google_indentation == 1
   finish
 endif
 
-let b:did_after_indent = 1
+let b:did_after_indent_objcpp = 1
 
 if !exists("b:debug_indent")
   let b:debug_indent = 0

@@ -4,15 +4,15 @@
 "   Last Change:    2004 May 16
 "
 " Only load this indent file when no other was loaded.
-if exists("b:did_after_indent")
+if exists("b:did_after_indent_objc")
     finish
 endif
 
-if exists("g:no_google_indentation") && g:no_google_indentation == 1
+if exists("g:no_google_indentation") && g:no_google_indentation
   finish
 endif
 
-let b:did_after_indent = 1
+let b:did_after_indent_objc = 1
 
 if !exists("b:debug_indent")
   let b:debug_indent = 0

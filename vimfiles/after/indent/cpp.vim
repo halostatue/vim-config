@@ -4,7 +4,7 @@
 " Last Change:	2009 May 16
 " Version: 1.0.0
 
-if exists("g:no_google_indentation") && g:no_google_indentation == 1
+if exists("g:no_google_indentation") && g:no_google_indentation
   finish
 endif
 
@@ -18,7 +18,7 @@ let s:cpp_open_brace    = '^\s*{'
 let s:cpp_constructor   = ')\s*:$\|)\s*:\s*'
 let s:cpp_case          = 'case\s*\w\+:\|default:'
 
-if !exists('b:did_after_indent')
+if !exists('b:did_after_indent_cpp') || !b:did_after_indent_cpp
   if exists("*GoogleCPPIndent")
     delfunction GoogleCPPIndent
   endif
@@ -107,7 +107,7 @@ if !exists('b:did_after_indent')
     return l:retv
   endfunction
 
-  let b:did_after_indent = 1
+  let b:did_after_indent_cpp = 1
 endif
 
 if exists('g:cpp_indent_width')

@@ -1,3 +1,0 @@
-" For Mac:
-
-SourceConfig unix
