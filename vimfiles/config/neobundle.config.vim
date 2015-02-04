@@ -841,6 +841,10 @@ NeoBundle 'andreimaxim/vim-io'
 " {{{2 vim-io: Go (language) support
 NeoBundle 'fatih/vim-go'
 " }}}2
+
+" {{{2 vim-io: Go (language) support
+NeoBundle 'chase/vim-ansible-yaml'
+" }}}2
 " }}}1
 
 " vim: foldmethod=marker
