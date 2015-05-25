@@ -67,14 +67,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'editorconfig/editorconfig-vim'
 
 " Completion code.
-if is#mac()
-  Plug 'Valloric/YouCompleteMe',
-        \{
-        \   'do': './install.sh --clang-completer --omnisharp-completer'
-        \ }
-elseif has('lua')
-  Plug 'Shougo/neocomplete'
-endif
+Plug 'Valloric/YouCompleteMe',
+      \{
+      \   'do': 'YCM_CORES=1 ./install.sh --clang-completer --omnisharp-completer'
+      \ }
 
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'

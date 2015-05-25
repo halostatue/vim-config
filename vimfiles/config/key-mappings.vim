@@ -42,14 +42,6 @@ nnoremap <silent> <Leader><Leader>S <Plug>(scratch-toggle)
 nnoremap <silent> <Leader><Leader>O <Plug>(scratch-open)
 nnoremap <silent> <Leader><Leader>C <Plug>(scratch-close)
 
-" CamelCase Motion
-nmap <silent> W <Plug>CamelCaseMotion_w
-xmap <silent> W <Plug>CamelCaseMotion_w
-omap <silent> W <Plug>CamelCaseMotion_w
-nmap <silent> B <Plug>CamelCaseMotion_b
-xmap <silent> B <Plug>CamelCaseMotion_b
-omap <silent> B <Plug>CamelCaseMotion_b
-
 " Smartchr
 " - smart comma
 inoremap <expr> , smartchr#one_of(', ', ',')
