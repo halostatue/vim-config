@@ -1,5 +1,4 @@
 " Plugins
-
 " Make vim make sense by default.
 Plug 'tpope/vim-sensible'
 
@@ -120,7 +119,7 @@ Plug 'vimwiki/vimwiki'
 
 if is#mac()
   Plug 'henrik/vim-reveal-in-finder', { 'on': 'Reveal' }
-  Plug 'rizzati/dash.vim',
+  Plug 'rizzatti/dash.vim',
         \ { 'on': [ '<Plug>DashSearch', '<Plug>DashGlobalSearch', 'Dash' ] }
 endif
 
