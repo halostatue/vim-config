@@ -288,6 +288,9 @@ nnoremap g, g,zz
 " Duplicate the current selection.
 xnoremap D y'>p
 
+nnoremap <D-O> :<C-u>CtrlP<CR>
+xnoremap <D-O> :<C-u>CtrlP<CR>
+
 " Insert the path of the currently edited file into a command.
 cmap <C-R><C-P> <C-R>=expand("%:p:h") . "/"<CR>
 
