@@ -1,10 +1,21 @@
 " CtrlP configuration
-let g:ctrlp_switch_buffer       = 'Et'
-let g:ctrlp_extensions          = [ 'funky', 'tag', 'dir', 'mixed', 'rtscript', 'undo' ]
-let g:ctrlp_working_path_mode   = 'rwa'
-let g:ctrlp_use_caching         = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_show_hidden         = 1
+let g:ctrlp_switch_buffer = 'Et'
+let g:ctrlp_extensions = [ 'funky', 'tag', 'dir', 'mixed', 'rtscript', 'undo' ]
+let g:ctrlp_working_path_mode = 'rwa'
+if executable('ag')
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+else
+  let g:ctrlp_use_caching = 1
+  let g:ctrlp_clear_cache_on_exit = 1
+endif
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_open_new_file = 'v'
+
+let g:commentary_map_backslash = 0
 
 augroup hsautocmd-fugitive
   autocmd!
@@ -17,6 +28,10 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_ruby_mri_exec = expand("~/.rubies/ruby-2.2.2/bin/ruby")
+let g:syntastic_ruby_rubocop_exe = g:syntastic_ruby_mri_exec . " -S rubocop"
+" let g:syntastic_ruby_rubylint_exe = g:syntastic_ruby_mri_exec . " -S ruby-lint"
+let g:syntastic_ruby_checkers = [ 'mri', 'rubocop' ]
 
 " Gist
 if is#cygwin()
@@ -69,6 +84,7 @@ if !exists('g:airline_symbols')
 endif
 
 let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
 let g:airline_right_sep = '«'
 let g:airline_right_sep = '◀'
 let g:airline_symbols.linenr = '¶'
@@ -76,6 +92,7 @@ let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.readonly = '∅'
+let g:airline_theme = 'papercolor'
 
 let g:vimpipe_invoke_map = '[Space]r'
 let g:vimpipe_close_map = '[Space]p'
@@ -106,3 +123,7 @@ let g:tagbar_type_vhdl =
       \ }
 
 let g:ref_no_default_key_mappings = 1
+
+let test#strategy = 'dispatch'
+
+SourceIf ~/.jiracomplete.vimrc

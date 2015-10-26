@@ -54,6 +54,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 " Plug 'ctrlp-related'
 
+" Plug 'vim-scripts/dbext.vim'
+
 " File Management
 Plug 'tpope/vim-eunuch',
       \ { 'on': [
@@ -61,7 +63,12 @@ Plug 'tpope/vim-eunuch',
       \     'Locate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
       \   ]
       \ }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+if homebrew#isdirectory('opt/fzf')
+  set rtp+=homebrew#path("opt/fzf")
+else
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+endif
 
 " Editorconfig standard
 Plug 'editorconfig/editorconfig-vim'
@@ -75,6 +82,8 @@ Plug 'Valloric/YouCompleteMe',
       \{
       \   'do': 'YCM_CORES=1 ./install.sh --clang-completer --omnisharp-completer'
       \ }
+
+Plug 'mnpk/vim-jira-complete'
 
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
@@ -168,9 +177,17 @@ Plug 'mattn/gist-vim', { 'on': 'Gist' }
 " Ag instead of Grep.
 Plug 'rking/ag.vim', { 'on': [ 'Ag', 'AgAdd', 'LAg', 'LAgAdd' ] }
 
+" Vim-Test
+Plug 'janko-m/vim-test',
+      \ { 'on': [
+      \     'TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'
+      \   ]
+      \ }
+
 " Display Helpers
 Plug 'myusuf3/numbers.vim'
 Plug 'flazz/vim-colorschemes'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'halostatue/vim-zoom-win'
 Plug 'thinca/vim-fontzoom'
 Plug 'farseer90718/vim-regionsyntax'
@@ -220,7 +237,7 @@ Plug 'thinca/vim-ft-diff_fold', { 'for': 'diff' }
 Plug 'thinca/vim-ft-help_fold', { 'for': 'help' }
 Plug 'thinca/vim-ft-markdown_fold', { 'for': 'markdown' }
 Plug 'thinca/vim-ft-vim_fold', { 'for' : 'vim' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'Coffee' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'kylef/apiblueprint.vim', { 'for': 'apiblueprint' }
 Plug 'msanders/cocoa.vim', { 'for': 'objc' }
 Plug 'mustache/vim-mustache-handlebars',
