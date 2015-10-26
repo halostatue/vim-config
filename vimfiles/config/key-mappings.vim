@@ -65,6 +65,12 @@ augroup hsautocmd-smartchr
   autocmd FileType lisp,scheme,clojure
         \ inoremap <buffer> <expr> = =
 
+  autocmd FileType ruby
+        \ inoremap <buffer> <expr> =
+        \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')
+        \ ? '<bs>= ' : search('\(*\<bar>!\)\%#', 'bcn')
+        \ ? '= ' : smartchr#one_of(' = ', '=', ' == ', ' => ')
+
   autocmd FileType haskell,int-ghci
         \ inoremap <buffer> <expr> + smartchr#loop('+', ' ++ ') |
         \ inoremap <buffer> <expr> - smartchr#loop('-', ' -> ', ' <- ') |
@@ -145,6 +151,7 @@ nnoremap <silent> [Space]cl :<C-u>call hs#toggleOption('cursorline')<CR>
 nnoremap <silent> [Space]ar :<C-u>call hs#toggleOption('autoread')<CR>
 nnoremap <silent> [Space]sp :<C-u>call hs#toggleOption('spell')<CR>
 nnoremap <silent> [Space]w  :<C-u>call hs#toggleOption('wrap')<CR>
+nnoremap <silent> [Space]z  :<C-u>call <SID>MaybeSpellcheck()<CR>
 nnoremap [Space]! :Shell<Space>
 
 " Edit/reload .vimrc
@@ -156,6 +163,13 @@ nnoremap <silent> [Space]cd :<C-u>CDToBufferDir<CR>
 
 " Toggle diff whitespace comparison.
 nnoremap <silent> [Space]dw :<C-u>call <SID>ToggleDiffWhitespace()<CR>
+
+" Vim-Test
+nmap <silent> [Space]tt :<C-u>TestNearest<CR>
+nmap <silent> [Space]tf :<C-u>TestFile<CR>
+nmap <silent> [Space]ta :<C-u>TestSuite<CR>
+nmap <silent> [Space]tl :<C-u>TestLast<CR>
+nmap <silent> [Space]tg :<C-u>TestVisit<CR>
 
 " Toggle gj/gk behaviours for j/k behaviours. The default is gk/gj
 " (display-linewise) movement, not j/k (linewise) movement.
@@ -179,8 +193,7 @@ nnoremap <silent> [Space]h- <Plug>VinegarSplitUp
 nnoremap <silent> [Space]v- <Plug>VinegarVerticalSplitUp
 
 " Buffergator
-nnoremap <silent> [Space]b :<C-u>BuffergatorOpen<CR>
-nnoremap <silent> [Space]B :<C-u>BuffergatorClose<CR>
+nnoremap <silent> [Space]b :<C-u>BuffergatorToggle<CR>
 nnoremap <silent> [Space]to :<C-u>BuffergatorTabsOpen<CR>
 nnoremap <silent> [Space]tc :<C-u>BuffergatorTabsClose<CR>
 nnoremap <silent> [Space][b :<C-U>BuffergatorMruCyclePrev<CR>
@@ -212,6 +225,8 @@ nnoremap [Quickfix]/ :execute 'vimgrep /' . @/ . '/g %'<CR>:copen<CR>
 
 " Toggle quickfix window.
 nnoremap <silent> [Quickfix]q :<C-u>ToggleQuickfixWindow<CR>
+nnoremap <silent> [Quickfix]n :<C-u>cnext<CR>
+nnoremap <silent> [Quickfix]p :<C-u>cprevious<CR>
 
 " Smart }.
 nnoremap <silent> } :<C-u>call ForwardParagraph()<CR>
@@ -357,4 +372,13 @@ function! s:ToggleDiffWhitespace()
     set diffopt+=iwhite
   endif
   diffupdate
+endfunction
+
+function! s:MaybeSpellcheck()
+  if &spell
+    setlocal nospell
+  else
+    setlocal spell
+    normal z=
+  endif
 endfunction

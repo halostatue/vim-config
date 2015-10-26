@@ -96,6 +96,7 @@ let g:markdown_fenced_languages=[
       \  'xml',
       \  'vim',
       \]
+let g:vim_markdown_no_default_key_mappings=0
 
 augroup hsautocmd-vimsyntax
   autocmd!
@@ -234,4 +235,19 @@ augroup hsautocmd-gosyntax
 
   autocmd FileType go highlight default link goErr WarningMsg |
         \ match goErr /\<err\>/
+
+  autocmd FileType go setlocal ts=2 sts=2 sw=2 noet ai
+augroup END
+
+augroup hsautocmd-gitstuff
+  autocmd!
+
+  autocmd FileType gitcommit setlocal buftype=
+
+  autocmd FileType gitconfig setlocal buftype=
+
+  autocmd FileType gitrebase setlocal buftype=
+  autocmd FileType gitrebase nnoremap <buffer> <silent> S :Cycle<CR>
+
+  autocmd FileType gitsendemail setlocal buftype=
 augroup END
