@@ -10,7 +10,7 @@ endif
 
 " Font settings
 if is#mac()
-  set guifont=Source\ Code\ Pro:h10,Inconsolata\ Medium:h10,Anonymous\ Pro:h11,DejaVu\ Sans\ Mono:h9,Andale\ Mono:h100
+  set guifont=Source\ Code\ Pro:h10,Inconsolata\ Medium:h10,Anonymous\ Pro:h11,DejaVu\ Sans\ Mono:h9,Andale\ Mono:h10
 elseif has('gui_gtk2') || has('X11')
   set guifont=Source\ Code\ Pro\ 11,Inconsolata\ Medium\ 11,Anonymous\ Pro\ 12,DejaVu\ Sans\ Mono\ 10,Andale\ Mono\ 11,Luxi\ Mono\ 9
 elseif has('win32') || has('win64')

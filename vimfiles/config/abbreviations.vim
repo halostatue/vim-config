@@ -20,10 +20,10 @@ iab ctime <C-R>=strftime("%H:%M")<CR>
 " yyyymmdd hh:mm
 iab cdatetime <C-R>=strftime("%Y%m%d %H:%M")<CR>
 " yyyy.mm.dd hh:mm
-iab cfdatetime <C-R>=strftime("%Y.%m.%d %%H:%M")<CR>
+iab cfdatetime <C-R>=strftime("%Y.%m.%d %H:%M")<CR>
 " system long date
-iab clongdate <C-R>=strftime("%a %b %#d %X %z %Y")<CR>
+iab clongdate <C-R>=strftime("%a %b %d %X %z %Y")<CR>
 " formatted long date
-iab cpdate <C-R>=strftime("%A, %#d %B %Y")<CR>
+iab cpdate <C-R>=strftime("%A, %d %B %Y")<CR>
 " ISO datetime
 iab cisodt <C-R>=strftime("%Y-%m-%dT%H:%M:%S%z")<CR>
