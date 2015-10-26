@@ -48,7 +48,7 @@ else
 endif
 
 " Provide the :Man command.
-runtime ftplugin/man.vim
+" runtime ftplugin/man.vim
 
 SourceIf ~/.local.vimrc
 

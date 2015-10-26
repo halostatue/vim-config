@@ -66,6 +66,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 " Editorconfig standard
 Plug 'editorconfig/editorconfig-vim'
 
+" vim-man
+" Temporarily disabled because of https://github.com/bruno-/vim-man/issues/23.
+Plug 'bruno-/vim-man'
+
 " Completion code.
 Plug 'Valloric/YouCompleteMe',
       \{
