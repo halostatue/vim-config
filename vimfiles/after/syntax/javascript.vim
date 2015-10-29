@@ -1,1 +1,1 @@
-SmartSetFoldText
+SmartFoldText

@@ -236,7 +236,7 @@ Plug 'thinca/vim-ft-diff_fold', { 'for': 'diff' }
 Plug 'thinca/vim-ft-help_fold', { 'for': 'help' }
 Plug 'thinca/vim-ft-markdown_fold', { 'for': 'markdown' }
 Plug 'thinca/vim-ft-vim_fold', { 'for' : 'vim' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'kchmck/vim-coffee-script' ", { 'for': 'coffee' }
 Plug 'kylef/apiblueprint.vim', { 'for': 'apiblueprint' }
 Plug 'msanders/cocoa.vim', { 'for': 'objc' }
 Plug 'mustache/vim-mustache-handlebars',
