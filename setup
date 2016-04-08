@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+message() {
+  (( quiet )) || builtin printf "${@}"
+}
+
 cate() {
   cat 1>&2 -
 }
@@ -33,11 +37,11 @@ backup() {
     b="${t}.bak"
 
     if [ -e "${b}" ]; then
-      (( quiet )) || builtin printf "  Removing previous backup %s...\n" "${b}"
+      (( quiet )) || message "  Removing previous backup %s...\n" "${b}"
       rm "${b}"
     fi
 
-    (( quiet )) || builtin printf "  Backing up %s...\n" "${t}"
+    (( quiet )) || message "  Backing up %s...\n" "${t}"
     mv "${t}" "${b}"
   fi
 }
@@ -46,10 +50,16 @@ install() {
   local t s ps
   t="${destination}/.${1}"
   s="${2:-${1}}"
-  ps="$(pwd)/${s}"
+  ps="$(pwd -P)/${s}"
 
-  (( quiet )) || builtin printf "Installing %s as %s...\n" "${s}" "${t}"
+  [ -h "${t}" ] && [ "$(readlink "${t}")" = "${ps}" ] && {
+    (( quiet )) || message "Already installed %s as %s.\n" "${s}" "${t}"
+    return
+  }
+
+  (( quiet )) || message "Installing %s as %s...\n" "${s}" "${t}"
   backup "${t}"
+
   ln -s "${ps}" "${t}"
 }
 
@@ -59,7 +69,7 @@ remove() {
 
   [ -e "${t}" ] || [ -h "${t}" ] || return
 
-  (( quiet )) || builtin printf "Removing %s...\n" "${t}"
+  (( quiet )) || message "Removing %s...\n" "${t}"
   backup "${t}"
 }
 
@@ -100,9 +110,11 @@ error
     help 1
   fi
 
-  install vimrc
+  install vimrc _vimrc
   install vim vimfiles
   remove gvimrc
+
+  [ "${destination}" = "${HOME}" ] && vim -c PlugInstall
 }
 
 main "${@}"
