@@ -1,0 +1,108 @@
+#! /usr/bin/env bash
+
+cate() {
+  cat 1>&2 -
+}
+
+help() {
+  local t
+  (( ${#} )) && t=cate
+  ${t:-cat} <<help
+${0} [options] [destination]
+
+Configure vim-config in destination, which defaults to \${HOME} if not
+specified.
+
+Options:
+
+  -h, -H, -?         Show this help.
+  -p                 Create the destination if it does not exist.
+  -B                 Skip the make_backup of the files in the destination.
+  -q                 Quiet
+help
+
+  exit "${1:-0}"
+}
+
+backup() {
+  local t="${1}"
+  t="${1}"
+  if (( make_backup )); then
+    [ -e "${t}" ] || [ -h "${t}" ] || return
+    local b
+    b="${t}.bak"
+
+    if [ -e "${b}" ]; then
+      (( quiet )) || builtin printf "  Removing previous backup %s...\n" "${b}"
+      rm "${b}"
+    fi
+
+    (( quiet )) || builtin printf "  Backing up %s...\n" "${t}"
+    mv "${t}" "${b}"
+  fi
+}
+
+install() {
+  local t s ps
+  t="${destination}/.${1}"
+  s="${2:-${1}}"
+  ps="$(pwd)/${s}"
+
+  (( quiet )) || builtin printf "Installing %s as %s...\n" "${s}" "${t}"
+  backup "${t}"
+  ln -s "${ps}" "${t}"
+}
+
+remove() {
+  local t
+  t="${destination}/.${1}"
+
+  [ -e "${t}" ] || [ -h "${t}" ] || return
+
+  (( quiet )) || builtin printf "Removing %s...\n" "${t}"
+  backup "${t}"
+}
+
+main() {
+  local destination create make_backup quiet
+  create=0
+  make_backup=1
+  quiet=0
+
+  while (( ${#} )); do
+    case ${1} in
+      -[hH?])
+        help
+        ;;
+      -p)
+        create=1
+        ;;
+      -B)
+        make_backup=0
+        ;;
+      *)
+        destination=$1
+        ;;
+    esac
+
+    shift
+  done
+
+  [ -z "${destination}" ] && destination="${HOME}"
+
+  (( create )) && mkdir -p "${destination}"
+
+  if [ ! -d "${destination}" ]; then
+    cate <<error
+Error: ${destination} does not exist.
+
+error
+    help 1
+  fi
+
+  install vimrc
+  install vim vimfiles
+  remove gvimrc
+}
+
+main "${@}"
