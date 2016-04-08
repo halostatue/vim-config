@@ -26,7 +26,8 @@ Plug 'tpope/vim-dispatch',
 Plug 'Shougo/vinarise', { 'on': 'Vinarise' }
 
 " Vim statusline replacement.
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " User textobject functions.
 Plug 'bootleq/vim-textobj-rubysymbol', { 'for': 'ruby' }
@@ -127,6 +128,7 @@ Plug 'majutsushi/tagbar'
 Plug 'abudden/taghighlight-automirror'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'thinca/vim-ref'
+Plug 'chiedoX/vim-case-convert'
 
 Plug 'vimwiki/vimwiki'
 
@@ -253,10 +255,17 @@ Plug 'tpope/vim-git',
       \ }
 Plug 'tpope/vim-haml',
       \ { 'for': [ 'haml', 'hamlbars', 'hamlc', 'sass', 'scss' ] }
-Plug 'plasticboy/vim-markdown', { 'for': 'mkd' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'vim-erlang/erlang-motions.vim', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
+Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 Plug 'othree/html5.vim'
+
+Plug 'pmsorhaindo/syntastic-local-eslint.vim'
+
+Plug 'ryanoasis/vim-devicons'
+
+Plug 'edkolev/promptline.vim', { 'on': 'PromptlineSnapshot' }

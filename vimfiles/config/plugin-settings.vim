@@ -14,6 +14,7 @@ else
 endif
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_open_new_file = 'v'
+let g:ctrlp_reuse_window = 'startify'
 
 let g:commentary_map_backslash = 0
 
@@ -32,6 +33,8 @@ let g:syntastic_ruby_mri_exec = expand("~/.rubies/ruby-2.2.2/bin/ruby")
 let g:syntastic_ruby_rubocop_exe = g:syntastic_ruby_mri_exec . " -S rubocop"
 " let g:syntastic_ruby_rubylint_exe = g:syntastic_ruby_mri_exec . " -S ruby-lint"
 let g:syntastic_ruby_checkers = [ 'mri', 'rubocop' ]
+let g:syntastic_javascript_checkers = [ 'eslint' ]
+" let g:syntastic_javascript_eslint_exec = 'eslint_d'
 
 " Gist
 if is#cygwin()
@@ -79,6 +82,8 @@ function! s:scratchtoggle()
 endfunction
 command! -bar -nargs=0 ScratchToggle call <SID>scratchtoggle()
 
+let g:airline_powerline_fonts = 1
+
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -124,6 +129,10 @@ let g:tagbar_type_vhdl =
 
 let g:ref_no_default_key_mappings = 1
 
-let test#strategy = 'dispatch'
+let g:test#strategy = 'dispatch'
+
+let g:startify_custom_header =
+      \ 'map(startify#fortune#boxed(), "\"   \".v:val")'
+let g:startify_change_to_vcs_root = 1
 
 SourceIf ~/.jiracomplete.vimrc
