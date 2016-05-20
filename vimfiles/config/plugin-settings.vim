@@ -2,16 +2,22 @@
 let g:ctrlp_switch_buffer = 'Et'
 let g:ctrlp_extensions = [ 'funky', 'tag', 'dir', 'mixed', 'rtscript', 'undo' ]
 let g:ctrlp_working_path_mode = 'rwa'
-if executable('ag')
+if executable('pt')
+  " Use pt in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'pt %s -l --nocolor -g ""'
+elseif executable('ag')
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 
-  " ag is fast enough that CtrlP doesn't need to cache
+if len(g:ctrlp_user_command)
+  " ag or pt are fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 else
   let g:ctrlp_use_caching = 1
   let g:ctrlp_clear_cache_on_exit = 1
 endif
+
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_open_new_file = 'v'
 let g:ctrlp_reuse_window = 'startify'
