@@ -12,7 +12,7 @@ help() {
   local t
   (( ${#} )) && t=cate
   ${t:-cat} <<help
-${0} [options] [destination]
+$(basename "${0}") [options] [destination]
 
 Configure vim-config in destination, which defaults to \${HOME} if not
 specified.
