@@ -41,10 +41,11 @@ augroup hsautocmd-cmdwin
   autocmd CmdwinEnter * call hs#init_cmdwin()
 augroup END
 
-" autocmd VimEnter *
-"       \   if !argc()
-"       \ |   Startify
-"       \ |   NERDTree
-"       \ |   wincmd w
-"       \ | endif
-" endif
+augroup hsautocmd-startup
+  autocmd VimEnter *
+        \   if !argc()
+        \ |   Startify
+        \ |   NERDTree
+        \ |   wincmd w
+        \ | endif
+augroup END

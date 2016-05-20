@@ -135,4 +135,11 @@ let g:startify_custom_header =
       \ 'map(startify#fortune#boxed(), "\"   \".v:val")'
 let g:startify_change_to_vcs_root = 1
 
+let g:NERDTreeShowBookmarks = 1
+let g:NERDTreeChDirMode = 2
+let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeMouseMode = 2
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeIgnore = ['\.pyc','\~$','\.swo$','\.swp$','\.git','\.hg','\.svn','\.bzr']
+
 SourceIf ~/.jiracomplete.vimrc

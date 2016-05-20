@@ -99,6 +99,7 @@ Plug 'junegunn/vim-easy-align',
       \   ]
       \ }
 Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
 Plug 'thinca/vim-localrc'
 Plug 'thinca/vim-qfreplace', { 'on': 'Qfreplace' }
 Plug 'thinca/vim-prettyprint', { 'on': [ 'PrettyPrint', 'PP' ] }
