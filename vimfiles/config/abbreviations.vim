@@ -27,3 +27,4 @@ iab clongdate <C-R>=strftime("%a %b %d %X %z %Y")<CR>
 iab cpdate <C-R>=strftime("%A, %d %B %Y")<CR>
 " ISO datetime
 iab cisodt <C-R>=strftime("%Y-%m-%dT%H:%M:%S%z")<CR>
+iab cdt <C-R>=strftime("%Y-%m-%dT%H:%M:%S%z")<CR>
