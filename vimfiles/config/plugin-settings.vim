@@ -148,4 +148,9 @@ let g:NERDTreeMouseMode = 2
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeIgnore = ['\.pyc','\~$','\.swo$','\.swp$','\.git','\.hg','\.svn','\.bzr']
 
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+
 SourceIf ~/.jiracomplete.vimrc
