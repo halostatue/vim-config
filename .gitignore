@@ -5,7 +5,6 @@
 .rake_tasks~
 .vagrant
 tags
-vendor/
 vimfiles/.netrwhist
 vimfiles/autoload/plug.vim
 vimfiles/bundle

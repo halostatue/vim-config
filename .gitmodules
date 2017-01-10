@@ -1,0 +1,3 @@
+[submodule "vendor/andrew-radev"]
+	path = vendor/andrew-radev
+	url = git://github.com/AndrewRadev/Vimfiles.git
