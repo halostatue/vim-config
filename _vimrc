@@ -8,20 +8,12 @@
 " Skip initialization for a vim-tiny or vim-small environment.
 if !1 | finish | endif
 
-if has('vim_starting')
-  " Use Vim settings, rather than Vi settings (much better!). This must be
-  " first, because it changes other options as a side effect.
-  set nocompatible
-endif
-
 " setlocal verbose=0 " Turn off verbose mode for this file.
 
 call config#init()
 
 call plug#begin(cache#for('plugged'))
-
 SourceConfig plugs
-
 call plug#end()
 
 SourceConfig editing

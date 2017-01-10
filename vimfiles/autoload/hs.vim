@@ -1,65 +1,66 @@
-function! hs#tabline()
-  let s = ''
+" Various helpful functions
+scriptencoding utf-8
 
-  for i in range(1, tabpagenr('$'))
-    let bufnrs = tabpagebuflist(i)
-    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+function! hs#tabline() abort
+  let l:s = ''
 
-    let no = i  " display 0-origin tabpagenr.
-    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+  for l:i in range(1, tabpagenr('$'))
+    let l:bufnrs = tabpagebuflist(l:i)
+    let l:bufnr = l:bufnrs[tabpagewinnr(l:i) - 1] " 1st window, 1st appears
 
-    " Use gettabvar().
-    let title =
+    let l:no = l:i " display 0-origin tabpagenr.
+    let l:mod = getbufvar(l:bufnr, '&modified') ? '!' : ' '
+
+    let l:title =
           \ !exists('*gettabvar') ?
-          \      fnamemodify(bufname(bufnr), ':t') :
-          \ gettabvar(i, 'title') != '' ?
-          \      gettabvar(i, 'title') :
-          \      fnamemodify((i == tabpagenr() ?
-          \       getcwd() : gettabvar(i, 'cwd')), ':t')
+          \      fnamemodify(bufname(l:bufnr), ':t') :
+          \ gettabvar(l:i, 'title') !=# '' ?
+          \      gettabvar(l:i, 'title') :
+          \      fnamemodify((l:i == tabpagenr() ?
+          \       getcwd() : gettabvar(l:i, 'cwd')), ':t')
 
-    let title = '[' . title . ']'
+    let l:title = '[' . l:title . ']'
 
-    let s .= '%'.i.'T'
-    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
-    let s .= title
-    let s .= mod
-    let s .= '%#TabLineFill#'
+    let l:s .= '%' . l:i . 'T'
+    let l:s .= '%#' . (l:i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let l:s .= l:title
+    let l:s .= l:mod
+    let l:s .= '%#TabLineFill#'
   endfor
 
-  let s .= '%#TabLineFill#%T%=%#TabLine#'
-  return s
+  let l:s .= '%#TabLineFill#%T%=%#TabLine#'
+  return l:s
 endfunction
 
-function! hs#clean_folds()
-  let line = getline(v:foldstart)
+function! hs#clean_folds() abort
+  let l:line = getline(v:foldstart)
 
-  let nucolwidth = &fdc + &number * &numberwidth
-  let windowwidth = winwidth(0) - nucolwidth - 13
-  let foldedlinecount = v:foldend - v:foldstart + 1
+  let l:nucolwidth = &foldcolumn + &number * &numberwidth
+  let l:windowwidth = winwidth(0) - l:nucolwidth - 13
+  let l:foldedlinecount = v:foldend - v:foldstart + 1
 
-  " expand tabs into spaces
-  let onetab = strpart('          ', 0, &tabstop)
-  let line = substitute(line, '\t', onetab, 'g')
+  let l:onetab = strpart('          ', 0, &tabstop)
+  let l:line = substitute(l:line, '\t', l:onetab, 'g')
 
-  let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-  let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 2
-  return line . '… ' . repeat(" ", fillcharcount) . foldedlinecount . ' lines'
+  let l:line = strpart(l:line, 0, l:windowwidth - 2 - len(l:foldedlinecount))
+  let l:fillcharcount = l:windowwidth - len(l:line) - len(l:foldedlinecount) - 2
+  return l:line . '… ' . repeat(' ', l:fillcharcount) . l:foldedlinecount . ' lines'
 endfunction
 
 let g:default_foldtext_function = 'hs#clean_folds'
 let g:default_foldtext_function = 'FoldCCtext'
 
-function! hs#has_value(varname)
-  return exists(a:varname) && exists("*" . eval(a:varname))
+function! hs#has_value(varname) abort
+  return exists(a:varname) && exists('*' . eval(a:varname))
 endfunction
 
-function! hs#smart_foldtext(...)
+function! hs#smart_foldtext(...) abort
   if a:0 != 0
     let &l:foldtext = a:1
   else
     let l:ftf = &l:foldtext
 
-    if l:ftf =~ 'getline(v:foldstart)'
+    if l:ftf =~# 'getline(v:foldstart)'
       if hs#has_value('g:default_foldtext_function')
         let l:ftf = g:default_foldtext_function . '()'
         let &l:foldtext = l:ftf
@@ -71,7 +72,7 @@ function! hs#smart_foldtext(...)
 endfunction
 command! SmartFoldText call hs#smart_foldtext()
 
-function! hs#on_filetype()
+function! hs#on_filetype() abort
   " Disable automatically insert comment.
   setl formatoptions-=ro formatoptions+=mMBl
 
@@ -80,8 +81,7 @@ function! hs#on_filetype()
     setlocal textwidth=0
   endif
 
-  " Use FoldCCtext().
-  if &filetype !=# 'help' 
+  if &filetype !=# 'help'
     call hs#smart_foldtext()
   endif
 
@@ -96,15 +96,15 @@ function! hs#on_filetype()
 endfunction
 
 " Make directory automatically.
-function! hs#mkpath(dir, force)
-  if !isdirectory(a:dir) && &l:buftype == '' &&
+function! hs#mkpath(dir, force) abort
+  if !isdirectory(a:dir) && &l:buftype ==# '' &&
         \ (a:force || input(printf('"%s" does not exist. Create? [y/N]',
         \              a:dir)) =~? '^y\%[es]$')
     call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
   endif
 endfunction
 
-function! hs#init_cmdwin()
+function! hs#init_cmdwin() abort
   nnoremap <buffer><silent> q :<C-u>quit<Return>
   nnoremap <buffer><silent> <Tab> :<c-u>quit<Return>
 
@@ -113,16 +113,22 @@ function! hs#init_cmdwin()
   startinsert!
 endfunction
 
-function! hs#toggleOption(option)
+function! hs#toggleOption(option) abort
   execute 'setlocal' a:option.'!'
   execute 'setlocal' a:option.'?'
 endfunction
 
-function! hs#toggleVariable(variable)
+function! hs#toggleVariable(variable) abort
   if eval(a:variable)
     execute 'let' a:variable.' = 0'
   else
     execute 'let' a:variable.' = 1'
   endif
   echo printf('%s = %s', a:variable, eval(a:variable))
+endfunction
+
+function! hs#isotime() abort
+  let l:zv = strftime('%z')
+  let l:zone = substitute(l:zv, '\([-+]\)\(\d\{2}\)\(\d\{2}\)', '\1\2:\3', '')
+  return strftime("%Y-%m-%dT%H:%M:%S") . l:zone
 endfunction

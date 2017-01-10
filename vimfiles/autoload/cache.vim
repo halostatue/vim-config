@@ -4,14 +4,20 @@ if exists('s:vim_cache') == 2
   finish
 endif
 
-function! s:mkpath(path)
-  if !isdirectory(a:path)
-    call mkdir(a:path, 'p')
+function! cache#mkpath(...) abort
+  let l:path = s:vim_cache
+
+  if a:0 != 0
+    let l:path = join([l:path, a:1], '/')
   endif
-  return a:path
+
+  if !isdirectory(l:path)
+    call mkdir(l:path, 'p')
+  endif
+  return l:path
 endfunction
 
-function! cache#setup()
+function! cache#setup() abort
   if exists('$VIM_CACHE')
     let s:vim_cache = expand('$VIM_CACHE')
   elseif exists('$CACHE')
@@ -22,15 +28,15 @@ function! cache#setup()
     let s:vim_cache = expand('~/.cache')
   endif
 
-  call s:mkpath(s:vim_cache)
+  call cache#mkpath()
 endfunction
 
-function! cache#root()
+function! cache#root() abort
   return s:vim_cache
 endfunction
 
-function! cache#for(path)
-  return s:mkpath(expand(join([s:vim_cache, a:path], '/')))
+function! cache#for(path) abort
+  return cache#mkpath(a:path)
 endfunction
 
 call cache#setup()
