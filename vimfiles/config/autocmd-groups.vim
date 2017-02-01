@@ -49,3 +49,8 @@ augroup hsautocmd-startup
         \ |   wincmd w
         \ | endif
 augroup END
+
+augroup hsautocmd-flagship
+  autocmd User Flags call Hoist("window", "SyntasticStatuslineFlag")
+  autocmd User Flags call Hoist("global", "%{&ignorecase ? '[IC]' : ''}")
+augroup END

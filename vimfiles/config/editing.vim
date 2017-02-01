@@ -27,7 +27,6 @@ if has('folding')
   " Folding settings.
   set foldenable foldmethod=marker foldcolumn=1 commentstring=#\ %s
   set foldlevelstart=0
-  if exists('*FoldCCtext') | set foldtext=FoldCCtext() | endif
 end
 
   " Use ag for built-in grep capabilities instead of grep.
@@ -47,7 +46,7 @@ endif
 
 set keywordprg=:help
 
-set timeout timeoutlen=3000 ttimeoutlen=100 " Keymapping timeout.
+set timeout timeoutlen=500 ttimeoutlen=100 " Keymapping timeout.
 set updatetime=1000 " CursorHold time.
 set directory=~/.cache/vim-tmp//,/var/tmp//,/tmp//,/private/tmp// " swap path
 
@@ -60,11 +59,6 @@ endif
 
 " Enable virtualedit in visual block mode.
 set virtualedit+=block
-
-" Use vim-jp/autofmt if present.
-if exists('*autofmt#compat#formatexpr')
-  set formatexpr=autofmt#compat#formatexpr()
-endif
 
 " Do not leave a backup file around, but make all writes safe. Use the swap
 " file directory for these files, too.
@@ -98,5 +92,10 @@ endif
 if has('syntax')
   set colorcolumn=+1,+2,79,80,90,91
 end
+
+" Use vim-jp/autofmt if present.
+if has_key(g:plugs, 'autofmt')
+  set formatexpr=autofmt#compat#formatexpr()
+endif
 
 call hs#smart_foldtext()

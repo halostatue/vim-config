@@ -21,6 +21,7 @@ SourceConfig viewing
 SourceConfig autocmd-groups
 SourceConfig filetype-defaults
 SourceConfig plugin-settings
+SourceConfig syntax-settings
 SourceConfig commands
 SourceConfig abbreviations
 SourceConfig key-mappings

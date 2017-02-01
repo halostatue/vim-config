@@ -10,12 +10,6 @@ function! homebrew#active() abort
   return s:HomebrewActive
 endfunction
 
-if homebrew#active()
-  let s:HomebrewPrefix = substitute(system('brew --prefix'), "\\n", '', '')
-else
-  let s:HomebrewPrefix = ''
-endif
-
 function! homebrew#prefix() abort
   return s:HomebrewPrefix
 endfunction
@@ -39,3 +33,19 @@ endfunction
 function! homebrew#filewritable(path) abort
   return filewritable(homebrew#path(a:path))
 endfunction
+
+function! homebrew#init() abort
+  if homebrew#active()
+    let l:brew_prefix = expand('~/.brew-prefix')
+    if exists(l:brew_prefix)
+      let s:HomebrewPrefix = execute('read ~/.brew-prefix')
+    else
+      let s:HomebrewPrefix = substitute(system('brew --prefix'), "\\n", '', '')
+      call writefile([ s:HomebrewPrefix ], l:brew_prefix)
+    endif
+  else
+    let s:HomebrewPrefix = ''
+  endif
+endfunction
+
+call homebrew#init()

@@ -70,7 +70,7 @@ function! hs#smart_foldtext(...) abort
     endif
   endif
 endfunction
-command! SmartFoldText call hs#smart_foldtext()
+command! -nargs=? -complete=function SmartFoldText call hs#smart_foldtext(<args>)
 
 function! hs#on_filetype() abort
   " Disable automatically insert comment.
@@ -114,8 +114,8 @@ function! hs#init_cmdwin() abort
 endfunction
 
 function! hs#toggleOption(option) abort
-  execute 'setlocal' a:option.'!'
-  execute 'setlocal' a:option.'?'
+  execute 'setlocal '.a:option.'!'
+  execute 'setlocal '.a:option.'?'
 endfunction
 
 function! hs#toggleVariable(variable) abort
@@ -130,5 +130,23 @@ endfunction
 function! hs#isotime() abort
   let l:zv = strftime('%z')
   let l:zone = substitute(l:zv, '\([-+]\)\(\d\{2}\)\(\d\{2}\)', '\1\2:\3', '')
-  return strftime("%Y-%m-%dT%H:%M:%S") . l:zone
+  return strftime('%Y-%m-%dT%H:%M:%S') . l:zone
 endfunction
+
+function! hs#download_thesaurus(bang) abort
+  if is#windows()
+    let l:path = expand('~/vimfiles/thesaurus/mthesaur.txt')
+  else
+    let l:path = expand('~/.vim/thesaurus/mthesaur.txt')
+  endif
+  let l:url = 'https://raw.githubusercontent.com/zeke/moby/master/words.txt'
+  let l:download = empty(glob(l:path))
+  if a:bang ==# '!' | let l:download = 1 | endif
+
+  if l:download
+    echo 'Downloading the Moby thesaurus…'
+    let l:command = '!curl -fLo ' . l:path . ' --create-dirs ' . l:url
+    silent execute l:command
+  endif
+endfunction
+command! -bang DownloadThesaurus call hs#download_thesaurus('<bang>')

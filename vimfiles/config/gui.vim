@@ -1,20 +1,21 @@
 " Do not use Windows ALT behaviour
 set winaltkeys=no
 
-" Fullscreen options
-if is#mac()
-  " Command-Ctrl-F for Full-Screen
-  macmenu Window.Toggle\ Full\ Screen\ Mode key=<D-C-F>
-  set fuoptions=maxvert,maxhorz
-endif
-
 " Font settings
 if is#mac()
-  set guifont=Source\ Code\ Pro:h10,Inconsolata\ Medium:h10,Anonymous\ Pro:h11,DejaVu\ Sans\ Mono:h9,Andale\ Mono:h10
+  " Fullscreen options
+  if has("gui_macvim") && has("gui_running")
+    " Command-Ctrl-F for Full-Screen
+    macmenu Window.Toggle\ Full\ Screen\ Mode key=<D-C-F>
+    set fuoptions=maxvert,maxhorz
+  endif
+
+  set macligatures
+  set guifont=Fira\ Code:h10,Input\ Mono\ Narrow:h10,Source\ Code\ Pro:h10,Inconsolata\ Medium:h10,Anonymous\ Pro:h11,DejaVu\ Sans\ Mono:h9,Andale\ Mono:h10
 elseif has('gui_gtk2') || has('X11')
-  set guifont=Source\ Code\ Pro\ 11,Inconsolata\ Medium\ 11,Anonymous\ Pro\ 12,DejaVu\ Sans\ Mono\ 10,Andale\ Mono\ 11,Luxi\ Mono\ 9
+  set guifont=Input\ Mono\ Narrow\ 10,Source\ Code\ Pro\ 11,Inconsolata\ Medium\ 11,Anonymous\ Pro\ 12,DejaVu\ Sans\ Mono\ 10,Andale\ Mono\ 11,Luxi\ Mono\ 9
 elseif has('win32') || has('win64')
-  set guifont=Source\ Code\ Pro:h11,Inconsolata\ Medium:h11,Anonymous\ Pro:h12,DejaVu\ Sans\ Mono:h10,Andale\ Mono:h11
+  set guifont=Input\ Mono\ Narrow:h10,Source\ Code\ Pro:h11,Inconsolata\ Medium:h11,Anonymous\ Pro:h12,DejaVu\ Sans\ Mono:h10,Andale\ Mono:h11
 
   if has('patch-7.4.394')
     " Use DirectWrite
@@ -37,7 +38,6 @@ else
 endif
 
 if has('transparency') | set transparency=1 | endif
-" if !exists('g:colors_name') | colorscheme desertEx | endif
 if !exists('g:colors_name') | colorscheme PaperColor | endif
 
 " Mouse settings

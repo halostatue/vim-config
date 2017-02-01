@@ -43,58 +43,58 @@ function! s:ToggleGJK()
 endfunction
 
 function! s:CDToBufferDir()
-  let filetype = getbufvar(bufnr('%'), '&filetype')
-  if filetype ==# 'vimfiler'
-    let dir = getbufvar(bufnr('%'), 'vimfiler').current_dir
-  elseif filetype ==# 'vimshell'
-    let dir = getbufvar(bufnr('%'), 'vimshell').save_dir
+  let l:filetype = getbufvar(bufnr('%'), '&filetype')
+  if l:filetype ==# 'vimfiler'
+    let l:dir = getbufvar(bufnr('%'), 'vimfiler').current_dir
+  elseif l:filetype ==# 'vimshell'
+    let l:dir = getbufvar(bufnr('%'), 'vimshell').save_dir
   else
-    let dir = isdirectory(bufname('%')) ?
+    let l:dir = isdirectory(bufname('%')) ?
           \ bufname('%') : fnamemodify(bufname('%'), ':p:h')
   endif
 
-  execute 'lcd' fnameescape(dir)
+  execute 'lcd' fnameescape(l:dir)
 endfunction
 
 function! s:ToggleQuickfixWindow()
-  let _ = winnr('$')
+  let l:w = winnr('$')
   cclose
-  if _ == winnr('$')
+  if l:w == winnr('$')
     copen
     setlocal nowrap whichwrap=b,s
   endif
 endfunction
 
 function! s:ToggleLocationWindow()
-  let _ = winnr('$')
+  let l:w = winnr('$')
   lclose
-  if _ == winnr('$')
+  if l:w == winnr('$')
     lopen
     setlocal nowrap whichwrap=b,s
   endif
 endfunction
 
 function! ForwardParagraph()
-  let cnt = v:count ? v:count : 1
-  let i = 0
-  while i < cnt
+  let l:cnt = v:count ? v:count : 1
+  let l:i = 0
+  while l:i < l:cnt
     if !search('^\s*\n.*\S','W')
       normal! G$
       return
     endif
-    let i = i + 1
+    let l:i = l:i + 1
   endwhile
 endfunction
 
 function! SmartHome(mode)
-  let curcol = col('.')
+  let l:curcol = col('.')
 
   if &wrap
     normal! g^
   else
     normal! ^
   endif
-  if col('.') == curcol
+  if col('.') == l:curcol
     if &wrap
       normal! g0
     else
@@ -102,24 +102,24 @@ function! SmartHome(mode)
     endif
   endif
 
-  if a:mode == "v"
+  if a:mode ==# 'v'
     normal! msgv`s
   endif
 
-  return ""
+  return ''
 endfunction
 
 " Smart end function
 function! SmartEnd(mode)
-  let curcol = col('.')
-  let lastcol = a:mode ==# 'i' ? col('$') : col('$') - 1
+  let l:curcol = col('.')
+  let l:lastcol = a:mode ==# 'i' ? col('$') : col('$') - 1
 
   " Gravitate towards ending for wrapped lines
-  if curcol < lastcol - 1
-    call cursor(0, curcol + 1)
+  if l:curcol < l:lastcol - 1
+    call cursor(0, l:curcol + 1)
   endif
 
-  if curcol < lastcol
+  if l:curcol < l:lastcol
     if &wrap
       normal! g$
     else
@@ -130,40 +130,41 @@ function! SmartEnd(mode)
   endif
 
   " Correct edit mode cursor position, put after current character
-  if a:mode == "i"
-    call cursor(0, col(".") + 1)
+  if a:mode ==# 'i'
+    call cursor(0, col('.') + 1)
   endif
 
-  if a:mode == "v"
+  if a:mode ==# 'v'
     normal! msgv`s
   endif
 
-  return ""
+  return ''
 endfunction
 
 function! s:ExecuteInShell(command)
-    let command = join(map(split(a:command), 'expand(v:val)'))
-    let winnr = bufwinnr('^' . command . '$')
-    silent! execute  winnr < 0 ? 'botright vnew ' . fnameescape(command) : winnr . 'wincmd w'
+    let l:command = join(map(split(a:command), 'expand(v:val)'))
+    let l:winnr = bufwinnr('^' . l:command . '$')
+    silent! execute l:winnr < 0 ? 'botright vnew ' . fnameescape(l:command) : l:winnr . 'wincmd w'
     setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap nonumber
-    silent! execute 'silent %!'. command
+    silent! execute 'silent %!'. l:command
     silent! redraw
     silent! execute 'autocmd BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
-    silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>:AnsiEsc<CR>'
+    silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . l:command . ''')<CR>:AnsiEsc<CR>'
     silent! execute 'nnoremap <silent> <buffer> q :q<CR>'
     silent! execute 'AnsiEsc'
 endfunction
 
 function! s:SynStack()
-  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), " > ")
+  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, ''name'')'), ' > ')
 endfunction
 
 function! s:TabMessage(cmd)
-  redir => message
+  let l:message = ''
+  redir => l:message
   silent execute a:cmd
   redir END
   tabnew
-  silent put=message
+  silent put=l:message
   set nomodified
 endfunction
 

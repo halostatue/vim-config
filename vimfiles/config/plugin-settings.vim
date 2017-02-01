@@ -1,26 +1,46 @@
-" CtrlP configuration
-let g:ctrlp_switch_buffer = 'Et'
-let g:ctrlp_extensions = [ 'funky', 'tag', 'dir', 'mixed', 'rtscript', 'undo' ]
-let g:ctrlp_working_path_mode = 'rwa'
-if executable('pt')
-  " Use pt in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'pt %s -l --nocolor -g ""'
-elseif executable('ag')
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
+scriptencoding utf-8
 
-if len(g:ctrlp_user_command)
-  " ag or pt are fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-else
-  let g:ctrlp_use_caching = 1
-  let g:ctrlp_clear_cache_on_exit = 1
-endif
+if has_key(g:plugs, 'CtrlP')
+  let g:ctrlp_switch_buffer = 'Et'
+  let g:ctrlp_extensions = [ 'funky', 'tag', 'dir', 'mixed', 'rtscript', 'undo' ]
+  let g:ctrlp_working_path_mode = 'rwa'
 
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_open_new_file = 'v'
-let g:ctrlp_reuse_window = 'startify'
+  function! s:ctrlp_user_command(...)
+    let l:command = ''
+
+    if a:0 > 0 && len(a:1)
+      if executable(a:1)
+        let l:command = a:1
+      else
+        echom 'Command "' . a:1 .'" is not executable. Falling back to discovery.'
+      endif
+    endif
+
+    " if !len(l:command) && executable('pt') | let l:command = 'pt' | endif
+    if !len(l:command) && executable('ag') | let l:command = 'ag' | endif
+
+    if len(l:command)
+      let g:ctrlp_user_command = l:command . ' %s -l --nocolor -g ""'
+    else
+      let g:ctrlp_user_command = ''
+    endif
+  endfunction
+  command! -nargs=? CtrlPUserCommand call <SID>ctrlp_user_command(<q-args>)
+  CtrlPUserCommand
+
+  if len(g:ctrlp_user_command)
+    " ag or pt are fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+  else
+    let g:ctrlp_use_caching = 1
+    let g:ctrlp_clear_cache_on_exit = 1
+  endif
+
+  let g:ctrlp_show_hidden = 1
+  let g:ctrlp_open_new_file = 'v'
+  let g:ctrlp_reuse_window = 'startify'
+
+endif
 
 let g:commentary_map_backslash = 0
 
@@ -33,14 +53,15 @@ augroup END
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
-let g:syntastic_ruby_mri_exec = expand("~/.rubies/ruby-2.2.2/bin/ruby")
-let g:syntastic_ruby_rubocop_exe = g:syntastic_ruby_mri_exec . " -S rubocop"
-" let g:syntastic_ruby_rubylint_exe = g:syntastic_ruby_mri_exec . " -S ruby-lint"
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_ruby_mri_exec = expand('~/.rubies/ruby-2.2.2/bin/ruby')
+let g:syntastic_ruby_rubocop_exe = g:syntastic_ruby_mri_exec . ' -S rubocop'
+" let g:syntastic_ruby_rubylint_exe = g:syntastic_ruby_mri_exec . ' -S ruby-lint'
 let g:syntastic_ruby_checkers = [ 'mri', 'rubocop' ]
 let g:syntastic_javascript_checkers = [ 'eslint' ]
 " let g:syntastic_javascript_eslint_exec = 'eslint_d'
+let g:syntastic_vim_checkers = ['vint']
 
 " Gist
 if is#cygwin()
@@ -66,8 +87,8 @@ let g:ragtag_global_maps = 1
 let g:vinarise_enable_auto_detect = 1
 
 " SuperTab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
+let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabContextDefaultCompletionType = '<c-p>'
 let g:SuperTabLongestHighlight = 1
 
 if has_key(g:plugs, 'YouCompleteMe')
@@ -80,30 +101,15 @@ endif
 
 " Scratch
 function! s:scratchtoggle()
-  if bufexists("*Scratch*")
-    exec "normal! :ScratchClose"
+  if bufexists('*Scratch*')
+    exec 'normal! :ScratchClose'
   else
-    exec "normal! :ScratchOpen"
+    exec 'normal! :ScratchOpen'
   endif
 endfunction
 command! -bar -nargs=0 ScratchToggle call <SID>scratchtoggle()
 
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_symbols.readonly = '∅'
-let g:airline_theme = 'papercolor'
+if has_key(g:plugs, 'vim-airline') | let g:airline_powerline_fonts = 1 | endif
 
 let g:vimpipe_invoke_map = '[Space]r'
 let g:vimpipe_close_map = '[Space]p'
@@ -135,8 +141,6 @@ let g:tagbar_type_vhdl =
 
 let g:ref_no_default_key_mappings = 1
 
-let g:test#strategy = 'dispatch'
-
 let g:startify_custom_header =
       \ 'map(startify#fortune#boxed(), "\"   \".v:val")'
 let g:startify_change_to_vcs_root = 1
@@ -152,5 +156,31 @@ let g:vim_markdown_conceal = 0
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_json_frontmatter = 1
+
+let g:grepper = {
+      \   'tools': [ 'pt', 'ag', 'git', 'grep' ],
+      \ }
+
+let g:sqlutil_keyword_case = '\U'
+
+" We don’t want these maps by default. They are not nicely loaded.
+let g:loaded_AlignMaps = 1
+let g:loaded_AlignMapsPlugin = 1
+
+if has('nvim')
+  let g:test#strategy = 'neovim'
+elseif v:version >= 800
+  let g:test#strategy = 'asyncrun'
+elseif is#mac() && has('gui_macvim') && has('gui_running')
+  let g:test#strategy = 'terminal'
+else
+  let g:test#strategy = 'dispatch'
+  " let g:test#strategy = 'vimux'
+endif
+
+if has_key(g:plugs, 'vim-lexical')
+  let g:lexical#spellang = [ 'en_ca', 'en_us', 'en', ]
+  DownloadThesaurus
+endif
 
 SourceIf ~/.jiracomplete.vimrc
