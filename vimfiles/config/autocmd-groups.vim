@@ -42,12 +42,18 @@ augroup hsautocmd-cmdwin
 augroup END
 
 augroup hsautocmd-startup
+  autocmd StdinReadPre * let s:std_in = 1
+
   autocmd VimEnter *
-        \   if !argc()
-        \ |   Startify
-        \ |   NERDTree
-        \ |   wincmd w
-        \ | endif
+        \  if !argc() && !exists('s:std_in')
+        \|   Startify
+        \|   NERDTree
+        \|   wincmd w
+        \| elseif argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in')
+        \|   Startify
+        \|   execute 'NERDTree' argv()[0]
+        \|   wincmd w
+        \| endif
 augroup END
 
 augroup hsautocmd-flagship

@@ -66,18 +66,16 @@ Plug 'wellle/targets.vim'
 "   Plug 'phalkunz/ctrlp-related'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
-" Plug 'vim-scripts/dbext.vim'
-
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " File Management
 Plug 'justinmk/vim-dirvish'
-Plug 'tpope/vim-eunuch',
-      \ { 'on': [
-      \     'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Find',
-      \     'Locate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
-      \   ]
-      \ }
+  Plug 'tpope/vim-eunuch',
+        \ { 'on': [
+        \     'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Find',
+        \     'Locate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
+        \   ]
+        \ }
 
 if homebrew#isdirectory('opt/fzf')
   let &runtimepath .= ',' . homebrew#path('opt/fzf')
@@ -279,6 +277,7 @@ Plug 'honza/dockerfile.vim', { 'for': 'dockerfile' }
 
 Plug 'elixir-lang/vim-elixir', { 'for': [ 'elixir', 'eelixir' ] }
   Plug 'mattreduce/vim-mix', { 'for': [ 'elixir', 'eelixir' ] }
+  Plug 'andyl/vim-projectionist-elixir'
   Plug 'c-brenn/phoenix.vim'
   Plug 'slashmili/alchemist.vim'
   " let g:alchemist_tag_disable = 1
