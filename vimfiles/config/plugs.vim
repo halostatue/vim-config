@@ -548,4 +548,6 @@ Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 
 Plug 'osyo-manga/vim-anzu'
 
+Plug 'junegunn/vader.vim', { 'for': 'vader', 'on': 'Vader' }
+
 delfunction Cond

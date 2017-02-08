@@ -13,7 +13,7 @@ augroup hsautocmd-allbufs
 
   autocmd BufWritePre * call hs#mkpath(expand('<afile>:p:h'), v:cmdbang)
 
-  autocmd FileType,Syntax * call hs#on_filetype()
+  autocmd FileType,Syntax * call hs#reset_on_filetype()
 
   " Update filetype.
   autocmd BufWritePost *
@@ -57,6 +57,6 @@ augroup hsautocmd-startup
 augroup END
 
 augroup hsautocmd-flagship
-  autocmd User Flags call Hoist("window", "SyntasticStatuslineFlag")
-  autocmd User Flags call Hoist("global", "%{&ignorecase ? '[IC]' : ''}")
+  autocmd User Flags call Hoist("window", "%{flagship#try('SyntasticStatuslineFlag')}")
+  autocmd User Flags call Hoist("window", "%{&ignorecase ? '[IC]' : ''}")
 augroup END

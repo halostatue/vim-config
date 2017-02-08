@@ -50,7 +50,7 @@ endfunction
 let g:default_foldtext_function = 'hs#clean_folds'
 let g:default_foldtext_function = 'FoldCCtext'
 
-function! hs#has_value(varname) abort
+function! hs#valid_function(varname) abort
   return exists(a:varname) && exists('*' . eval(a:varname))
 endfunction
 
@@ -61,7 +61,7 @@ function! hs#smart_foldtext(...) abort
     let l:ftf = &l:foldtext
 
     if l:ftf =~# 'getline(v:foldstart)'
-      if hs#has_value('g:default_foldtext_function')
+      if hs#valid_function('g:default_foldtext_function')
         let l:ftf = g:default_foldtext_function . '()'
         let &l:foldtext = l:ftf
       else
@@ -72,9 +72,9 @@ function! hs#smart_foldtext(...) abort
 endfunction
 command! -nargs=? -complete=function SmartFoldText call hs#smart_foldtext(<args>)
 
-function! hs#on_filetype() abort
+function! hs#reset_on_filetype() abort
   " Disable automatically insert comment.
-  setl formatoptions-=ro formatoptions+=mMBl
+  setlocal formatoptions-=ro formatoptions+=mMBl
 
   " Disable auto wrap.
   if &l:textwidth != 70 && &filetype !=# 'help'
@@ -133,7 +133,29 @@ function! hs#isotime() abort
   return strftime('%Y-%m-%dT%H:%M:%S') . l:zone
 endfunction
 
-function! hs#download_thesaurus(bang) abort
+" Copied from flagship#try.
+function! hs#try(...) abort
+  let l:args = copy(a:000)
+  let l:dict = {}
+  let l:default = ''
+  if type(get(l:args, 0)) == type({})
+    let l:dict = remove(l:args, 0)
+  endif
+  if type(get(l:args, 0)) == type([])
+    let l:default = remove(l:args, 0)[0]
+  endif
+  if empty(l:args)
+    return l:default
+  endif
+  let l:Func = remove(l:args, 0)
+  if type(l:Func) == type(function('tr')) || exists('*' . l:Func)
+    return call(l:Func, l:args, l:dict)
+  else
+    return l:default
+  endif
+endfunction
+
+function! hs#download_thesaurus(force) abort
   if is#windows()
     let l:path = expand('~/vimfiles/thesaurus/mthesaur.txt')
   else
@@ -141,7 +163,7 @@ function! hs#download_thesaurus(bang) abort
   endif
   let l:url = 'https://raw.githubusercontent.com/zeke/moby/master/words.txt'
   let l:download = empty(glob(l:path))
-  if a:bang ==# '!' | let l:download = 1 | endif
+  if a:force ==# '!' | let l:download = 1 | endif
 
   if l:download
     echo 'Downloading the Moby thesaurus…'

@@ -7,7 +7,7 @@
 tags
 vimfiles/.netrwhist
 vimfiles/autoload/plug.vim
-vimfiles/bundle
-vimfiles/tmp/
 vimfiles/autoload/plug.vim.old
-vimfiles/thesaurus/
+vimfiles/bundle
+vimfiles/thesaurus/mthesaur.txt
+vimfiles/tmp/

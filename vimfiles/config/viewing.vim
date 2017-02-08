@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 set number " Show line numbers
 set hlsearch " Show search highlight
 
@@ -30,14 +32,21 @@ endif
 let &tabline = '%!hs#tabline()'
 set showtabline=1
 
+set statusline=%{hs#status#buffer()}\ %<%.99f\ %h%m%r%{hs#try('CapsLockStatusline')}%y%{hs#try('fugitive#statusline')}%#ErrorMsg#%{hs#try('SyntasticStatuslineFlag')}%*%=%-14.(%l,%c%V%)\ %P
+
 " Set the default statusline when Airline is not turned on.
-let &statusline="%{winnr('$')>1?'['.winnr().'/'.winnr('$')"
-      \ . ".(winnr('#')==winnr()?'#':'').']':''}\ "
-      \ . "%{(&previewwindow?'[preview] ':'').expand('%:t')}"
+let &statusline= "%{(&previewwindow?'[preview] ':'').expand('%:t')}"
       \ . "\ %=%{(winnr('$')==1 || winnr('#')!=winnr()) ?
       \ '['.(&filetype!=''?&filetype.',':'')"
       \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''}"
       \ . "%m%{printf(' %4d/%d',line('.'),line('$'))}"
+
+let &g:statusline = '%{hs#status#buffer()}'
+      \. '%<%.99f %(%{hs#status#filemodifiers()}%q%)'
+      \. '%{hs#status#fugitive()}'
+      \. '%#ErrorMsg#%{hs#try(''SyntasticStatuslineFlag'')}%*'
+      \. '%='
+      \. '%-14.(%c%V,%l/%L%) %P'
 
 " Set linebreaking and wrapping rules
 if has('linebreak')
