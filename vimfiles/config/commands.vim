@@ -177,3 +177,12 @@ if executable('pdftotext')
     setlocal nomodified
   endfunction
 endif
+
+command! -bang DownloadThesaurus call hs#download_thesaurus('<bang>')
+command! -nargs=? -complete=function SmartFoldText call hs#smart_foldtext(<args>)
+command! -bang CleanWhitespace call hs#clean_whitespace('<bang>')
+command! CleanAnsiColors  call lib#with_saved_state('%s/\[.\{-}m//ge')
+command! CleanEol         call lib#with_saved_state('%s/$//e')
+command! CleanDoubleLines call lib#with_saved_state('%s/^\n\+/\r/e')
+command! -nargs=* -complete=command Bufferize call hs#bufferize#do(<q-args>)
+command! Messages call hs#messages()

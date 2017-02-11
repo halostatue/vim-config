@@ -22,29 +22,20 @@ set ignorecase smartcase
 " If the title can be changed, change it to something useful.
 if has('title')
   set title titlelen=95
-  let &titlestring="
-        \ %{expand('%:p:~:.')}%(%m%w%)
-        \ %<\(%{str#widthpart(\ fnamemodify(getcwd(), ':~'),
-        \ &columns - len(expand('%:p:.:~')))}\) - VIM"
+  let &g:titlestring='%{expand(''%:p:~:.'')}%(%m%w%)'
+        \. '%<(%{str#widthpart(fnamemodify(getcwd(), '':~''),'
+        \. '&columns - len(expand(''%:p:.:~'')))}) - VIM'
 endif
 
 " Set the default tabline.
 let &tabline = '%!hs#tabline()'
 set showtabline=1
 
-set statusline=%{hs#status#buffer()}\ %<%.99f\ %h%m%r%{hs#try('CapsLockStatusline')}%y%{hs#try('fugitive#statusline')}%#ErrorMsg#%{hs#try('SyntasticStatuslineFlag')}%*%=%-14.(%l,%c%V%)\ %P
-
-" Set the default statusline when Airline is not turned on.
-let &statusline= "%{(&previewwindow?'[preview] ':'').expand('%:t')}"
-      \ . "\ %=%{(winnr('$')==1 || winnr('#')!=winnr()) ?
-      \ '['.(&filetype!=''?&filetype.',':'')"
-      \ . ".(&fenc!=''?&fenc:&enc).','.&ff.']' : ''}"
-      \ . "%m%{printf(' %4d/%d',line('.'),line('$'))}"
-
 let &g:statusline = '%{hs#status#buffer()}'
       \. '%<%.99f %(%{hs#status#filemodifiers()}%q%)'
-      \. '%{hs#status#fugitive()}'
+      " \. '%{hs#status#fugitive()}'
       \. '%#ErrorMsg#%{hs#try(''SyntasticStatuslineFlag'')}%*'
+      \. '%{hs#status#asyncrun()}'
       \. '%='
       \. '%-14.(%c%V,%l/%L%) %P'
 

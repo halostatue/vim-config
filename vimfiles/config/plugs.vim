@@ -24,6 +24,7 @@ Plug 'LeafCage/foldCC.vim'
 " DLL-based vim process.
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Asynchronous compiler calls.
+" Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-dispatch',
       \ { 'on': [
       \     'Make', 'Copen', 'Dispatch', 'FocusDispatch', 'Start', 'Spawn'
@@ -60,6 +61,8 @@ Plug 'kana/vim-textobj-user'
   Plug 'whatyouhide/vim-textobj-xmlattr', { 'for': [ 'html', 'xml' ] }
 Plug 'wellle/targets.vim'
 
+Plug 'tommcdo/vim-exchange'
+
 " Fuzzy file finder
 " Plug 'ctrlpvim/ctrlp.vim'
 "   Plug 'tacahiroy/ctrlp-funky'
@@ -93,7 +96,9 @@ Plug 'mnpk/vim-jira-complete'
 
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'AndrewRadev/andrews_nerdtree.vim'
 
 Plug 'vim-jp/autofmt'
 
@@ -141,12 +146,6 @@ Plug 'romainl/vim-qlist'
 Plug 'justinmk/vim-sneak'
 Plug 'vimwiki/vimwiki'
 
-Plug 'mhinz/vim-grepper',
-      \ { 'on':
-      \   [ 'Grepper'
-      \   ]
-      \ }
-
 if is#mac()
   Plug 'henrik/vim-reveal-in-finder', { 'on': 'Reveal' }
   Plug 'rizzatti/dash.vim',
@@ -154,7 +153,7 @@ if is#mac()
 endif
 
 " VCS
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive' | Plug 'int3/vim-extradite'
 Plug 'jlfwong/vim-mercenary'
 Plug 'gregsexton/gitv'
 
@@ -191,6 +190,11 @@ Plug 'krisajenkins/vim-pipe'
 Plug 'mattn/gist-vim', { 'on': 'Gist' }
 
 " Ag instead of Grep.
+Plug 'mhinz/vim-grepper',
+      \ { 'on':
+      \   [ 'Grepper'
+      \   ]
+      \ }
 Plug 'rking/ag.vim', { 'on': [ 'Ag', 'AgAdd', 'LAg', 'LAgAdd' ] }
 
 " Vim-Test
@@ -209,6 +213,7 @@ Plug 'halostatue/vim-ansi-esc', { 'on': 'AnsiEsc' }
 Plug 'mhinz/vim-signify'
 Plug 'mhinz/vim-startify'
 Plug 'tomtom/quickfixsigns_vim'
+Plug 'mh21/errormarker.vim'
 
 Plug 'henrik/vim-indexed-search'
 
@@ -284,9 +289,8 @@ Plug 'elixir-lang/vim-elixir', { 'for': [ 'elixir', 'eelixir' ] }
 
 Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
 
-Plug 'yalesov/vim-ember-script', { 'for': 'ember-script' }
-
-Plug 'yalesov/vim-emblem', { 'for': 'emblem' }
+Plug 'yalesov/vim-ember-script', { 'for': 'ember-script' } |
+  Plug 'yalesov/vim-emblem', { 'for': 'emblem' }
 
 Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
   Plug 'vim-erlang/erlang-motions.vim', { 'for': 'erlang' }
@@ -349,6 +353,7 @@ Plug 'tbastos/vim-lua', { 'for': 'lua' }
 
 Plug 'sophacles/vim-bundle-mako', { 'for': 'mako' }
 
+" Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
   Plug 'thinca/vim-ft-markdown_fold', { 'for': 'markdown' }
 

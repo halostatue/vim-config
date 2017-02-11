@@ -70,7 +70,6 @@ function! hs#smart_foldtext(...) abort
     endif
   endif
 endfunction
-command! -nargs=? -complete=function SmartFoldText call hs#smart_foldtext(<args>)
 
 function! hs#reset_on_filetype() abort
   " Disable automatically insert comment.
@@ -171,4 +170,31 @@ function! hs#download_thesaurus(force) abort
     silent execute l:command
   endif
 endfunction
-command! -bang DownloadThesaurus call hs#download_thesaurus('<bang>')
+
+function! hs#getvar(name, ...) abort
+  let l:result = get(b:, a:name, get(g:, a:name))
+  if !l:result && a:0
+    let l:result = a:1
+  endif
+  return l:result
+endfunction
+
+function! hs#clean_whitespace(force) abort
+  if a:force || hs#getvar('skip_clean_whitespace')
+    call lib#with_saved_state('%s/\s\+$//e')
+  endif
+endfunction
+
+function! hs#messages()
+  if hs#bufferize#bufnr('messages')
+    return
+  endif
+
+  silent Bufferize messages
+  call lib#set_buffer_updater(hs#bufferize#bufnr('messages'),
+        \ function('hs#update_messages'), 500)
+endfunction
+
+function! hs#update_messages(_timer_id)
+  silent Bufferize messages
+endfunction

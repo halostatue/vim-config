@@ -383,4 +383,3 @@ augroup hsautocmd-vim-plug
   autocmd FileType vim-plug call s:plug_setup_extra_keys()
   autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 augroup END
-

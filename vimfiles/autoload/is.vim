@@ -1,4 +1,4 @@
-" Query Fucntions
+scriptencoding utf-8
 
 if exists('s:isWindows')
   finish
@@ -14,10 +14,15 @@ function! s:setup() abort
         \ && (has('mac') || has('macunix') || has('gui_macvim') ||
         \   (!executable('xdg-open') &&
         \     system('uname') =~? '^darwin'))
+  let s:isMacGui = s:isMac && has('gui_running')
 endfunction
 
 function! is#mac() abort
   return s:isMac
+endfunction
+
+function! is#macgui() abort
+  return s:isMacGui
 endfunction
 
 function! is#windows() abort

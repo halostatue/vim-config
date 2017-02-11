@@ -57,3 +57,7 @@ function! hs#status#fugitive() abort
   end
   return l:result
 endfunction
+
+function! hs#status#asyncrun() abort
+  return get(g:, 'asyncrun_status', '')
+endfunction

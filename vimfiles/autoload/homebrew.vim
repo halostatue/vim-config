@@ -1,9 +1,5 @@
 " Homebrew interaction functions
 
-if exists('*homebrew#active')
-  finish
-endif
-
 let s:HomebrewActive = is#mac() && executable('brew')
 
 function! homebrew#active() abort

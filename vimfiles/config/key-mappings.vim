@@ -158,8 +158,6 @@ xmap <silent> [Space]P <Plug>WhitespasteVisual
 xmap <silent> [Space]p <Plug>WhitespasteVisual
 nnoremap <silent> [Space]S :<C-U>Switch<CR>
 
-nnoremap <silent> [Space]X :<C-U>call <SID>BrowsePlugin()<CR>
-
 " Edit/reload .vimrc
 nnoremap <silent> [Space]ev :<C-U>edit $MYVIMRC<CR>
 nnoremap <silent> [Space]rv :<C-U>source $MYVIMRC \| echo "source $MYVIMRC"<CR>
@@ -315,6 +313,9 @@ nnoremap g, g,zz
 " Duplicate the current selection.
 xnoremap D y'>p
 
+nnoremap <D-O> :<C-U>CtrlP<CR>
+xnoremap <D-O> :<C-U>CtrlP<CR>
+
 " Insert the path of the currently edited file into a command.
 cmap <C-R><C-P> <C-R>=expand("%:p:h") . "/"<CR>
 
@@ -367,15 +368,5 @@ function! s:MaybeSpellcheck()
   else
     setlocal spell
     normal z=
-  endif
-endfunction
-
-function! s:BrowsePlugin()
-  let l:url = 'https://github.com/' . expand('<cfile>')
-  let l:viewer = get(g:, 'netrw_browsex_viewer', '-')
-  if l:viewer ==# '-'
-    call netrw#BrowseX(l:url, '')
-  else
-    exec '!' . g:netrw_browsex_viewer . ' ' . l:url
   endif
 endfunction

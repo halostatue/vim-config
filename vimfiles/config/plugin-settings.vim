@@ -167,20 +167,52 @@ let g:sqlutil_keyword_case = '\U'
 let g:loaded_AlignMaps = 1
 let g:loaded_AlignMapsPlugin = 1
 
-if has('nvim')
-  let g:test#strategy = 'neovim'
-elseif v:version >= 800
-  let g:test#strategy = 'asyncrun'
-elseif is#mac() && has('gui_macvim') && has('gui_running')
-  let g:test#strategy = 'terminal'
-else
-  let g:test#strategy = 'dispatch'
-  " let g:test#strategy = 'vimux'
+if has_key(g:plugs, 'vim-test')
+  if has('nvim')
+    if has_key(g:plugs, 'neoterm')
+      let g:test#strategy = 'neoterm'
+    else
+      let g:test#strategy = 'neovim'
+    endif
+  elseif has_key(g:plugs, 'vim-dispatch')
+    let g:test#strategy = 'dispatch'
+  elseif has_key(g:plugs, 'asyncrun.vim')
+    let g:test#strategy = 'asyncrun'
+  elseif has_key(g:plugs, 'vimproc.vim')
+    let g:test#strategy = 'vimproc'
+  elseif !has('gui_running')
+    if has_key(g:plugs, 'vimux')
+      let g:test#strategy = 'vimux'
+    elseif has_key(g:plugs, 'tslime.vim')
+      let g:test#strategy = 'tslime'
+    elseif has_key(g:plugs, 'vim-tmux-runner')
+      let g:test#strategy = 'vtr'
+    endif
+  elseif is#macgui()
+    let g:test#strategy = 'terminal'
+  else
+    let g:test#strategy = 'make'
+  endif
+endif
+
+if has_key(g:plugs, 'vim-dispatch')
+  " let g:dispatch_compilers =
+  "       \ {
+  "       \    'elixir' : 'exunit'
+  "       \ }
+endif
+
+if v:version >= 800 && has_key(g:plugs, 'asyncrun.vim')
+  if has_key(g:plugs, 'errormarker.vim')
+    let g:asyncrun_auto = 'make'
+  endif
+  if has_key(g:plugs, 'vim-fugitive')
+    command! bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+  endif
 endif
 
 if has_key(g:plugs, 'vim-lexical')
   let g:lexical#spellang = [ 'en_ca', 'en_us', 'en', ]
-  DownloadThesaurus
 endif
 
 SourceIf ~/.jiracomplete.vimrc
