@@ -1,21 +1,21 @@
 " Override the default K binding to search for a word in the current directory.
 " Use the location window for matches.
-nnoremap K :lgrep! "\b<C-R><C-W>\b"<CR>:lw<CR>
-xnoremap K :lgrep! "\b<C-R><C-W>\b"<CR>:lw<CR>
+nnoremap K :lgrep! "\b<C-R><C-W>\b"<Return>:lw<Return>
+xnoremap K :lgrep! "\b<C-R><C-W>\b"<Return>:lw<Return>
 
 " Allow easy toggling between cmdheight 1 and 2.
 nnoremap <Leader>1 :set cmdheight=1<cr>
 nnoremap <Leader>2 :set cmdheight=2<cr>
 
 " Tabularization of equals signs
-nmap <Leader>a= :Tabularize eq<CR>
-xmap <Leader>a= :Tabularize eq<CR>
+nmap <Leader>a= :Tabularize eq<Return>
+xmap <Leader>a= :Tabularize eq<Return>
 
 " Tabularization of hashes as JSON.
-nmap <Leader>a: :Tabularize json_hash<CR>
-xmap <Leader>a: :Tabularize json_hash<CR
+nmap <Leader>a: :Tabularize json_hash<Return>
+xmap <Leader>a: :Tabularize json_hash<Return>
 
-augroup hsautocmd-rubysyntax
+augroup hsautocmd-ruby-tabularize
   " Override Tabularization of hashes to Ruby hash formats.
   autocmd FileType ruby
         \ nmap <buffer> <Leader>a: :<C-U>Tabularize ruby_hash<Return> |
@@ -88,6 +88,22 @@ augroup hsautocmd-smartchr
         \ inoremap <buffer> <expr> < smartchr#loop('<', '<%', '<%=')
 augroup END
 
+if has_key(g:plugs, 'dirvish.vim')
+  nmap <silent> [Space]- <Plug>(dirvish_up)
+  nmap <silent> [Space]h- <Plug>(dirvish_split_up)
+  nmap <silent> [Space]v- <Plug>(dirvish_vsplit_up)
+elseif has_key(g:plugs, 'vim-vinegar')
+  nmap <silent> [Space]- <Plug>VinegarUp
+  nmap <silent> [Space]t- <Plug>VinegarTabUp
+  nmap <silent> [Space]h- <Plug>VinegarSplitUp
+  nmap <silent> [Space]v- <Plug>VinegarVerticalSplitUp
+endif
+
+if has_key(g:plugs, 'vim-choosewin')
+  nmap <silent> [Space]W <Plug>(choosewin)
+  let g:choosewin_overlay_enable = 1
+endif
+
 " Quickrun
 nmap <silent> <Leader>r <Plug>(quickrun)
 
@@ -104,6 +120,7 @@ xmap A <Plug>(niceblock-A)
 xmap <Enter> <Plug>(EasyAlign)
 nmap <Leader><Leader>a <Plug>(EasyAlign)
 nnoremap <silent> <F9> :TagbarToggle<Return>
+nnoremap <silent> <F4> :NERDTreeToggle<Return>
 
 if has('gui_running')
   " Move between buffers. Different on Mac vs not-Mac because option inserts
@@ -142,73 +159,73 @@ nnoremap [Space] <Nop>
 xnoremap [Space] <Nop>
 
 " Toggle a number of options:
-nnoremap <silent> [Space].  :<C-U>call hs#toggleOption('relativenumber')<CR>
-nnoremap <silent> [Space]m  :<C-U>call hs#toggleOption('paste')<CR>
-nnoremap <silent> [Space]/  :<C-U>call hs#toggleOption('hlsearch')<CR>
-nnoremap <silent> [Space]cl :<C-U>call hs#toggleOption('cursorline')<CR>
-nnoremap <silent> [Space]ar :<C-U>call hs#toggleOption('autoread')<CR>
-nnoremap <silent> [Space]sp :<C-U>call hs#toggleOption('spell')<CR>
-nnoremap <silent> [Space]w  :<C-U>call hs#toggleOption('wrap')<CR>
-nnoremap <silent> [Space]z  :<C-U>call <SID>MaybeSpellcheck()<CR>
+nnoremap <silent> [Space].  :<C-U>call hs#toggleOption('relativenumber')<Return>
+nnoremap <silent> [Space]m  :<C-U>call hs#toggleOption('paste')<Return>
+nnoremap <silent> [Space]/  :<C-U>call hs#toggleOption('hlsearch')<Return>
+nnoremap <silent> [Space]cl :<C-U>call hs#toggleOption('cursorline')<Return>
+nnoremap <silent> [Space]ar :<C-U>call hs#toggleOption('autoread')<Return>
+nnoremap <silent> [Space]sp :<C-U>call hs#toggleOption('spell')<Return>
+nnoremap <silent> [Space]w  :<C-U>call hs#toggleOption('wrap')<Return>
+nnoremap <silent> [Space]z  :<C-U>call <SID>MaybeSpellcheck()<Return>
 nnoremap [Space]! :Shell<Space>
 
 nmap <silent> [Space]P <Plug>WhitespasteBefore
 nmap <silent> [Space]p <Plug>WhitespasteAfter
 xmap <silent> [Space]P <Plug>WhitespasteVisual
 xmap <silent> [Space]p <Plug>WhitespasteVisual
-nnoremap <silent> [Space]S :<C-U>Switch<CR>
+nnoremap <silent> [Space]S :<C-U>Switch<Return>
 
 " Edit/reload .vimrc
-nnoremap <silent> [Space]ev :<C-U>edit $MYVIMRC<CR>
-nnoremap <silent> [Space]rv :<C-U>source $MYVIMRC \| echo "source $MYVIMRC"<CR>
+nnoremap <silent> [Space]ev :<C-U>edit $MYVIMRC<Return>
+nnoremap <silent> [Space]rv :<C-U>source $MYVIMRC \| echo "source $MYVIMRC"<Return>
 
 " Change current directory to the directory of the current buffer.
-nnoremap <silent> [Space]cd :<C-U>CDToBufferDir<CR>
+nnoremap <silent> [Space]cd :<C-U>CDToBufferDir<Return>
 
 " Toggle diff whitespace comparison.
-nnoremap <silent> [Space]dw :<C-U>call <SID>ToggleDiffWhitespace()<CR>
+nnoremap <silent> [Space]dw :<C-U>call <SID>ToggleDiffWhitespace()<Return>
 
 " Enable ArgWrap
-nnoremap <silent> [Space]aw :<C-U>ArgWrap<CR>
+nnoremap <silent> [Space]aw :<C-U>ArgWrap<Return>
 
 " Vim-Test
-nmap <silent> [Space]tt :<C-U>TestNearest<CR>
-nmap <silent> [Space]tf :<C-U>TestFile<CR>
-nmap <silent> [Space]ta :<C-U>TestSuite<CR>
-nmap <silent> [Space]tl :<C-U>TestLast<CR>
-nmap <silent> [Space]tg :<C-U>TestVisit<CR>
+nmap <silent> [Space]tt :<C-U>TestNearest<Return>
+nmap <silent> [Space]tf :<C-U>TestFile<Return>
+nmap <silent> [Space]ta :<C-U>TestSuite<Return>
+nmap <silent> [Space]tl :<C-U>TestLast<Return>
+nmap <silent> [Space]tg :<C-U>TestVisit<Return>
 
 " Toggle gj/gk behaviours for j/k behaviours. The default is gk/gj
 " (display-linewise) movement, not j/k (linewise) movement.
 noremap j gj
 noremap k gk
-noremap <silent> [Space]gj :<C-U>ToggleGJK<CR>
+noremap <silent> [Space]gj :<C-U>ToggleGJK<Return>
 
 " Change tab width.
-nnoremap <silent> [Space]t2 :<C-U>setlocal shiftwidth=2 softtabstop=2<CR>
-nnoremap <silent> [Space]t4 :<C-U>setlocal shiftwidth=4 softtabstop=4<CR>
-nnoremap <silent> [Space]t8 :<C-U>setlocal shiftwidth=8 softtabstop=8<CR>
+nnoremap <silent> [Space]t2 :<C-U>setlocal shiftwidth=2 softtabstop=2<Return>
+nnoremap <silent> [Space]t4 :<C-U>setlocal shiftwidth=4 softtabstop=4<Return>
+nnoremap <silent> [Space]t8 :<C-U>setlocal shiftwidth=8 softtabstop=8<Return>
 
 " Jump folds.
 noremap <silent> [Space]j zj
 noremap <silent> [Space]k zk
 
 " Buffergator
-nnoremap <silent> [Space]b :<C-U>BuffergatorToggle<CR>
-nnoremap <silent> [Space]to :<C-U>BuffergatorTabsOpen<CR>
-nnoremap <silent> [Space]tc :<C-U>BuffergatorTabsClose<CR>
-nnoremap <silent> [Space][b :<C-U>BuffergatorMruCyclePrev<CR>
-nnoremap <silent> [Space]]b :<C-U>BuffergatorMruCycleNext<CR>
+nnoremap <silent> [Space]b :<C-U>BuffergatorToggle<Return>
+nnoremap <silent> [Space]to :<C-U>BuffergatorTabsOpen<Return>
+nnoremap <silent> [Space]tc :<C-U>BuffergatorTabsClose<Return>
+nnoremap <silent> [Space][b :<C-U>BuffergatorMruCyclePrev<Return>
+nnoremap <silent> [Space]]b :<C-U>BuffergatorMruCycleNext<Return>
 
 " YAML Toggle Flatness
-nnoremap <silent> [Space]y :<C-U>YAMLToggleFlatness<CR>
+nnoremap <silent> [Space]y :<C-U>YAMLToggleFlatness<Return>
 
 " Look into vim-ref
 nmap <silent> [Space]K <Plug>(ref-keyword)
 vmap <silent> [Space]K <Plug>(ref-keyword)
 
 " Grepper
-nnoremap <silent> [Space]* :<C-U>Grepper -tool ag -cword -noprompt<CR>
+nnoremap <silent> [Space]* :<C-U>Grepper -tool ag -cword -noprompt<Return>
 nmap gS <plug>(GrepperOperator)
 xmap gS <plug>(GrepperOperator)
 
@@ -227,23 +244,23 @@ nmap q [Quickfix]
 nnoremap [Quickfix] <Nop>
 
 " Open a quickfix window for the last search.
-nnoremap [Quickfix]/ :execute 'vimgrep /' . @/ . '/g %'<CR>:copen<CR>
+nnoremap [Quickfix]/ :execute 'vimgrep /' . @/ . '/g %'<Return>:copen<Return>
 
 " Toggle quickfix window.
-nnoremap <silent> [Quickfix]q :<C-U>ToggleQuickfixWindow<CR>
-nnoremap <silent> [Quickfix]n :<C-U>cnext<CR>
-nnoremap <silent> [Quickfix]p :<C-U>cprevious<CR>
+nnoremap <silent> [Quickfix]q :<C-U>ToggleQuickfixWindow<Return>
+nnoremap <silent> [Quickfix]n :<C-U>cnext<Return>
+nnoremap <silent> [Quickfix]p :<C-U>cprevious<Return>
 
 " Smart }.
-nnoremap <silent> } :<C-U>call ForwardParagraph()<CR>
-onoremap <silent> } :<C-U>call ForwardParagraph()<CR>
-xnoremap <silent> } <Esc>:<C-U>call ForwardParagraph()<CR>mzgv`z
+nnoremap <silent> } :<C-U>call ForwardParagraph()<Return>
+onoremap <silent> } :<C-U>call ForwardParagraph()<Return>
+xnoremap <silent> } <Esc>:<C-U>call ForwardParagraph()<Return>mzgv`z
 
 " Smart home and smart end.
-nnoremap <silent> gh  :<C-U>call SmartHome('n')<CR>
-nnoremap <silent> gl  :<C-U>call SmartEnd('n')<CR>
-xnoremap <silent> gh  <Esc>:<C-U>call SmartHome('v')<CR>
-xnoremap <silent> gl  <Esc>:<C-U>call SmartEnd('v')<CR>
+nnoremap <silent> gh  :<C-U>call SmartHome('n')<Return>
+nnoremap <silent> gl  :<C-U>call SmartEnd('n')<Return>
+xnoremap <silent> gh  <Esc>:<C-U>call SmartHome('v')<Return>
+xnoremap <silent> gl  <Esc>:<C-U>call SmartEnd('v')<Return>
 
 " Disable Ex mode shortcut.
 nnoremap Q gqip
@@ -251,8 +268,8 @@ nnoremap Q gqip
 " Like gv, reselect the last changed text.
 nnoremap gz `[v`]
 " Specify the last changed text as {motion}.
-xnoremap <silent> gz :<C-U>normal gz<CR>
-onoremap <silent> gz :<C-U>normal gz<CR>
+xnoremap <silent> gz :<C-U>normal gz<Return>
+onoremap <silent> gz :<C-U>normal gz<Return>
 
 " Select rectangle.
 xnoremap r <C-v>
@@ -285,8 +302,8 @@ noremap <expr> zz (winline() == (winheight(0)+1)/ 2) ?
 
 " Keep search matches in the middle of the window and pulse the line when
 " moving to them.
-nnoremap <silent> n nzzzv:call <SID>PulseCursorLine(4, 20, 5)<CR>
-nnoremap <silent> N Nzzzv:call <SID>PulseCursorLine(4, 20, 5)<CR>
+nnoremap <silent> n nzzzv:call <SID>PulseCursorLine(4, 20, 5)<Return>
+nnoremap <silent> N Nzzzv:call <SID>PulseCursorLine(4, 20, 5)<Return>
 augroup hsautocmd-pulse
   autocmd!
   autocmd FocusGained * call s:PulseCursorLine(4, 20, 5)
@@ -299,8 +316,8 @@ noremap <C-^> <C-^>`"
 noremap <C-G> 2<C-G>
 
 " Visual Mode */# from Scrooloose
-xnoremap <silent> * :<C-U>call <SID>VSetSearch()<CR>//<CR><C-O>
-xnoremap <silent> # :<C-U>call <SID>VSetSearch()<CR>??<CR><C-O>
+xnoremap <silent> * :<C-U>call <SID>VSetSearch()<Return>//<Return><C-O>
+xnoremap <silent> # :<C-U>call <SID>VSetSearch()<Return>??<Return><C-O>
 
 " Don't move on */#
 nnoremap * *<C-O>
@@ -313,11 +330,11 @@ nnoremap g, g,zz
 " Duplicate the current selection.
 xnoremap D y'>p
 
-nnoremap <D-O> :<C-U>CtrlP<CR>
-xnoremap <D-O> :<C-U>CtrlP<CR>
+nnoremap <D-O> :<C-U>CtrlP<Return>
+xnoremap <D-O> :<C-U>CtrlP<Return>
 
 " Insert the path of the currently edited file into a command.
-cmap <C-R><C-P> <C-R>=expand("%:p:h") . "/"<CR>
+cmap <C-R><C-P> <C-R>=expand("%:p:h") . "/"<Return>
 
 " Functions for the maps within.
 function! s:PulseCursorLine(times, delay, ...)
@@ -367,6 +384,6 @@ function! s:MaybeSpellcheck()
     setlocal nospell
   else
     setlocal spell
-    normal z=
+    normal! z=
   endif
 endfunction

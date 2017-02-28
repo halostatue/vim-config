@@ -1,4 +1,4 @@
-" Plugins
+scriptencoding utf-8
 
 function! Cond(cond, ...)
   let l:opts = get(a:000, 0, {})
@@ -17,6 +17,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-haystack'
 Plug 'rstacruz/vim-xtract'
 Plug 'tpope/vim-projectionist'
+" Plug 'google/vim-glaive'
+" Plug 'google/vim-maktaba'
 
 " A sensible foldtext function.
 Plug 'LeafCage/foldCC.vim'
@@ -36,7 +38,8 @@ Plug 'Shougo/vinarise', { 'on': 'Vinarise' }
 
 " Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 " Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-flagship'
+" Plug 'rafi/vim-tinyline'
+" Plug 'tpope/vim-flagship'
 
 " User textobject functions.
 Plug 'kana/vim-textobj-user'
@@ -145,17 +148,21 @@ Plug 'romainl/vim-qf'
 Plug 'romainl/vim-qlist'
 Plug 'justinmk/vim-sneak'
 Plug 'vimwiki/vimwiki'
+" Plug 'chiphogg/vim-vtd'
 
 if is#mac()
   Plug 'henrik/vim-reveal-in-finder', { 'on': 'Reveal' }
   Plug 'rizzatti/dash.vim',
         \ { 'on': [ '<Plug>DashSearch', '<Plug>DashGlobalSearch', 'Dash' ] }
+  Plug 'itchyny/dictionary.vim', { 'on': 'Dictionary' }
 endif
 
 " VCS
 Plug 'tpope/vim-fugitive' | Plug 'int3/vim-extradite'
+Plug 'lambdalisue/vim-gita'
 Plug 'jlfwong/vim-mercenary'
 Plug 'gregsexton/gitv'
+Plug 'itchyny/vim-gitbranch'
 
 " gf (open file under cursor) extensions
 Plug 'kana/vim-gf-user'
@@ -163,6 +170,8 @@ Plug 'kana/vim-gf-diff', { 'for': 'diff' }
 
 " Global regular expression execution
 Plug 'kana/vim-operator-user'
+Plug 'kana/vim-operator-replace'
+" Plug 'rhysd/vim-operator-surround'
 Plug 'kana/vim-grex', { 'on': [ 'Grey', 'Gred' ] }
 
 " Work with blockwise Visual mode nicer.
@@ -188,6 +197,7 @@ Plug 'krisajenkins/vim-pipe'
 
 " Gist management
 Plug 'mattn/gist-vim', { 'on': 'Gist' }
+" Plug 'lambdalisue/vim-gista'
 
 " Ag instead of Grep.
 Plug 'mhinz/vim-grepper',
@@ -214,8 +224,11 @@ Plug 'mhinz/vim-signify'
 Plug 'mhinz/vim-startify'
 Plug 'tomtom/quickfixsigns_vim'
 Plug 'mh21/errormarker.vim'
+Plug 'Shougo/echodoc.vim'
 
 Plug 'henrik/vim-indexed-search'
+Plug 'haya14busa/incsearch.vim'
+Plug 'terryma/vim-expand-region'
 
 " Development
 Plug 'tpope/vim-bundler',
@@ -278,6 +291,7 @@ Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
 
 Plug 'dart-lang/dart-vim-plugin', { 'for': 'dart' }
 
+" Plug 'ekalinin/Dockerfile.vim'
 Plug 'honza/dockerfile.vim', { 'for': 'dockerfile' }
 
 Plug 'elixir-lang/vim-elixir', { 'for': [ 'elixir', 'eelixir' ] }
@@ -294,7 +308,7 @@ Plug 'yalesov/vim-ember-script', { 'for': 'ember-script' } |
 
 Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
   Plug 'vim-erlang/erlang-motions.vim', { 'for': 'erlang' }
-  Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
+  Plug 'vim-erlang/vim-erlang-compiler'
   Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
   Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
 
@@ -328,6 +342,9 @@ Plug 'othree/html5.vim'
 
 Plug 'glanotte/vim-jasmine', { 'for': 'jasmine.javascript' }
 
+" Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+" Plug 'jiangmiao/simple-javascript-indenter', { 'for': 'javascript' }
+" Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'pmsorhaindo/syntastic-local-eslint.vim'
 
@@ -377,6 +394,10 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 Plug 'exu/pgsql.vim', { 'for': 'pgsql' }
 
 Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+  Plug 'rayburgemeestre/phpfolding.vim', { 'for': 'php' }
+  Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+  Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
+  Plug 'rafi/vim-phpspec', { 'for': 'php' }
 
 Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 
@@ -392,7 +413,8 @@ Plug 'voxpupuli/vim-puppet', { 'for': [ 'puppet', 'ruby' ] }
 Plug 'raichoo/purescript-vim', { 'for': 'purescript' }
 
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
-  Plug 'aliev/vim-compiler-python', { 'for': 'python' }
+  Plug 'aliev/vim-compiler-python'
+  Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 
 Plug 'peterhoeg/vim-qml', { 'for': 'qml' }
 
@@ -429,7 +451,7 @@ Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'keith/tmux.vim', { 'for': 'tmux' }
   Plug 'tmux-plugins/vim-tmux', { 'for': 'tmux' }
   Plug 'tmux-plugins/vim-tmux-focus-events'
-  Plug 'christoomey/vim-tmux-navigator'
+  " Plug 'christoomey/vim-tmux-navigator'
   Plug 'tpope/vim-tbone',
         \ { 'on': [ 'Tmux', 'Tyank', 'Tput', 'Twrite', 'Tattach' ] }
 
@@ -473,6 +495,9 @@ Plug 'thinca/vim-ft-help_fold', { 'for': 'help' }
 Plug 'thinca/vim-ft-vim_fold', { 'for' : 'vim' }
 
 Plug 'kylef/apiblueprint.vim', { 'for': 'apiblueprint' }
+
+Plug 'mitsuhiko/vim-jinja'
+Plug 'robbles/logstash.vim'
 
 Plug 'sukima/xmledit', { 'for': 'xml' }
 
@@ -550,9 +575,16 @@ Plug 'hashivim/vim-terraform', { 'for': 'terraform' }
 
 Plug 'tek/vim-fieldtrip'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 
 Plug 'osyo-manga/vim-anzu'
 
 Plug 'junegunn/vader.vim', { 'for': 'vader', 'on': 'Vader' }
+
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 't9md/vim-choosewin'
+Plug 'itchyny/vim-cursorword'
+Plug 'bogado/file-line'
+Plug 'tyru/open-browser.vim'
 
 delfunction Cond

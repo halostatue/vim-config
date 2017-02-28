@@ -180,12 +180,12 @@ function! hs#getvar(name, ...) abort
 endfunction
 
 function! hs#clean_whitespace(force) abort
-  if a:force || hs#getvar('skip_clean_whitespace')
+  if a:force || !hs#getvar('skip_clean_whitespace')
     call lib#with_saved_state('%s/\s\+$//e')
   endif
 endfunction
 
-function! hs#messages()
+function! hs#messages() abort
   if hs#bufferize#bufnr('messages')
     return
   endif
@@ -195,6 +195,6 @@ function! hs#messages()
         \ function('hs#update_messages'), 500)
 endfunction
 
-function! hs#update_messages(_timer_id)
+function! hs#update_messages(_timer_id) abort
   silent Bufferize messages
 endfunction

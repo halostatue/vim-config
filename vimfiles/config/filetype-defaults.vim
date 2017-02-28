@@ -234,11 +234,6 @@ augroup hsautocmd-rubysyntax
         \| endif
 augroup END
 
-augroup hsautocmd-jssyntax
-  autocmd!
-  autocmd FileType javascript if exists(':SmartFoldText') | SmartFoldText | endif
-augroup END
-
 augroup hsautocmd-sqlsyntax
   autocmd!
 
