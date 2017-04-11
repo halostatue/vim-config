@@ -26,7 +26,7 @@ set infercase " Ignore case on insert completion.
 if has('folding')
   " Folding settings.
   set foldenable foldmethod=marker foldcolumn=1 commentstring=#\ %s
-  set foldlevelstart=0
+  set foldlevelstart=5 foldnestmax=10
 end
 
   " Use ag for built-in grep capabilities instead of grep.

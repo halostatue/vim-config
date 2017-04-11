@@ -10,7 +10,7 @@ augroup hsautocmd-allbufs
         \ if &paste | set nopaste mouse=ar | echo 'nopaste' | endif
   autocmd InsertLeave * if &l:diff | diffupdate | endif
 
-  autocmd BufWritePre * CleanWhitespace
+  " autocmd BufWritePre * CleanWhitespace
   autocmd BufWritePre * call hs#mkpath(expand('<afile>:p:h'), v:cmdbang)
 
   autocmd FileType,Syntax * call hs#reset_on_filetype()

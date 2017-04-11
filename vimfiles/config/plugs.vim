@@ -97,7 +97,10 @@ Plug 'bruno-/vim-man'
 
 Plug 'mnpk/vim-jira-complete'
 
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
+Plug 'ajh17/VimCompletesMe'
+" Plug 'lifepillar/vim-mucomplete'
+
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -586,5 +589,9 @@ Plug 't9md/vim-choosewin'
 Plug 'itchyny/vim-cursorword'
 Plug 'bogado/file-line'
 Plug 'tyru/open-browser.vim'
+
+Plug 'michaelbruce/vim-chruby'
+
+Plug 'junegunn/vim-peekaboo'
 
 delfunction Cond

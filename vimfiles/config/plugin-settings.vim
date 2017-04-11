@@ -168,6 +168,8 @@ let g:loaded_AlignMaps = 1
 let g:loaded_AlignMapsPlugin = 1
 
 if has_key(g:plugs, 'vim-test')
+  let g:test#ruby#minitest#executable = 'm'
+
   if has('nvim')
     if has_key(g:plugs, 'neoterm')
       let g:test#strategy = 'neoterm'
@@ -213,6 +215,15 @@ endif
 
 if has_key(g:plugs, 'vim-lexical')
   let g:lexical#spellang = [ 'en_ca', 'en_us', 'en', ]
+endif
+
+if has_key(g:plugs, 'vim-mucomplete')
+  set completeopt+=menuone
+  " set completeopt+=noinsert,noselect
+endif
+
+if has_key(g:plugs, 'vim-peekaboo')
+  let g:peekaboo_ins_prefix='<C-x>'
 endif
 
 SourceIf ~/.jiracomplete.vimrc
