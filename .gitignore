@@ -5,9 +5,11 @@
 .rake_tasks~
 .vagrant
 tags
-vimfiles/.netrwhist
-vimfiles/autoload/plug.vim
-vimfiles/autoload/plug.vim.old
-vimfiles/bundle
-vimfiles/thesaurus/mthesaur.txt
-vimfiles/tmp/
+/vimfiles/.netrwhist
+/vimfiles/autoload/plug.vim
+/vimfiles/autoload/plug.vim.old
+/vimfiles/bundle
+/vimfiles/thesaurus/mthesaur.txt
+/vimfiles/tmp/
+/vimfiles/local/*
+!/vimfiles/local/.gitkeep

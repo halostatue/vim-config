@@ -234,12 +234,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'terryma/vim-expand-region'
 
 " Development
-Plug 'tpope/vim-bundler',
-      \ { 'on': [
-      \     'Bundle', 'Bopen', 'Bedit', 'Bsplit', 'Bvsplit', 'Btabedit',
-      \     'Bpedit'
-      \   ]
-      \ }
+Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-heroku', { 'on': 'Hk' }
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake', { 'on': 'Rake' }
@@ -361,7 +356,8 @@ Plug 'dcjones/julia-minimalist-vim', { 'for': 'julia' }
 
 Plug 'udalov/kotlin-vim', { 'for': 'kotlin' }
 
-Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'latex' }
+" Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'latex' }
+Plug 'lervag/vimtex', { 'for': [ 'tex', 'latex' ] }
 
 Plug 'groenewege/vim-less', { 'for': 'less' }
 
@@ -404,7 +400,7 @@ Plug 'StanAngeloff/php.vim', { 'for': 'php' }
 
 Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 
-Plug 'Persistent13/vim-ps1', { 'for': [ 'ps1', 'ps1xml' ] }
+Plug 'PProvost/vim-ps1', { 'for': [ 'ps1', 'ps1xml' ] }
 
 Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 
@@ -506,6 +502,7 @@ Plug 'sukima/xmledit', { 'for': 'xml' }
 
 Plug 'flazz/vim-colorschemes'
   Plug 'godlygeek/csapprox'
+  Plug 'dracula/vim'
 
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -593,5 +590,7 @@ Plug 'tyru/open-browser.vim'
 Plug 'michaelbruce/vim-chruby'
 
 Plug 'junegunn/vim-peekaboo'
+
+Plug 'posva/vim-vue'
 
 delfunction Cond

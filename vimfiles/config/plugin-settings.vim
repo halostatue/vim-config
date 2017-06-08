@@ -1,54 +1,5 @@
 scriptencoding utf-8
 
-if has_key(g:plugs, 'CtrlP')
-  let g:ctrlp_switch_buffer = 'Et'
-  let g:ctrlp_extensions = [ 'funky', 'tag', 'dir', 'mixed', 'rtscript', 'undo' ]
-  let g:ctrlp_working_path_mode = 'rwa'
-
-  function! s:ctrlp_user_command(...)
-    let l:command = ''
-
-    if a:0 > 0 && len(a:1)
-      if executable(a:1)
-        let l:command = a:1
-      else
-        echom 'Command "' . a:1 .'" is not executable. Falling back to discovery.'
-      endif
-    endif
-
-    " if !len(l:command) && executable('pt') | let l:command = 'pt' | endif
-    if !len(l:command) && executable('ag') | let l:command = 'ag' | endif
-
-    if len(l:command)
-      let g:ctrlp_user_command = l:command . ' %s -l --nocolor -g ""'
-    else
-      let g:ctrlp_user_command = ''
-    endif
-  endfunction
-  command! -nargs=? CtrlPUserCommand call <SID>ctrlp_user_command(<q-args>)
-  CtrlPUserCommand
-
-  if len(g:ctrlp_user_command)
-    " ag or pt are fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
-  else
-    let g:ctrlp_use_caching = 1
-    let g:ctrlp_clear_cache_on_exit = 1
-  endif
-
-  let g:ctrlp_show_hidden = 1
-  let g:ctrlp_open_new_file = 'v'
-  let g:ctrlp_reuse_window = 'startify'
-
-endif
-
-let g:commentary_map_backslash = 0
-
-augroup hsautocmd-fugitive
-  autocmd!
-  autocmd BufNewFile,BufRead .git/index setlocal nolist
-augroup END
-
 " Syntastic
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
@@ -91,11 +42,11 @@ let g:SuperTabDefaultCompletionType = 'context'
 let g:SuperTabContextDefaultCompletionType = '<c-p>'
 let g:SuperTabLongestHighlight = 1
 
-if has_key(g:plugs, 'YouCompleteMe')
+if hs#plug#in('YouCompleteMe')
   let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
   let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
   let g:SuperTabDefaultCompletionType = '<C-Tab>'
-elseif has_key(g:plugs, 'neocomplete')
+elseif hs#plug#in('neocomplete')
   let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
 endif
 
@@ -109,7 +60,7 @@ function! s:scratchtoggle()
 endfunction
 command! -bar -nargs=0 ScratchToggle call <SID>scratchtoggle()
 
-if has_key(g:plugs, 'vim-airline') | let g:airline_powerline_fonts = 1 | endif
+if hs#plug#in('vim-airline') | let g:airline_powerline_fonts = 1 | endif
 
 let g:vimpipe_invoke_map = '[Space]r'
 let g:vimpipe_close_map = '[Space]p'
@@ -167,27 +118,27 @@ let g:sqlutil_keyword_case = '\U'
 let g:loaded_AlignMaps = 1
 let g:loaded_AlignMapsPlugin = 1
 
-if has_key(g:plugs, 'vim-test')
+if hs#plug#in('vim-test')
   let g:test#ruby#minitest#executable = 'm'
 
   if has('nvim')
-    if has_key(g:plugs, 'neoterm')
+    if hs#plug#in('neoterm')
       let g:test#strategy = 'neoterm'
     else
       let g:test#strategy = 'neovim'
     endif
-  elseif has_key(g:plugs, 'vim-dispatch')
+  elseif hs#plug#in('vim-dispatch')
     let g:test#strategy = 'dispatch'
-  elseif has_key(g:plugs, 'asyncrun.vim')
+  elseif hs#plug#in('asyncrun.vim')
     let g:test#strategy = 'asyncrun'
-  elseif has_key(g:plugs, 'vimproc.vim')
+  elseif hs#plug#in('vimproc.vim')
     let g:test#strategy = 'vimproc'
   elseif !has('gui_running')
-    if has_key(g:plugs, 'vimux')
+    if hs#plug#in('vimux')
       let g:test#strategy = 'vimux'
-    elseif has_key(g:plugs, 'tslime.vim')
+    elseif hs#plug#in('tslime.vim')
       let g:test#strategy = 'tslime'
-    elseif has_key(g:plugs, 'vim-tmux-runner')
+    elseif hs#plug#in('vim-tmux-runner')
       let g:test#strategy = 'vtr'
     endif
   elseif is#macgui()
@@ -197,33 +148,33 @@ if has_key(g:plugs, 'vim-test')
   endif
 endif
 
-if has_key(g:plugs, 'vim-dispatch')
+if hs#plug#in('vim-dispatch')
   " let g:dispatch_compilers =
   "       \ {
   "       \    'elixir' : 'exunit'
   "       \ }
 endif
 
-if v:version >= 800 && has_key(g:plugs, 'asyncrun.vim')
-  if has_key(g:plugs, 'errormarker.vim')
+if v:version >= 800 && hs#plug#in('asyncrun.vim')
+  if hs#plug#in('errormarker.vim')
     let g:asyncrun_auto = 'make'
   endif
-  if has_key(g:plugs, 'vim-fugitive')
+  if hs#plug#in('vim-fugitive')
     command! bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
   endif
 endif
 
-if has_key(g:plugs, 'vim-lexical')
+if hs#plug#in('vim-lexical')
   let g:lexical#spellang = [ 'en_ca', 'en_us', 'en', ]
 endif
 
-if has_key(g:plugs, 'vim-mucomplete')
+if hs#plug#in('vim-mucomplete')
   set completeopt+=menuone
   " set completeopt+=noinsert,noselect
 endif
 
-if has_key(g:plugs, 'vim-peekaboo')
+if hs#plug#in('vim-peekaboo')
   let g:peekaboo_ins_prefix='<C-x>'
 endif
 
-SourceIf ~/.jiracomplete.vimrc
+SourceIf local/*

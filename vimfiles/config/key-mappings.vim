@@ -7,39 +7,6 @@ xnoremap K :lgrep! "\b<C-R><C-W>\b"<Return>:lw<Return>
 nnoremap <Leader>1 :set cmdheight=1<cr>
 nnoremap <Leader>2 :set cmdheight=2<cr>
 
-" Tabularization of equals signs
-nmap <Leader>a= :Tabularize eq<Return>
-xmap <Leader>a= :Tabularize eq<Return>
-
-" Tabularization of hashes as JSON.
-nmap <Leader>a: :Tabularize json_hash<Return>
-xmap <Leader>a: :Tabularize json_hash<Return>
-
-augroup hsautocmd-ruby-tabularize
-  " Override Tabularization of hashes to Ruby hash formats.
-  autocmd FileType ruby
-        \ nmap <buffer> <Leader>a: :<C-U>Tabularize ruby_hash<Return> |
-        \ xmap <buffer> <Leader>a: :<C-U>Tabularize ruby_hash<Return>
-  autocmd FileType ruby
-        \ nmap <buffer> <Leader>a> :<C-U>Tabularize ruby_rocket_hash<Return> |
-        \ xmap <buffer> <Leader>a> :<C-U>Tabularize ruby_rocket_hash<Return>
-augroup END
-
-" Fugitive
-nnoremap <Leader>gd :Gdiff<Return>
-nnoremap <Leader>gs :Gstatus<Return>
-nnoremap <Leader>gw :Gwrite<Return>
-nnoremap <Leader>ga :Gadd<Return>
-nnoremap <Leader>gb :Gblame<Return>
-nnoremap <Leader>gco :Gcheckout<Return>
-nnoremap <Leader>gci :Gcommit<Return>
-nnoremap <Leader>gm :Gmove<Return>
-nnoremap <Leader>gr :Gremove<Return>
-
-" Scratch buffer support
-nmap <silent> <Leader><Leader>o <Plug>(scratch-open)
-nmap <silent> <Leader><Leader>c <Plug>(scratch-close)
-
 " Smartchr
 " - smart comma
 inoremap <expr> , smartchr#one_of(', ', ',')
@@ -48,7 +15,7 @@ inoremap <expr> , smartchr#one_of(', ', ',')
 inoremap <expr> =
       \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')
       \ ? '<bs>= ' : search('\(*\<bar>!\)\%#', 'bcn')
-      \ ? '= ' : smartchr#one_of(' = ', '=', ' == ')
+      \ ? '= ' : smartchr#one_of(' = ', '=', ' == ', ' => ')
 
 augroup hsautocmd-smartchr
   " Substitute .. into -> .
@@ -63,11 +30,11 @@ augroup hsautocmd-smartchr
   autocmd FileType lisp,scheme,clojure
         \ inoremap <buffer> <expr> = =
 
-  autocmd FileType ruby
+  autocmd FileType ruby, elixir
         \ inoremap <buffer> <expr> =
         \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')
         \ ? '<bs>= ' : search('\(*\<bar>!\)\%#', 'bcn')
-        \ ? '= ' : smartchr#one_of(' = ', '=', ' == ', ' => ')
+        \ ? '= ' : smartchr#one_of(' = ', '=', ' == ', ' => ', ' =~ ')
 
   autocmd FileType haskell,int-ghci
         \ inoremap <buffer> <expr> + smartchr#loop('+', ' ++ ') |
@@ -88,18 +55,22 @@ augroup hsautocmd-smartchr
         \ inoremap <buffer> <expr> < smartchr#loop('<', '<%', '<%=')
 augroup END
 
-if has_key(g:plugs, 'dirvish.vim')
+if hs#plug#in('dirvish.vim')
   nmap <silent> [Space]- <Plug>(dirvish_up)
   nmap <silent> [Space]h- <Plug>(dirvish_split_up)
   nmap <silent> [Space]v- <Plug>(dirvish_vsplit_up)
-elseif has_key(g:plugs, 'vim-vinegar')
+elseif hs#plug#in('vim-vinegar')
   nmap <silent> [Space]- <Plug>VinegarUp
   nmap <silent> [Space]t- <Plug>VinegarTabUp
   nmap <silent> [Space]h- <Plug>VinegarSplitUp
   nmap <silent> [Space]v- <Plug>VinegarVerticalSplitUp
 endif
 
-if has_key(g:plugs, 'vim-choosewin')
+if mapcheck('-', 'n') =~# '<Plug>(dirvish_up)\|<Plug>VinegarUp'
+  nunmap -
+endif
+
+if hs#plug#in('vim-choosewin')
   nmap <silent> [Space]W <Plug>(choosewin)
   let g:choosewin_overlay_enable = 1
 endif
@@ -151,22 +122,24 @@ nnoremap <SID>(command-line-norange) q:<C-U>
 nmap ;; <SID>(command-line-enter)
 xmap ;; <SID>(command-line-enter)
 
-" Treat <Space> as a type of <Leader>. This can be used by other scripts.
-" Space by itself acts as <Nop> on timeout.
+" Treat <Space> and <S-Space> as a type of <Leader>. This can be used by other
+" scripts. Space by itself acts as <Nop> on timeout.
 nmap <Space> [Space]
 xmap <Space> [Space]
+nmap <S-Space> [Space]
+xmap <S-Space> [Space]
 nnoremap [Space] <Nop>
 xnoremap [Space] <Nop>
 
 " Toggle a number of options:
-nnoremap <silent> [Space].  :<C-U>call hs#toggleOption('relativenumber')<Return>
-nnoremap <silent> [Space]m  :<C-U>call hs#toggleOption('paste')<Return>
-nnoremap <silent> [Space]/  :<C-U>call hs#toggleOption('hlsearch')<Return>
-nnoremap <silent> [Space]cl :<C-U>call hs#toggleOption('cursorline')<Return>
-nnoremap <silent> [Space]ar :<C-U>call hs#toggleOption('autoread')<Return>
-nnoremap <silent> [Space]sp :<C-U>call hs#toggleOption('spell')<Return>
-nnoremap <silent> [Space]w  :<C-U>call hs#toggleOption('wrap')<Return>
-nnoremap <silent> [Space]z  :<C-U>call <SID>MaybeSpellcheck()<Return>
+nnoremap <silent> [Space]o.  :<C-U>call hs#toggleOption('relativenumber')<Return>
+nnoremap <silent> [Space]om  :<C-U>call hs#toggleOption('paste')<Return>
+nnoremap <silent> [Space]o/  :<C-U>call hs#toggleOption('hlsearch')<Return>
+nnoremap <silent> [Space]oc :<C-U>call hs#toggleOption('cursorline')<Return>
+nnoremap <silent> [Space]oa :<C-U>call hs#toggleOption('autoread')<Return>
+nnoremap <silent> [Space]os :<C-U>call hs#toggleOption('spell')<Return>
+nnoremap <silent> [Space]ow  :<C-U>call hs#toggleOption('wrap')<Return>
+nnoremap <silent> [Space]oz  :<C-U>call <SID>MaybeSpellcheck()<Return>
 nnoremap [Space]! :Shell<Space>
 
 nmap <silent> [Space]P <Plug>WhitespasteBefore
@@ -184,16 +157,6 @@ nnoremap <silent> [Space]cd :<C-U>CDToBufferDir<Return>
 
 " Toggle diff whitespace comparison.
 nnoremap <silent> [Space]dw :<C-U>call <SID>ToggleDiffWhitespace()<Return>
-
-" Enable ArgWrap
-nnoremap <silent> [Space]aw :<C-U>ArgWrap<Return>
-
-" Vim-Test
-nmap <silent> [Space]tt :<C-U>TestNearest<Return>
-nmap <silent> [Space]tf :<C-U>TestFile<Return>
-nmap <silent> [Space]ta :<C-U>TestSuite<Return>
-nmap <silent> [Space]tl :<C-U>TestLast<Return>
-nmap <silent> [Space]tg :<C-U>TestVisit<Return>
 
 " Toggle gj/gk behaviours for j/k behaviours. The default is gk/gj
 " (display-linewise) movement, not j/k (linewise) movement.
@@ -329,9 +292,6 @@ nnoremap g, g,zz
 
 " Duplicate the current selection.
 xnoremap D y'>p
-
-nnoremap <D-O> :<C-U>CtrlP<Return>
-xnoremap <D-O> :<C-U>CtrlP<Return>
 
 " Insert the path of the currently edited file into a command.
 cmap <C-R><C-P> <C-R>=expand("%:p:h") . "/"<Return>

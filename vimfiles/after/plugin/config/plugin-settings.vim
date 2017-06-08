@@ -8,7 +8,7 @@ if exists(':CtrlSpace') && mapcheck('<C-P>', 'n') ==# ''
   nnoremap <silent> <C-P> :<C-U>CtrlSpace O<CR>
 endif
 
-if exists('g:plugs') && has_key(g:plugs, 'vim-airline')
+if hs#plug#in('vim-airline')
   if !exists('g:airline_symbols') | let g:airline_symbols = {} | endif
 
   let g:airline_left_sep = '»'

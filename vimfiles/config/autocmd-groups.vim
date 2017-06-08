@@ -4,7 +4,7 @@ if !has('autocmd') | finish | endif
 augroup hsautocmd-allbufs
   autocmd!
 
-  autocmd WINENTER * checktime
+  autocmd WinEnter * checktime
 
   autocmd InsertLeave *
         \ if &paste | set nopaste mouse=ar | echo 'nopaste' | endif
@@ -37,10 +37,12 @@ augroup hsautocmd-allbufs
 augroup END
 
 augroup hsautocmd-cmdwin
+  autocmd!
   autocmd CmdwinEnter * call hs#init_cmdwin()
 augroup END
 
 augroup hsautocmd-startup
+  autocmd!
   autocmd StdinReadPre * let s:std_in = 1
 
   autocmd VimEnter *
@@ -52,5 +54,7 @@ augroup hsautocmd-startup
         \|   Startify
         \|   execute 'NERDTree' argv()[0]
         \|   wincmd w
+        \| elseif exists('s:std_in')
+        \|   unlet s:std_in
         \| endif
 augroup END

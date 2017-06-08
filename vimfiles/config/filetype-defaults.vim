@@ -283,14 +283,6 @@ augroup END
 augroup hsautocmd-switch
   autocmd!
 
-  autocmd FileType erlang let b:switch_custom_definitions =
-        \ [
-        \   {
-        \     '<<"\([^"]*\)">>':       '"\1"',
-        \     '\%(<<\)\@<!"\([^"]*\)"': '<<"\1">>',
-        \   }
-        \ ]
-
   autocmd FileType tex,plaintex let b:switch_custom_definitions =
         \ [
         \    [
@@ -324,6 +316,22 @@ augroup hsautocmd-switch
         \ [
         \   [ 'pick', 'reword', 'edit', 'squash', 'fixup', 'exec' ]
         \ ]
+
+  autocmd FileType erlang let b:switch_custom_definitions =
+        \ [
+        \   {
+        \     '<<"\([^"]*\)">>':       '"\1"',
+        \     '\%(<<\)\@<!"\([^"]*\)"': '<<"\1">>',
+        \   }
+        \ ]
+
+  autocmd FileType elixir let b:switch_custom_definitions =
+        \ [
+        \   {
+        \     '<<"\([^"]*\)">>':       '"\1"',
+        \     '\%(<<\)\@<!"\([^"]*\)"': '<<"\1">>',
+        \   }
+        \ ]
 augroup END
 
 augroup hsautocmd-dirvish
@@ -333,7 +341,7 @@ augroup END
 
 function! s:plug_doc()
   let l:name = matchstr(getline('.'), '^- \zs\S\+\ze:')
-  if has_key(g:plugs, l:name)
+  if hs#plug#in(l:name)
     for l:doc in split(globpath(g:plugs[l:name].dir, 'doc/*.txt'), '\n')
       execute 'tabe' l:doc
     endfor

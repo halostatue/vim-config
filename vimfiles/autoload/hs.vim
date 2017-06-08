@@ -198,3 +198,7 @@ endfunction
 function! hs#update_messages(_timer_id) abort
   silent Bufferize messages
 endfunction
+
+function! hs#plug(name) abort
+  return has_key(g:, 'plugs') && has_key(g:plugs, a:name)
+endfunction

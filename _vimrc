@@ -32,6 +32,8 @@ SourceConfig commands
 SourceConfig abbreviations
 SourceConfig key-mappings
 
+SourceConfig plugs/*
+
 if is#windows()
   SourceConfig windows
 elseif is#mac()
@@ -45,10 +47,5 @@ if has('gui_running')
 else
   SourceConfig terminal
 endif
-
-" Provide the :Man command.
-" runtime ftplugin/man.vim
-
-SourceIf ~/.local.vimrc
 
 set secure
