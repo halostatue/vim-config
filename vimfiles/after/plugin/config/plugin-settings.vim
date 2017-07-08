@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " CtrlP configuration
 if exists(':CtrlP')
   nnoremap <D-O> :<C-U>CtrlP<CR>
@@ -24,8 +26,9 @@ if hs#plug#in('vim-airline')
 endif
 
 if exists('#lightline')
+        " \   'colorscheme': 'PaperColor',
   let g:lightline = {
-        \   'colorscheme': 'PaperColor',
+        \   'colorscheme': 'Deus',
         \   'component': {
         \     'readonly': '%{&readonly?"🔒":""}'
         \   },

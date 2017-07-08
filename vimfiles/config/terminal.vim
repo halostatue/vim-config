@@ -1,6 +1,8 @@
 " Enable 256 color terminal.
 set t_Co=256
+
 if !exists('g:colors_name') | colorscheme PaperColor | endif
+if !exists('g:colors_name') | colorscheme Deus | endif
 
 if &term =~# 'xterm'
   let &t_ti .= "\e[?2004h"
@@ -26,7 +28,7 @@ if &term =~# 'xterm'
 endif
 
 " Change cursor shape.
-if &term =~ "xterm"
+if &term =~# 'xterm'
   let &t_SI = "\<Esc>]12;lightgreen\x7"
   let &t_EI = "\<Esc>]12;white\x7"
 endif

@@ -67,21 +67,17 @@ Plug 'wellle/targets.vim'
 Plug 'tommcdo/vim-exchange'
 
 " Fuzzy file finder
-" Plug 'ctrlpvim/ctrlp.vim'
-"   Plug 'tacahiroy/ctrlp-funky'
-"   Plug 'phalkunz/ctrlp-related'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " File Management
-Plug 'justinmk/vim-dirvish'
-  Plug 'tpope/vim-eunuch',
-        \ { 'on': [
-        \     'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Find',
-        \     'Locate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
-        \   ]
-        \ }
+Plug 'tpope/vim-eunuch',
+      \ { 'on': [
+      \     'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Find',
+      \     'Locate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
+      \   ]
+      \ }
 
 if homebrew#isdirectory('opt/fzf')
   let &runtimepath .= ',' . homebrew#path('opt/fzf')
@@ -117,14 +113,17 @@ Plug 'junegunn/vim-easy-align',
       \     'EasyAlign', 'LiveEasyAlign'
       \   ]
       \ }
-Plug 'scrooloose/syntastic'
+
+" Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
+
 Plug 'thinca/vim-localrc'
 Plug 'thinca/vim-qfreplace', { 'on': 'Qfreplace' }
 Plug 'thinca/vim-prettyprint', { 'on': [ 'PrettyPrint', 'PP' ] }
 Plug 'thinca/vim-quickrun', { 'on': [ 'QuickRun', '<Plug>(quickrun)' ] }
 Plug 'tjennings/git-grep-vim',
       \ { 'on': [ 'GitGrep', 'GitGrepAdd', 'LGitGrep', 'LGitGrepAdd' ] }
-Plug 'tpope/vim-abolish', { 'on': [ 'Abolish', 'Subvert' ] }
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-characterize'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-endwise'
@@ -344,7 +343,10 @@ Plug 'glanotte/vim-jasmine', { 'for': 'jasmine.javascript' }
 " Plug 'jiangmiao/simple-javascript-indenter', { 'for': 'javascript' }
 " Plug 'ternjs/tern_for_vim', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+
+if hs#plug#in('syntastic')
   Plug 'pmsorhaindo/syntastic-local-eslint.vim'
+endif
 
 Plug 'elzr/vim-json', { 'for': 'json' }
 
@@ -383,6 +385,7 @@ Plug 'b4winckler/vim-objc', { 'for': 'objc' }
   Plug 'msanders/cocoa.vim', { 'for': 'objc' }
 
 Plug 'jrk/vim-ocaml', { 'for': 'ocaml' }
+Plug 'reasonml-editor/vim-reason'
 
 Plug 'vim-scripts/octave.vim--', { 'for': 'octave' }
 
@@ -503,6 +506,7 @@ Plug 'sukima/xmledit', { 'for': 'xml' }
 Plug 'flazz/vim-colorschemes'
   Plug 'godlygeek/csapprox'
   Plug 'dracula/vim'
+  Plug 'ajmwagar/vim-deus'
 
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/splitjoin.vim'

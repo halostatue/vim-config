@@ -30,7 +30,7 @@ augroup hsautocmd-smartchr
   autocmd FileType lisp,scheme,clojure
         \ inoremap <buffer> <expr> = =
 
-  autocmd FileType ruby, elixir
+  autocmd FileType ruby,elixir
         \ inoremap <buffer> <expr> =
         \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')
         \ ? '<bs>= ' : search('\(*\<bar>!\)\%#', 'bcn')

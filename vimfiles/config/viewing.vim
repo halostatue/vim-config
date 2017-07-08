@@ -34,7 +34,7 @@ set showtabline=1
 let &g:statusline = '%{hs#status#buffer()}'
       \. '%<%.99f %(%{hs#status#filemodifiers()}%q%)'
       \. '%{hs#status#fugitive()}'
-      \. '%#ErrorMsg#%{hs#try(''SyntasticStatuslineFlag'')}%*'
+      \. '%#ErrorMsg#%{hs#status#syntax()}%*'
       \. '%{hs#status#asyncrun()}'
       \. '%='
       \. '%-14.(%c%V,%l/%L%) %P'

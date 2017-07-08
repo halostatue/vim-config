@@ -38,7 +38,11 @@ else
 endif
 
 if has('transparency') | set transparency=1 | endif
-if !exists('g:colors_name') | colorscheme PaperColor | endif
+" if !exists('g:colors_name') | colorscheme PaperColor | endif
+if !exists('g:colors_name')
+  set background=dark
+  colorscheme Deus
+endif
 
 " Mouse settings
 set nomousefocus mousehide

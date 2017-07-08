@@ -155,3 +155,57 @@ function! lib#set_buffer_updater(bufnr, callback, interval) abort
     execute 'autocmd BufUnload <buffer=' . a:bufnr . '> call timer_stop(' . l:timer . ')'
   augroup END
 endfunction
+
+let s:_width = function(exists('*strwidth') ? 'strwidth' : 'strlen')
+lockvar s:_width
+
+" A crude printf()-like width formatter supporting wide characters. Lifted from
+" syntastic#util#wformat.
+function! lib#wformat(format, str) abort
+  if a:format ==# '' | return a:str | end
+
+  let l:specs = matchlist(a:format, '\v^(-?)(0?)(%([1-9]\d*))?%(\.(\d+))?$')
+  if len(l:specs) < 5 | return a:str | end
+
+  let l:flushleft = l:specs[1] ==# '-'
+  let l:lpad = l:specs[2] ==# '0' ? '0' : ' '
+  let l:minlen = str2nr(l:specs[3])
+  let l:maxlen = str2nr(l:specs[4])
+  let l:out = substitute(a:str, "\t", ' ', 'g')
+
+  if l:maxlen && s:_width(l:out) > l:maxlen
+    let l:chars = filter(split(l:out, '\zs\ze', 1), 'v:val !=# ''''')
+    let l:out = ''
+
+    if l:flushleft
+      for l:c in l:chars
+        if s:_width(l:out . l:c) < l:maxlen
+          let l:out .= l:c
+        else
+          let l:out .= &encoding ==# 'utf-8' && &termencoding ==# 'utf-8' ? "\u2026" : '>'
+          break
+        endif
+      endfor
+    else
+      call reverse(l:chars)
+      for l:c in l:chars
+        if s:_width(l:c . l:out) < l:maxlen
+          let l:out = l:c . l:out
+        else
+          let l:out = (&encoding ==# 'utf-8' && &termencoding ==# 'utf-8' ? "\u2026" : '<') . l:out
+          break
+        endif
+      endfor
+    endif
+  endif
+
+  if l:minlen && s:_width(l:out) < l:minlen
+    if l:flushleft
+      let l:out .= repeat(' ', l:minlen - s:_width(l:out))
+    else
+      let l:out = repeat(l:lpad, l:minlen - s:_width(l:out)) . l:out
+    endif
+  endif
+
+  return l:out
+endfunction
