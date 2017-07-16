@@ -31,18 +31,17 @@ if is#windows()
 endif
 
 if is#mac()
+  set lines=62 columns=106
+  winpos 637 22
+
   " Make the mac window as big as possible
-  set lines=999 columns=9999
+  " set lines=999 columns=9999
 else
   set lines=60 columns=180
 endif
 
 if has('transparency') | set transparency=1 | endif
-" if !exists('g:colors_name') | colorscheme PaperColor | endif
-if !exists('g:colors_name')
-  set background=dark
-  colorscheme Deus
-endif
+if !exists('g:colors_name') | colorscheme PaperColor | endif
 
 " Mouse settings
 set nomousefocus mousehide
