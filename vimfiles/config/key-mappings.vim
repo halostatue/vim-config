@@ -7,21 +7,6 @@ xnoremap K :lgrep! "\b<C-R><C-W>\b"<Return>:lw<Return>
 nnoremap <Leader>1 :set cmdheight=1<cr>
 nnoremap <Leader>2 :set cmdheight=2<cr>
 
-if hs#plug#in('dirvish.vim')
-  nmap <silent> [Space]- <Plug>(dirvish_up)
-  nmap <silent> [Space]h- <Plug>(dirvish_split_up)
-  nmap <silent> [Space]v- <Plug>(dirvish_vsplit_up)
-elseif hs#plug#in('vim-vinegar')
-  nmap <silent> [Space]- <Plug>VinegarUp
-  nmap <silent> [Space]t- <Plug>VinegarTabUp
-  nmap <silent> [Space]h- <Plug>VinegarSplitUp
-  nmap <silent> [Space]v- <Plug>VinegarVerticalSplitUp
-endif
-
-if mapcheck('-', 'n') =~# '<Plug>(dirvish_up)\|<Plug>VinegarUp'
-  nunmap -
-endif
-
 if hs#plug#in('vim-choosewin')
   nmap <silent> [Space]W <Plug>(choosewin)
   let g:choosewin_overlay_enable = 1
@@ -36,7 +21,6 @@ augroup hsautocmd-qfreplace
 augroup END
 
 nnoremap <silent> <F9> :TagbarToggle<Return>
-nnoremap <silent> <F4> :NERDTreeToggle<Return>
 
 if has('gui_running')
   " Move between buffers. Different on Mac vs not-Mac because option inserts
