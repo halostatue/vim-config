@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 command! -nargs=0 -bar ToggleGJK call <SID>ToggleGJK()
 command! -nargs=0 -bar CDToBufferDir call <SID>CDToBufferDir()
 command! -nargs=0 -bar ToggleQuickfixWindow call <SID>ToggleQuickfixWindow()
@@ -17,7 +19,7 @@ command! -nargs=0 Undiff setlocal nodiff noscrollbind wrap
 command! -nargs=+ -complete=command TabMessage call <SID>TabMessage(<q-args>)
 
 function! s:ToggleGJK()
-  if exists('b:enable_mapping_gjk') && b:enable_mapping_gjk
+  if has_key(b:, 'enable_mapping_gjk') && b:enable_mapping_gjk
     let b:enable_mapping_gjk = 0
     noremap <buffer> j j
     noremap <buffer> k k

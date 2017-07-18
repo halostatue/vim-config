@@ -7,54 +7,6 @@ xnoremap K :lgrep! "\b<C-R><C-W>\b"<Return>:lw<Return>
 nnoremap <Leader>1 :set cmdheight=1<cr>
 nnoremap <Leader>2 :set cmdheight=2<cr>
 
-" Smartchr
-" - smart comma
-inoremap <expr> , smartchr#one_of(', ', ',')
-
-" - smart equals
-inoremap <expr> =
-      \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')
-      \ ? '<bs>= ' : search('\(*\<bar>!\)\%#', 'bcn')
-      \ ? '= ' : smartchr#one_of(' = ', '=', ' == ', ' => ')
-
-augroup hsautocmd-smartchr
-  " Substitute .. into -> .
-  autocmd FileType c,cpp
-        \ inoremap <buffer> <expr> . smartchr#loop('.', '->', '...')
-  autocmd FileType perl,php
-        \ inoremap <buffer> <expr> . smartchr#loop(' . ', '->', '.')
-  autocmd FileType perl,php
-        \ inoremap <buffer> <expr> - smartchr#loop('-', '->')
-  autocmd FileType vim
-        \ inoremap <buffer> <expr> . smartchr#loop('.', ' . ', '..', '...')
-  autocmd FileType lisp,scheme,clojure
-        \ inoremap <buffer> <expr> = =
-
-  autocmd FileType ruby,elixir
-        \ inoremap <buffer> <expr> =
-        \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')
-        \ ? '<bs>= ' : search('\(*\<bar>!\)\%#', 'bcn')
-        \ ? '= ' : smartchr#one_of(' = ', '=', ' == ', ' => ', ' =~ ')
-
-  autocmd FileType haskell,int-ghci
-        \ inoremap <buffer> <expr> + smartchr#loop('+', ' ++ ') |
-        \ inoremap <buffer> <expr> - smartchr#loop('-', ' -> ', ' <- ') |
-        \ inoremap <buffer> <expr> $ smartchr#loop(' $ ', '$') |
-        \ inoremap <buffer> <expr> \ smartchr#loop('\ ', '\') |
-        \ inoremap <buffer> <expr> : smartchr#loop(':', ' :: ', ' : ') |
-        \ inoremap <buffer> <expr> . smartchr#loop('.', ' . ', '..')
-
-  autocmd FileType scala
-        \ inoremap <buffer> <expr> - smartchr#loop('-', ' -> ', ' <- ') |
-        \ inoremap <buffer> <expr> = smartchr#loop(' = ', '=', ' => ') |
-        \ inoremap <buffer> <expr> : smartchr#loop(': ', ':', ' :: ') |
-        \ inoremap <buffer> <expr> . smartchr#loop('.', ' => ')
-
-  autocmd FileType eruby
-        \ inoremap <buffer> <expr> > smartchr#loop('>', '%>') |
-        \ inoremap <buffer> <expr> < smartchr#loop('<', '<%', '<%=')
-augroup END
-
 if hs#plug#in('dirvish.vim')
   nmap <silent> [Space]- <Plug>(dirvish_up)
   nmap <silent> [Space]h- <Plug>(dirvish_split_up)
@@ -83,13 +35,6 @@ augroup hsautocmd-qfreplace
   autocmd FileType qf nnoremap <buffer> r :<C-U>Qfreplace<Return>
 augroup END
 
-" vim-niceblock
-xmap I <Plug>(niceblock-I)
-xmap A <Plug>(niceblock-A)
-
-" vim-easy-align
-xmap <Enter> <Plug>(EasyAlign)
-nmap <Leader><Leader>a <Plug>(EasyAlign)
 nnoremap <silent> <F9> :TagbarToggle<Return>
 nnoremap <silent> <F4> :NERDTreeToggle<Return>
 
@@ -132,14 +77,6 @@ nnoremap [Space] <Nop>
 xnoremap [Space] <Nop>
 
 " Toggle a number of options:
-nnoremap <silent> [Space]o.  :<C-U>call hs#toggleOption('relativenumber')<Return>
-nnoremap <silent> [Space]om  :<C-U>call hs#toggleOption('paste')<Return>
-nnoremap <silent> [Space]o/  :<C-U>call hs#toggleOption('hlsearch')<Return>
-nnoremap <silent> [Space]oc :<C-U>call hs#toggleOption('cursorline')<Return>
-nnoremap <silent> [Space]oa :<C-U>call hs#toggleOption('autoread')<Return>
-nnoremap <silent> [Space]os :<C-U>call hs#toggleOption('spell')<Return>
-nnoremap <silent> [Space]ow  :<C-U>call hs#toggleOption('wrap')<Return>
-nnoremap <silent> [Space]oz  :<C-U>call <SID>MaybeSpellcheck()<Return>
 nnoremap [Space]! :Shell<Space>
 
 nmap <silent> [Space]P <Plug>WhitespasteBefore
@@ -156,7 +93,7 @@ nnoremap <silent> [Space]rv :<C-U>source $MYVIMRC \| echo "source $MYVIMRC"<Retu
 nnoremap <silent> [Space]cd :<C-U>CDToBufferDir<Return>
 
 " Toggle diff whitespace comparison.
-nnoremap <silent> [Space]dw :<C-U>call <SID>ToggleDiffWhitespace()<Return>
+nnoremap <silent> =oz :<C-U>call <SID>ToggleDiffWhitespace()<Return>
 
 " Toggle gj/gk behaviours for j/k behaviours. The default is gk/gj
 " (display-linewise) movement, not j/k (linewise) movement.
@@ -337,13 +274,4 @@ function! s:ToggleDiffWhitespace()
     set diffopt+=iwhite
   endif
   diffupdate
-endfunction
-
-function! s:MaybeSpellcheck()
-  if &spell
-    setlocal nospell
-  else
-    setlocal spell
-    normal! z=
-  endif
 endfunction

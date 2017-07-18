@@ -4,9 +4,7 @@ set winaltkeys=no
 " Font settings
 if is#mac()
   " Fullscreen options
-  if has("gui_macvim") && has("gui_running")
-    " Command-Ctrl-F for Full-Screen
-    macmenu Window.Toggle\ Full\ Screen\ Mode key=<D-C-F>
+  if has('gui_macvim') && has('gui_running')
     set fuoptions=maxvert,maxhorz
   endif
 
@@ -41,7 +39,7 @@ else
 endif
 
 if has('transparency') | set transparency=1 | endif
-if !exists('g:colors_name') | colorscheme PaperColor | endif
+if !has_key(g:, 'colors_name') | colorscheme PaperColor | endif
 
 " Mouse settings
 set nomousefocus mousehide

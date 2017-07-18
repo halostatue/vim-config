@@ -1,8 +1,7 @@
 " Enable 256 color terminal.
 set t_Co=256
 
-if !exists('g:colors_name') | colorscheme PaperColor | endif
-if !exists('g:colors_name') | colorscheme Deus | endif
+if !has_key(g:, 'colors_name') | colorscheme PaperColor | endif
 
 if &term =~# 'xterm'
   let &t_ti .= "\e[?2004h"

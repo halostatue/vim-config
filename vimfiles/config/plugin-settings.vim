@@ -1,5 +1,7 @@
 scriptencoding utf-8
 
+let g:fontzoom_no_default_key_mappings = 1
+
 " Gist
 if is#cygwin()
   let g:gist_clip_command = 'putclip'

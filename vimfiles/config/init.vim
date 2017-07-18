@@ -2,6 +2,8 @@
 
 if is#windows() | set shellslash | endif
 
+set noerrorbells visualbell t_vb=
+
 if has('vim_starting') && empty(glob('~/.vim/autoload/plug.vim'))
   " Automatically install vim-plug.
   echo "Installing vim-plug.\n"
@@ -14,7 +16,7 @@ if has('vim_starting') && empty(glob('~/.vim/autoload/plug.vim'))
 else
   augroup vim-plug-install
     autocmd VimEnter *
-          \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+          \  if len(filter(values(get(g:, 'plugs', {})), '!isdirectory(v:val.dir)'))
           \|   PlugInstall --sync | q
           \| endif
   augroup END

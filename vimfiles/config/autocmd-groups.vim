@@ -41,6 +41,11 @@ augroup hsautocmd-cmdwin
   autocmd CmdwinEnter * call hs#init_cmdwin()
 augroup END
 
+augroup hsautocmd-silence-the-beep
+  autocmd!
+  autocmd GUIEnter * set visualbell t_vb=
+augroup END
+
 augroup hsautocmd-startup
   autocmd!
   autocmd StdinReadPre * let s:std_in = 1
@@ -54,7 +59,6 @@ augroup hsautocmd-startup
         \|   Startify
         \|   execute 'NERDTree' argv()[0]
         \|   wincmd w
-        \| elseif exists('s:std_in')
-        \|   unlet s:std_in
         \| endif
+        \| if exists('s:std_in') | unlet s:std_in | endif
 augroup END

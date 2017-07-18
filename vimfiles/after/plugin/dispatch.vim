@@ -1,5 +1,7 @@
+scriptencoding utf-8
+
 function! s:add_jobs_dispatch_handler()
-  if exists('g:dispatch_handlers') && index(g:dispatch_handlers, 'jobs') == -1
+  if has_key(g:, 'dispatch_handlers') && index(g:dispatch_handlers, 'jobs') == -1
     let l:position = index(g:dispatch_handlers, 'screen') + 1
     let g:dispatch_handlers = insert(g:dispatch_handlers, 'jobs', l:position)
   endif

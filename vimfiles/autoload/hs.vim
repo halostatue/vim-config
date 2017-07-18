@@ -48,7 +48,6 @@ function! hs#clean_folds() abort
 endfunction
 
 let g:default_foldtext_function = 'hs#clean_folds'
-let g:default_foldtext_function = 'FoldCCtext'
 
 function! hs#valid_function(varname) abort
   return exists(a:varname) && exists('*' . eval(a:varname))

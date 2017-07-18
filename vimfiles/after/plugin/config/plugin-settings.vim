@@ -11,7 +11,7 @@ if exists(':CtrlSpace') && mapcheck('<C-P>', 'n') ==# ''
 endif
 
 if hs#plug#in('vim-airline')
-  if !exists('g:airline_symbols') | let g:airline_symbols = {} | endif
+  if !has_key(g:, 'airline_symbols') | let g:airline_symbols = {} | endif
 
   let g:airline_left_sep = '»'
   let g:airline_left_sep = '▶'
@@ -26,13 +26,9 @@ if hs#plug#in('vim-airline')
 endif
 
 if exists('#lightline')
-        " \   'colorscheme': 'PaperColor',
-  let g:lightline = {
-        \   'colorscheme': 'Deus',
-        \   'component': {
-        \     'readonly': '%{&readonly?"🔒":""}'
-        \   },
-        \   'separator': { 'left': '', 'right': '' },
-        \   'subseparator': { 'left': '|', 'right': '|' }
-        \ }
+  if !has_key(g:, 'lightline') | let g:lightline = {} | endif
+  let g:lightline.colorscheme = 'PaperColor'
+  let g:lightline.component = { 'readonly': '%{&readonly?"🔒":""}' }
+  let g:lightline.separator =  { 'left': '', 'right': '' }
+  let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 endif
