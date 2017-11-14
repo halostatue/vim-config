@@ -85,7 +85,6 @@ let g:SimpleJsIndenter_CaseIndentLevel=-1
 
 " http://mattn.kaoriya.net/software/vim/20140523124903.htm
 let g:markdown_fenced_languages=[
-      \  'coffee',
       \  'css',
       \  'erb=eruby',
       \  'javascript',
