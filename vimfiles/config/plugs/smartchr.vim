@@ -10,20 +10,25 @@ if hs#plug#in('vim-smartchr')
         \ ? '= ' : smartchr#loop(' = ', '=', ' == ', ' => ')
 
   augroup hsautocmd-smartchr
+    autocmd!
+
     " Substitute .. into -> .
     autocmd FileType c,cpp
           \ inoremap <buffer> <expr> . smartchr#loop('.', '->', '...')
     autocmd FileType perl,php
           \ inoremap <buffer> <expr> . smartchr#loop(' . ', '->', '.')
     autocmd FileType perl,php,rust
-          \| inoremap <buffer> <expr> - smartchr#loop('-', ' -',  ' -> ')
+          \ inoremap <buffer> <expr> - smartchr#loop('-', ' -',  ' -> ')
     autocmd FileType vim
           \ inoremap <buffer> <expr> . smartchr#loop('.', ' . ', '..', '...')
     autocmd FileType lisp,scheme,clojure
           \ inoremap <buffer> = =
 
     autocmd FileType ruby,elixir
-          \  inoremap <buffer> <expr> ~ smartchr#loop('~', ' ~= ', ' !~ ')
+          \ inoremap <buffer> <expr> ~ smartchr#loop('~', ' ~= ', ' !~ ')
+
+    autocmd FileType elixir
+          \ inoremap <buffer> <expr> - smartchr#loop('-', ' -> ', ' <- ')
 
     autocmd FileType haskell,int-ghci
           \  inoremap <buffer> <expr> + smartchr#loop('+', ' ++ ')

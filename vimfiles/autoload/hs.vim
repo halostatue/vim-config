@@ -154,7 +154,7 @@ function! hs#try(...) abort
 endfunction
 
 function! hs#download_thesaurus(force) abort
-  if is#windows()
+  if hs#is#windows()
     let l:path = expand('~/vimfiles/thesaurus/mthesaur.txt')
   else
     let l:path = expand('~/.vim/thesaurus/mthesaur.txt')

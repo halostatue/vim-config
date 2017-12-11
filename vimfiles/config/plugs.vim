@@ -11,25 +11,25 @@ Plug 'tpope/vim-sensible'
 
 " {{{1 Generally useful utilities
 Plug 'chrisbra/unicode.vim'
-Plug 'christoomey/vim-quicklink'
-" Plug 'dahu/vimple'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/vim-pseudocl' | Plug 'junegunn/vim-fnr'
+Plug 'junegunn/vim-pseudocl'
+      \| Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-slash'
+  " Plug 'romainl/vim-cool'
 Plug 'kana/vim-smartchr'
 Plug 'kana/vim-smartinput'
+  " Plug 'cohama/lexima.vim'
 Plug 'lambdalisue/vim-foldround'
 Plug 'LeafCage/foldCC.vim'
 Plug 'mhinz/vim-hugefile'
-" Plug 'romainl/vim-cool' " Conflicts with vim-slash?
 Plug 'romainl/vim-qf'
 Plug 'romainl/vim-qlist'
 Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'thinca/vim-localrc'
-" Plug 'tomtom/tinykeymap_vim'
+Plug 'tomtom/tinykeymap_vim'
 Plug 'tpope/tpope-vim-abolish'
 Plug 'tpope/vim-capslock'
 Plug 'tpope/vim-endwise'
@@ -41,21 +41,20 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-jp/autofmt'
-Plug 'zimbatm/direnv.vim'
-" Plug 'vim-utils/vim-troll-stopper'
+Plug 'direnv/direnv.vim'
+Plug 'vim-utils/vim-troll-stopper'
+Plug 'unblevable/quick-scope'
 
 " {{{2 Projects
-Plug 'tpope/vim-projectionist'
-      \| Plug 'andyl/vim-projectionist-elixir'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'AndrewRadev/andrews_nerdtree.vim'
+      \| Plug 'Xuyuanp/nerdtree-git-plugin'
+      \| Plug 'AndrewRadev/andrews_nerdtree.vim'
 Plug 'majutsushi/tagbar'
 Plug 'justinmk/vim-gtfo'
 Plug 'tyru/open-browser.vim'
-" Plug 'kana/vim-metarw'
-" Plug 'kana/vim-metarw-git'
+Plug 'kana/vim-metarw'
+      \| Plug 'kana/vim-metarw-git'
 " }}}2
 
 " {{{2 Version Control
@@ -92,6 +91,7 @@ Plug 'kana/vim-submode'
 Plug 'junegunn/vim-after-object'
 Plug 'vim-utils/vim-all'
 Plug 'wellle/targets.vim'
+Plug 'michaeljsmith/vim-indent-object'
 
 " {{{2 Provided by kana/vim-textobj-user
 "      Temporarily disabled for performance investigation.
@@ -102,6 +102,8 @@ Plug 'wellle/targets.vim'
 " Plug 'kana/vim-textobj-diff'
 " Plug 'kana/vim-textobj-fold'
 " Plug 'kana/vim-textobj-function'
+" Plug 'thinca/vim-textobj-function-javascript'
+" Plug 'thinca/vim-textobj-function-perl'
 " Plug 'kana/vim-textobj-indent'
 " Plug 'kana/vim-textobj-line'
 " Plug 'kana/vim-textobj-syntax'
@@ -114,8 +116,6 @@ Plug 'wellle/targets.vim'
 " Plug 'rhysd/vim-textobj-conflict'
 " Plug 'thalesmello/vim-textobj-methodcall'
 " Plug 'thinca/vim-textobj-comment'
-" Plug 'thinca/vim-textobj-function-javascript'
-" Plug 'thinca/vim-textobj-function-perl'
 " Plug 'whatyouhide/vim-textobj-xmlattr'
 " }}}2
 " }}}1
@@ -125,7 +125,6 @@ Plug 'christoomey/vim-sort-motion'
 Plug 'christoomey/vim-system-copy'
 Plug 'haya14busa/vim-asterisk'
 Plug 'justinmk/vim-sneak'
-" Plug 'kana/vim-smartword'
 Plug 'rhysd/clever-f.vim'
 Plug 'vim-scripts/camelcasemotion'
 " }}}1
@@ -176,7 +175,7 @@ Plug 'tpope/vim-tbone', { 'on': [ 'Tmux', 'Tyank', 'Tput', 'Twrite', 'Tattach' ]
 Plug 'vim-utils/vim-man', { 'on': [ 'Man', 'Vman', 'Mangrep' ] }
 
 " {{{2 Mac Commands
-if is#mac()
+if hs#is#mac()
   Plug 'itchyny/dictionary.vim', { 'on': 'Dictionary' }
   Plug 'rizzatti/dash.vim', { 'on': [ '<Plug>DashSearch', '<Plug>DashGlobalSearch', 'Dash' ] }
   Plug 'vim-scripts/ColorX', { 'on': [ 'ColorRGB', 'ColorHEX' ] }
@@ -184,7 +183,7 @@ endif
 " }}}2
 
 " {{{2 Windows Commands
-if is#windows()
+if hs#is#windows()
   Plug 'thinca/vim-winenv', { 'on': 'WinEnv', '<Plug>(winenv-edit)' }
 endif
 " }}}2
@@ -203,11 +202,11 @@ Plug 'thinca/vim-quickmemo'
 
 " {{{1 fzf
 if homebrew#isdirectory('opt/fzf')
-  Plug homebrew#path('opt/fzf')
+  let &runtimepath .= ',' . homebrew#path('opt/fzf')
 else
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
 endif
-Plug 'junegunn/fzf.vim'
 " }}}1
 
 " {{{1 Editing
@@ -236,10 +235,10 @@ Plug 'myusuf3/numbers.vim'
 Plug 'thinca/vim-fontzoom', { 'on': [ '<Plug>(fontzoom-larger)', '<Plug>(fontzoom-smaller)' ] }
 
 " {{{2 Search
-" Plug 'henrik/vim-indexed-search'
-" Plug 'haya14busa/incsearch.vim'
-" Plug 'haya14busa/incsearch-fuzzy.vim'
-Plug 'wincent/loupe'
+Plug 'haya14busa/is.vim'
+Plug 'haya14busa/vim-asterisk'
+Plug 'osyo-manga/vim-anzu'
+Plug 'google/vim-searchindex'
 " }}}2
 " }}}1
 
@@ -506,6 +505,7 @@ Plug 'keith/swift.vim', { 'for': 'swift' }
 " }}}2
 " {{{2 Text files and markdown languages
 Plug 'junegunn/goyo.vim' | Plug 'junegunn/limelight.vim'
+Plug 'christoomey/vim-quicklink'
 " {{{3 Markdown
 " Disabled for issue https://github.com/plasticboy/vim-markdown/issues/323
 " Plug 'plasticboy/vim-markdown'
@@ -601,8 +601,9 @@ Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 
 " {{{1 Color Schemes
 Plug 'flazz/vim-colorschemes'
-  Plug 'godlygeek/csapprox'
-  Plug 'dracula/vim'
+Plug 'godlygeek/csapprox'
+Plug 'dracula/vim'
+Plug 'chrisbra/Colorizer'
 " }}}1
 
 " ----- CONTINUE HERE
@@ -672,7 +673,7 @@ Plug 'osyo-manga/vim-anzu'
 
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 't9md/vim-choosewin'
-Plug 'bogado/file-line'
+Plug 'kopischke/vim-fetch'
 
 " Plug 'skywind3000/asyncrun.vim'
 " Plug 'google/vim-glaive'

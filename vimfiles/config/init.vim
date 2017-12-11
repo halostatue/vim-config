@@ -1,6 +1,6 @@
 " Basic Initialization.
 
-if is#windows() | set shellslash | endif
+if hs#is#windows() | set shellslash | endif
 
 set noerrorbells visualbell t_vb=
 

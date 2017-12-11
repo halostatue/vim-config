@@ -22,7 +22,7 @@ function! cache#setup() abort
     let s:vim_cache = expand('$VIM_CACHE')
   elseif exists('$CACHE')
     let s:vim_cache = expand('$CACHE')
-  elseif is#windows() || is#cygwin()
+  elseif hs#is#windows() || hs#is#cygwin()
     let s:vim_cache = expand('~/vimcache')
   else
     let s:vim_cache = expand('~/.cache')

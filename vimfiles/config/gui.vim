@@ -2,7 +2,7 @@
 set winaltkeys=no
 
 " Font settings
-if is#mac()
+if hs#is#mac()
   " Fullscreen options
   if has('gui_macvim') && has('gui_running')
     set fuoptions=maxvert,maxhorz
@@ -22,13 +22,13 @@ elseif has('win32') || has('win64')
 endif
 
 " Window settings
-if is#windows()
+if hs#is#windows()
   noremap <A-Space> :simalt ~<CR>
   inoremap <A-Space> <C-O>:simalt ~<CR>
   cnoremap <A-Space> <C-C><A-Space>
 endif
 
-if is#mac()
+if hs#is#mac()
   set lines=62 columns=106
   winpos 637 22
 

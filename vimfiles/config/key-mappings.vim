@@ -26,7 +26,7 @@ if has('gui_running')
   " Move between buffers. Different on Mac vs not-Mac because option inserts
   " special characters on the Mac and the Command/Super key isn't available off
   " the Mac.
-  if is#mac()
+  if hs#is#mac()
     nmap <D-<> :N<Return>
     nmap <D->> :n<Return>
   else
@@ -100,6 +100,9 @@ nnoremap <silent> [Space]to :<C-U>BuffergatorTabsOpen<Return>
 nnoremap <silent> [Space]tc :<C-U>BuffergatorTabsClose<Return>
 nnoremap <silent> [Space][b :<C-U>BuffergatorMruCyclePrev<Return>
 nnoremap <silent> [Space]]b :<C-U>BuffergatorMruCycleNext<Return>
+
+nnoremap <silent> [Space]q :<C-U>QuickScopeToggle<Return>
+vnoremap <silent> [Space]q :<C-U>QuickScopeToggle<Return>
 
 " YAML Toggle Flatness
 nnoremap <silent> [Space]y :<C-U>YAMLToggleFlatness<Return>

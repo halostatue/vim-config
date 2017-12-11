@@ -16,6 +16,9 @@ if !1 | finish | endif
 
 " setlocal verbose=0 " Turn off verbose mode for this file.
 
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+
 call config#init()
 
 call plug#begin(cache#for('plugged'))
@@ -34,9 +37,9 @@ SourceConfig key-mappings
 
 SourceConfig plugs/*
 
-if is#windows()
+if hs#is#windows()
   SourceConfig windows
-elseif is#mac()
+elseif hs#is#mac()
   SourceConfig mac
 else
   SourceConfig unix

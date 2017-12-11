@@ -3,11 +3,11 @@ scriptencoding utf-8
 let g:fontzoom_no_default_key_mappings = 1
 
 " Gist
-if is#cygwin()
+if hs#is#cygwin()
   let g:gist_clip_command = 'putclip'
-elseif is#mac()
+elseif hs#is#mac()
   let g:gist_clip_command = 'pbcopy'
-elseif !is#windows() && executable('xclip')
+elseif !hs#is#windows() && executable('xclip')
   let g:gist_clip_command = 'xclip -selection clipboard'
 endif
 let g:gist_detect_filetype = 1
@@ -122,7 +122,7 @@ if hs#plug#in('vim-test')
     elseif hs#plug#in('vim-tmux-runner')
       let g:test#strategy = 'vtr'
     endif
-  elseif is#macgui()
+  elseif hs#is#macgui()
     let g:test#strategy = 'terminal'
   else
     let g:test#strategy = 'make'

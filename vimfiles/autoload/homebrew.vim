@@ -1,6 +1,6 @@
 " Homebrew interaction functions
 
-let s:HomebrewActive = is#mac() && executable('brew')
+let s:HomebrewActive = hs#is#mac() && executable('brew')
 
 function! homebrew#active() abort
   return s:HomebrewActive

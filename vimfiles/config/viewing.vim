@@ -36,6 +36,7 @@ let &g:statusline = '%{hs#status#buffer()}'
       \. '%{hs#status#fugitive()}'
       \. '%#ErrorMsg#%{hs#status#syntax()}%*'
       \. '%{hs#status#asyncrun()}'
+      \. '%{anzu#search_status()}'
       \. '%='
       \. '%-14.(%c%V,%l/%L%) %P'
 
