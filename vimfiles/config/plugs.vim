@@ -592,7 +592,6 @@ Plug 'vim-scripts/XSLT-syntax', { 'for': [ 'xsl', 'xslt' ] }
 " }}}2
 " {{{2 YAML
 Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
-  Plug 'henrik/vim-yaml-flattener', { 'for': 'yaml' }
 " }}}2
 " {{{2 GraphQL
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
