@@ -9,7 +9,7 @@ let b:did_macros_c_style=1
 " Set tabstops, soft tabstops, shift width to 4 spaces, and text width to 118
 " set ts=4 sts=4 sw=4 tw=118
 " Expands tabs, autoindents, uses C indentation mode, and smart tabs.
-set expandtab autoident cindent smarttab
+set expandtab autoindent cindent smarttab
 
 setlocal cinoptions=
 setlocal cinoptions+=>s " Normal indent by shiftwidth
